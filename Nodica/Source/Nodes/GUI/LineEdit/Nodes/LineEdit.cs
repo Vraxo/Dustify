@@ -349,7 +349,7 @@ public partial class LineEdit : ClickableRectangle
             Style.Current.FontSize,
             Style.Current.FontSpacing).X;
 
-        float avaiableWidth = Size.X * 0.9f;
+        float avaiableWidth = Size.X * 0.85f;
 
         int displayableCharactersCount = (int)(avaiableWidth / oneCharacterWidth);
 

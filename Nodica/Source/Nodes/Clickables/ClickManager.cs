@@ -66,7 +66,7 @@ public class ClickManager : Node
             }
         }
 
-        //Console.WriteLine("Clickables: " + viableClickables.Count);
+        //Console.WriteLine("clickables: " + viableClickables.Count);
 
         return viableClickables;
     }

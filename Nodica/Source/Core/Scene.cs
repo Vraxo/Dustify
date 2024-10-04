@@ -224,6 +224,12 @@ public class Scene
                 return;
             }
 
+            if (propertyInfo.PropertyType == typeof(uint))
+            {
+                propertyInfo.SetValue(obj, uint.Parse(value.ToString()));
+                return;
+            }
+
             if (propertyInfo.PropertyType == typeof(float))
             {
                 propertyInfo.SetValue(obj, float.Parse(value.ToString()));
