@@ -4,6 +4,9 @@ namespace Nodica;
 
 public class ThemeLoader
 {
+    public static ThemeLoader Instance => instance ??= new();
+    private static ThemeLoader? instance;
+
     public Dictionary<string, Color> Colors = new()
     {
         { "Background", new(16, 16, 16, 255) },
@@ -20,17 +23,6 @@ public class ThemeLoader
         { "SliderFillColor", new(71, 114, 179, 255) },
         { "Text", new(255, 255, 255, 255) }
     };
-
-    private static ThemeLoader? instance;
-
-    public static ThemeLoader Instance
-    {
-        get
-        {
-            instance ??= new();
-            return instance;
-        }
-    }
 
     private ThemeLoader()
     {

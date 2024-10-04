@@ -4,12 +4,14 @@ namespace Nodica;
 
 public class MouseManager : Node
 {
-    public static MouseManager Instance => instance ??= new MouseManager();
+    public static MouseManager Instance => instance ??= new();
     private static MouseManager? instance;
 
     public int MinLayer = -1;
 
     private List<Clickable> clickables = [];
+
+    private MouseManager() { }
 
     public void Register(Clickable clickable)
     {

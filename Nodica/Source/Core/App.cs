@@ -5,19 +5,13 @@ namespace Nodica;
 
 public class App
 {
+    public static App Instance => instance ??= new();
     private static App? instance;
 
     public Node RootNode;
     public string[] Args;
 
-    public static App Instance
-    {
-        get
-        {
-            instance ??= new();
-            return instance;
-        }
-    }
+    private App() { }
 
     public void Initialize(int width, int height, string title, string[] args)
     {
