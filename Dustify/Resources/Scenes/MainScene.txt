@@ -1,0 +1,10 @@
+﻿[MainScene "Root"]
+
+[Button "ImageSelectionButton" "Root"]
+Size = Vector2(500, 500)
+Style/Roundness = 0
+
+[AspectRatioContainer "ARC" "ImageSelectionButton"]
+Size = Vector2(500, 500)
+
+[TexturedRectangle "TexturedRectangle" "ARC"]
