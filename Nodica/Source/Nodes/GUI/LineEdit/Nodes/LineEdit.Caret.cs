@@ -4,7 +4,7 @@ namespace Nodica;
 
 public partial class LineEdit : ClickableRectangle
 {
-    private class Caret : Node2D
+    protected class Caret : Node2D
     {
         public float MaxTime = 0.5F;
         private const int minTime = 0;

@@ -5,15 +5,18 @@ Position = Vector2(800, 100)
 Text = "Speed"
 FontSize = 18
 
-[LineEdit "SpeedLineEdit" "SpeedLabel"]
-Position = Vector2(250, 0)
+[NumberLineEdit "SpeedNumberLineEdit" "SpeedLabel"]
+Position = Vector2(100, 0)
+Size = Vector2(50, 25)
 Style/Roundness = 0.5
+MaxValue = 10
 
 [Label "NumberLabel" "Root"]
 Position = Vector2(800, 150)
 Text = "Number"
 FontSize = 18
 
-[LineEdit "NumberLineEdit" "NumberLabel"]
-Position = Vector2(250, 0)
+[NumberLineEdit "DensityNumberLineEdit" "NumberLabel"]
+Position = Vector2(100, 0)
+Size = Vector2(50, 25)
 Style/Roundness = 0.5

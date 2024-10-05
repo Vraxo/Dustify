@@ -33,12 +33,13 @@ public partial class LineEdit : ClickableRectangle
     public event EventHandler<string>? TextChanged;
     public event EventHandler<string>? Confirmed;
 
+    protected Caret caret;
+
     private const int minAscii = 32;
     private const int maxAscii = 125;
     private const float backspaceDelay = 0.5f;
     private const float backspaceSpeed = 0.05f;
 
-    private Caret caret;
     private float backspaceTimer = 0f;
     private bool backspaceHeld = false;
 
@@ -49,6 +50,17 @@ public partial class LineEdit : ClickableRectangle
     public LineEdit()
     {
         Size = DefaultSize;
+    }
+
+    public override void Build()
+    {
+        AddChild(new Shape());
+
+        AddChild(new TextDisplayer());
+
+        AddChild(new PlaceholderTextDisplayer());
+
+        AddChild(new Caret(), "Caret");
     }
 
     public override void Start()
