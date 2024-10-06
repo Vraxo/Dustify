@@ -1,7 +1,7 @@
 ﻿using Raylib_cs;
 
 namespace Nodica;
-// to revert
+
 public partial class LineEdit
 {
     private class Shape
