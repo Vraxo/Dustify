@@ -9,6 +9,7 @@ public class MainScene : Node
 {
     private Button imageSelectionButton;
     private TexturedRectangle texturedRectangle;
+    private Node2D rightPanel;
 
     public override void Start()
     {
@@ -16,6 +17,8 @@ public class MainScene : Node
         imageSelectionButton.LeftClicked += OnImageSelectionButtonLeftClicked;
 
         texturedRectangle = GetNode<TexturedRectangle>("ImageSelectionButton/ARC/TexturedRectangle");
+
+        rightPanel = GetNode<Node2D>("RightPanel");
 
         base.Start();
     }
@@ -25,7 +28,7 @@ public class MainScene : Node
         //GetNode<AspectRatioContainer>("ImageSelectionButton/ARC").Position = Window.Size / 2;
 
         UpdateImageSelectionButton();
-        UpdateTexturedRectangle();
+        UpdateRightPanel();
 
         base.Update();
     }
@@ -63,9 +66,9 @@ public class MainScene : Node
         imageSelectionButton.Position = new(Window.Size.X * 0.25f, Window.Size.Y / 2);
     }
 
-    private void UpdateTexturedRectangle()
+    private void UpdateRightPanel()
     {
-        //texturedRectangle.Position = new(Window.Size.X * 0.25f, Window.Size.Y / 2);
+        rightPanel.Position = new(Window.Size.X * 0.8f, Window.Size.Y * 0.25f);
     }
 
     private static string ConvertToPng(string imagePath)
