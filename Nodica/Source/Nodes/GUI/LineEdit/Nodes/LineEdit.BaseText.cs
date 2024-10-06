@@ -15,9 +15,10 @@ public partial class LineEdit
             parent = GetParent<LineEdit>();
         }
 
-        public void Update()
+        public override void Update()
         {
             Draw();
+            base.Update();
         }
 
         protected void Draw()

@@ -4,18 +4,19 @@ namespace Nodica;
 
 public partial class LineEdit
 {
-    private class Shape
+    private class Shape : Node2D
     {
         private LineEdit parent;
 
-        public Shape(LineEdit parent)
+        public override void Start()
         {
-            this.parent = parent;
+            parent = GetParent<LineEdit>();
         }
 
-        public void Update()
+        public override void Update()
         {
             Draw();
+            base.Update();
         }
 
         private void Draw()

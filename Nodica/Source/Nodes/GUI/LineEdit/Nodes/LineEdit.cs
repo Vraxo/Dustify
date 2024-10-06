@@ -20,9 +20,9 @@ public partial class LineEdit : ClickableRectangle
     public bool Editable { get; set; } = true;
     public bool RevertToDefaultText { get; set; } = true;
     public bool TemporaryDefaultText { get; set; } = true;
-    public bool ExpandToText { get; set; } = false;
     public bool Secret { get; set; } = false;
     public char SecretCharacter { get; set; } = '*';
+    public bool ExpandToText { get; set; } = false;
 
     public int TextStartIndex = 0;
 
@@ -34,8 +34,6 @@ public partial class LineEdit : ClickableRectangle
     public event EventHandler<string>? Confirmed;
 
     protected Caret caret;
-
-    private Shape shape;
 
     private const int minAscii = 32;
     private const int maxAscii = 125;
@@ -56,6 +54,8 @@ public partial class LineEdit : ClickableRectangle
 
     public override void Build()
     {
+        AddChild(new Shape());
+
         AddChild(new TextDisplayer());
 
         AddChild(new PlaceholderTextDisplayer());
@@ -65,8 +65,6 @@ public partial class LineEdit : ClickableRectangle
 
     public override void Start()
     {
-        shape = new(this);
-
         SizeChanged += OnSizeChanged;
 
         Style.Pressed.FillColor = ThemeLoader.Instance.Colors["TextBoxPressedFill"];
@@ -84,9 +82,6 @@ public partial class LineEdit : ClickableRectangle
         HandleInput();
         PasteText();
         UpdateSizeToFitText();
-
-        shape.Update();
-
         base.Update();
     }
 

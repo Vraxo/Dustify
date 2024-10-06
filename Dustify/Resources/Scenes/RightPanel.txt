@@ -1,8 +1,7 @@
-﻿[Node2D "RightPanel"]
+﻿[Node2D "Root"]
+
+[Label "SpeedLabel" "Root"]
 Position = Vector2(800, 100)
-
-
-[Label "SpeedLabel" "RightPanel"]
 Text = "Speed"
 FontSize = 18
 
@@ -12,10 +11,8 @@ Size = Vector2(50, 25)
 Style/Roundness = 0.5
 MaxValue = 10
 
-
-
-[Label "NumberLabel" "RightPanel"]
-Position = Vector2(0, 50)
+[Label "NumberLabel" "Root"]
+Position = Vector2(800, 150)
 Text = "Number"
 FontSize = 18
 
