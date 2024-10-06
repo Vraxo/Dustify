@@ -34,6 +34,7 @@ public partial class LineEdit : ClickableRectangle
     public event EventHandler<string>? Confirmed;
 
     protected Caret caret;
+    private Shape shape;
 
     private const int minAscii = 32;
     private const int maxAscii = 125;
@@ -54,7 +55,7 @@ public partial class LineEdit : ClickableRectangle
 
     public override void Build()
     {
-        AddChild(new Shape());
+        //AddChild(new Shape());
 
         AddChild(new TextDisplayer());
 
@@ -65,6 +66,8 @@ public partial class LineEdit : ClickableRectangle
 
     public override void Start()
     {
+        shape = new(this);
+
         SizeChanged += OnSizeChanged;
 
         Style.Pressed.FillColor = ThemeLoader.Instance.Colors["TextBoxPressedFill"];
@@ -82,6 +85,9 @@ public partial class LineEdit : ClickableRectangle
         HandleInput();
         PasteText();
         UpdateSizeToFitText();
+
+        shape.Update();
+
         base.Update();
     }
 
