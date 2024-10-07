@@ -55,26 +55,20 @@ public partial class LineEdit : ClickableRectangle
 
     public override void Build()
     {
-        //AddChild(new Shape());
-
         AddChild(new TextDisplayer());
-
         AddChild(new PlaceholderTextDisplayer());
-
-        AddChild(new Caret(), "Caret");
     }
 
     public override void Start()
     {
         shape = new(this);
+        caret = new(this);
 
         SizeChanged += OnSizeChanged;
 
         Style.Pressed.FillColor = ThemeLoader.Instance.Colors["TextBoxPressedFill"];
         Style.Pressed.OutlineThickness = 1;
         Style.Pressed.OutlineColor = ThemeLoader.Instance.Colors["Accent"];
-
-        caret = GetNode<Caret>("Caret");
 
         base.Start();
     }
@@ -87,6 +81,7 @@ public partial class LineEdit : ClickableRectangle
         UpdateSizeToFitText();
 
         shape.Update();
+        caret.Update();
 
         base.Update();
     }

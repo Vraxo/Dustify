@@ -162,7 +162,7 @@ public partial class BaseSlider
         //{
         //    Rectangle rectangle = new()
         //    {
-        //        Position = position - Origin,
+        //        position = position - Origin,
         //        Size = Size
         //    };
         //
@@ -184,7 +184,7 @@ public partial class BaseSlider
         //    {
         //        Rectangle rectangle = new()
         //        {
-        //            Position = position - Origin - new Vector2(i, i),
+        //            position = position - Origin - new Vector2(i, i),
         //            Size = new(Size.X + i + 1, Size.Y + i + 1)
         //        };
         //

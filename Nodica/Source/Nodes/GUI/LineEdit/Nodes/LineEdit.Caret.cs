@@ -4,8 +4,12 @@ namespace Nodica;
 
 public partial class LineEdit : ClickableRectangle
 {
-    protected class Caret : Node2D
+    protected class Caret
     {
+        #region [ - - - Properties & Fields - - - ]
+
+        private Vector2 position { get; set; } = Vector2.Zero;
+
         public float MaxTime = 0.5F;
         private const int minTime = 0;
         private const byte minAlpha = 0;
@@ -47,12 +51,18 @@ public partial class LineEdit : ClickableRectangle
             }
         }
 
-        public override void Start()
+        private Vector2 GlobalPosition => parent.GlobalPosition + position;
+
+        #endregion
+
+        // Public
+
+        public Caret(LineEdit parent)
         {
-            parent = GetParent<LineEdit>();
+            this.parent = parent;
         }
 
-        public override void Update()
+        public void Update()
         {
             if (!parent.Selected)
             {
@@ -62,7 +72,6 @@ public partial class LineEdit : ClickableRectangle
             HandleInput();
             Draw();
             UpdateAlpha();
-            base.Update();
         }
 
         private void Draw()
@@ -75,6 +84,8 @@ public partial class LineEdit : ClickableRectangle
                 1,
                 GetColor());
         }
+
+        // Movement
 
         private void HandleInput()
         {
@@ -166,6 +177,8 @@ public partial class LineEdit : ClickableRectangle
             }
         }
 
+        // Position & size
+
         private Vector2 GetPosition()
         {
             int width = GetWidth();
@@ -199,16 +212,18 @@ public partial class LineEdit : ClickableRectangle
 
         private float GetCharacterWidth()
         {
-            float textWidth = Raylib.MeasureTextEx(
-                                  parent.Style.Current.Font,
-                                  ".",
-                                  parent.Style.Current.FontSize,
-                                  parent.Style.Current.FontSpacing).X;
+            float characterWidth = Raylib.MeasureTextEx(
+                                       parent.Style.Current.Font,
+                                       ".",
+                                       parent.Style.Current.FontSize,
+                                       parent.Style.Current.FontSpacing).X;
 
-            //int characterWidth = (int)MathF.Ceiling(textWidth) / parent.Text.Length;
+            //int characterWidth = (int)MathF.Ceiling(characterWidth) / parent.Text.Length;
 
-            return textWidth;
+            return characterWidth;
         }
+
+        // Alpha
 
         private Color GetColor()
         {

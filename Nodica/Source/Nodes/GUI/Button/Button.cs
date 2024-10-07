@@ -357,7 +357,7 @@ public class Button : ClickableRectangle
             Style.Current.TextColor);
     }
 
-    // TextDisplayer positioning
+    // Text positioning
 
     private Vector2 GetTextPosition()
     {

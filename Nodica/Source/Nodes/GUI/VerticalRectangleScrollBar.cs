@@ -31,8 +31,8 @@
 //
 //    public override void Update()
 //    {
-//        Value = Grabber.Position.Y / (Size.Y - Grabber.Size.Y);
-//        BottomButton.Position.Y = Size.Y + 8;
+//        Value = Grabber.position.Y / (Size.Y - Grabber.Size.Y);
+//        BottomButton.position.Y = Size.Y + 8;
 //
 //        DrawRectangle();
 //        SnapMiddleButtonToClickedPosition();
@@ -44,7 +44,7 @@
 //
 //    private void OnTopButtonLeftClicked(object? sender, EventArgs e)
 //    {
-//        Grabber.Position.Y -= Grabber.Size.Y;
+//        Grabber.position.Y -= Grabber.Size.Y;
 //        Value -= BottomButton.Size.Y / Size.Y;
 //    }
 //
@@ -52,7 +52,7 @@
 //    {
 //        Rectangle rectangle = new()
 //        {
-//            Position = GlobalPosition - Origin,
+//            position = GlobalPosition - Origin,
 //            Size = Size
 //        };
 //        
@@ -63,7 +63,7 @@
 //    {
 //        TopButton = new()
 //        {
-//            Position = new(0, -8),
+//            position = new(0, -8),
 //            Size = new(Size.X, 10),
 //        };
 //
@@ -76,7 +76,7 @@
 //    {
 //        BottomButton = new()
 //        {
-//            Position = new(0, Size.Y),
+//            position = new(0, Size.Y),
 //            Size = new(Size.X, 10),
 //        };
 //
@@ -87,7 +87,7 @@
 //
 //    private void OnBottomButtonLeftClicked(object? sender, EventArgs e)
 //    {
-//        Grabber.Position.Y += Grabber.Size.Y;
+//        Grabber.position.Y += Grabber.Size.Y;
 //        Value += BottomButton.Size.Y / Size.Y;
 //    }
 //
@@ -102,19 +102,19 @@
 //            {
 //                if (Button.PressedLeft)
 //                {
-//                    Button.Position.Y = Raylib.GetMousePosition().Y - Button.Size.Y;
+//                    Button.position.Y = Raylib.GetMousePosition().Y - Button.Size.Y;
 //                }
 //
 //                float maxY = Size.Y - Button.Size.Y;
 //
-//                if (Button.Position.Y > maxY)
+//                if (Button.position.Y > maxY)
 //                {
-//                    Button.Position.Y = maxY;
+//                    Button.position.Y = maxY;
 //                }
 //
-//                if (Button.Position.Y < 0)
+//                if (Button.position.Y < 0)
 //                {
-//                    Button.Position.Y = 0;
+//                    Button.position.Y = 0;
 //                }
 //            }
 //        };
@@ -128,7 +128,7 @@
 //    {
 //        if (IsMouseOver() && Raylib.IsMouseButtonPressed(MouseButton.Left))
 //        {
-//            Grabber.Position.Y = Raylib.GetMousePosition().Y - Grabber.Size.Y;
+//            Grabber.position.Y = Raylib.GetMousePosition().Y - Grabber.Size.Y;
 //        }
 //    }
 //

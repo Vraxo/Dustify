@@ -57,7 +57,7 @@ public class ItemList : ClickableRectangle
 
                 slider.Position = new(x, y);
 
-                //slider.Position.Y = slider.Grabber.Radius * 2.5F;
+                //slider.position.Y = slider.Grabber.Radius * 2.5F;
 
                 slider.Size = new(slider.Size.X, Size.Y - slider.Grabber.Size.Y * 5); // * 8
 
@@ -168,14 +168,14 @@ public class ItemList : ClickableRectangle
             if (i >= StartingIndex && i < StartingIndex + maxItemsShownAtOnce)
             {
                 Items[i].Activate();
-                //Items[i].Position.Y = ItemSize.Y * j;
+                //Items[i].position.Y = ItemSize.Y * j;
                 Items[i].Position = new(Items[i].Position.X, ItemSize.Y * j);
                 j++;
             }
             else
             {
                 Items[i].Position = new(Items[i].Position.X, -1000);
-                //Items[i].Position = new(Items[i].Position.X, ItemSize.Y * j);
+                //Items[i].position = new(Items[i].position.X, ItemSize.Y * j);
                 Items[i].Deactivate();
             }
         }

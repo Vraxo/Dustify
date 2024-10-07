@@ -16,7 +16,7 @@ public class AspectRatioContainer : Node2D
             Vector2 newSize = textureSize * ratio;
             
             child.Size = newSize;
-            //child.Position = center;
+            //child.position = center;
         }
 
         base.Update();
