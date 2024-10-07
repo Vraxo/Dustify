@@ -169,7 +169,7 @@ public partial class LineEdit : ClickableRectangle
             {
                 float x = mouseX - (parent.GlobalPosition.X - parent.Origin.X) - parent.TextOrigin.X;
 
-                float characterWidth = GetCharacterWidth();
+                float characterWidth = GetSize().X;
                 X = (int)MathF.Floor(x / characterWidth);
 
                 int maxX = Math.Min(parent.GetDisplayableCharactersCount(), parent.Text.Length);
@@ -181,46 +181,23 @@ public partial class LineEdit : ClickableRectangle
 
         private Vector2 GetPosition()
         {
-            int width = GetWidth();
-            int height = GetHeight();
+            Vector2 size = GetSize();
 
-            int x = (int)(GlobalPosition.X - parent.Origin.X + parent.TextOrigin.X + X * width - width / 2) + X;
-            int y = (int)(GlobalPosition.Y + parent.Size.Y / 2 - height / 2 - parent.Origin.Y);
+            int x = (int)(GlobalPosition.X - parent.Origin.X + parent.TextOrigin.X + X * size.X - size.X / 2) + X;
+            int y = (int)(GlobalPosition.Y + parent.Size.Y / 2 - size.Y / 2 - parent.Origin.Y);
 
             return new(x, y);
         }
 
-        private int GetWidth()
+        private Vector2 GetSize()
         {
             Font font = parent.Style.Current.Font;
             float fontSize = parent.Style.Current.FontSize;
 
             int width = (int)Raylib.MeasureTextEx(font, "|", fontSize, 1).X;
-
-            return width;
-        }
-
-        private int GetHeight()
-        {
-            Font font = parent.Style.Current.Font;
-            float fontSize = parent.Style.Current.FontSize;
-
             int fontHeight = (int)(Raylib.MeasureTextEx(font, parent.Text, fontSize, 1).Y);
 
-            return fontHeight;
-        }
-
-        private float GetCharacterWidth()
-        {
-            float characterWidth = Raylib.MeasureTextEx(
-                                       parent.Style.Current.Font,
-                                       ".",
-                                       parent.Style.Current.FontSize,
-                                       parent.Style.Current.FontSpacing).X;
-
-            //int characterWidth = (int)MathF.Ceiling(characterWidth) / parent.Text.Length;
-
-            return characterWidth;
+            return new(width, fontHeight);
         }
 
         // Alpha
