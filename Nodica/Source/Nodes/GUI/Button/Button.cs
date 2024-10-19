@@ -15,7 +15,7 @@ public class Button : ClickableRectangle
     public Vector2 TextPadding { get; set; } = Vector2.Zero;
     public Vector2 TextOrigin { get; set; } = Vector2.Zero;
     public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
-    public ButtonStyle Style { get; set; } = new();
+    public ButtonStylePack Style { get; set; } = new();
     public bool PressedLeft { get; set; } = false;
     public bool PressedRight { get; set; } = false;
     public bool LimitText { get; set; } = false;
@@ -91,18 +91,6 @@ public class Button : ClickableRectangle
 
     private void HandleLeftClickLimitless()
     {
-        if (IsMouseOver())
-        {
-            if (Raylib.IsMouseButtonReleased(MouseButton.Left))
-            {
-                if (PressedLeft)
-                {
-                    PressedLeft = false;
-                    LeftClicked.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-
         if (Raylib.IsMouseButtonDown(MouseButton.Left))
         {
             if (!IsMouseOver())
@@ -114,7 +102,16 @@ public class Button : ClickableRectangle
         if (IsMouseOver())
         {
             Style.Current = Style.Hover;
-            
+
+            if (Raylib.IsMouseButtonReleased(MouseButton.Left))
+            {
+                if (PressedLeft)
+                {
+                    PressedLeft = false;
+                    LeftClicked.Invoke(this, EventArgs.Empty);
+                }
+            }
+
             if (Raylib.IsMouseButtonDown(MouseButton.Left))
             {
                 if (!alreadyClicked && OnTopLeft)

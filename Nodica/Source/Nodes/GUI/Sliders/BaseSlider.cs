@@ -9,8 +9,8 @@ public abstract partial class BaseSlider : ClickableRectangle
     public float MaxExternalValue  { get; set; } = 0;
     public bool HasButtons         { get; set; } = true;
     public bool ResetOnRitghtClick { get; set; } = true;
-    public ButtonStyle FilledStyle { get; set; } = new();
-    public ButtonStyle EmptyStyle  { get; set; } = new();
+    public ButtonStylePack FilledStyle { get; set; } = new();
+    public ButtonStylePack EmptyStyle  { get; set; } = new();
     public BaseGrabber Grabber;
 
     public Action<BaseSlider> OnUpdate = (slider) => { };

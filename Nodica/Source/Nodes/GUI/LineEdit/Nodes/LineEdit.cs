@@ -15,7 +15,7 @@ public partial class LineEdit : ClickableRectangle
     public int MaxCharacters { get; set; } = int.MaxValue;
     public int MinCharacters { get; set; } = 0;
     public List<char> AllowedCharacters { get; set; } = [];
-    public ButtonStyle Style { get; set; } = new();
+    public ButtonStylePack Style { get; set; } = new();
     public bool Selected { get; set; } = false;
     public bool Editable { get; set; } = true;
     public bool RevertToDefaultText { get; set; } = true;

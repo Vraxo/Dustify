@@ -1,6 +1,6 @@
 ﻿using Nodica;
 
-public class ButtonStyle : StylePack<ButtonStateStyle>
+public class ButtonStylePack : StylePack<ButtonStateStyle>
 {
     // Setters
 
