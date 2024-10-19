@@ -95,7 +95,7 @@ public partial class VerticalSlider : BaseSlider
             FilledStyle.Current.FillColor);
     }
 
-    private void DrawOutline(Rectangle rectangle, ButtonStateStyle style)
+    private void DrawOutline(Rectangle rectangle, ButtonStyle style)
     {
         if (style.OutlineThickness <= 0)
         {
