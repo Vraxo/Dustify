@@ -24,6 +24,8 @@ public class CustomTexturedRectangle : Node2D
     {
         Texture = TextureLoader.Instance.Textures[name];
         HasTexture = true;
+
+        Size = new(Texture.Width, Texture.Height);
     }
 
     public void Draw()

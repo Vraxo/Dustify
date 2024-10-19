@@ -1,6 +1,6 @@
 ﻿namespace Nodica;
 
-public abstract class Clickable : Node2D
+public abstract class Clickable : VisualItem
 {
     public bool OnTopLeft = false;
     public bool OnTopRight = false;

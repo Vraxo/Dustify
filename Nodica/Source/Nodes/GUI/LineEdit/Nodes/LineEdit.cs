@@ -196,12 +196,9 @@ public partial class LineEdit : ClickableRectangle
 
         if (isKeyInRange && isSpaceLeft)
         {
-            if (AllowedCharacters.Count > 0)
+            if (AllowedCharacters.Count > 0 && !AllowedCharacters.Contains((char)key))
             {
-                if (!AllowedCharacters.Contains((char)key))
-                {
-                    return;
-                }
+                return;
             }
 
             if (TemporaryDefaultText && Text == DefaultText)
@@ -216,12 +213,12 @@ public partial class LineEdit : ClickableRectangle
 
             Text = Text.Insert(caret.X + TextStartIndex, ((char)key).ToString());
 
-            if (Text.Length > GetDisplayableCharactersCount() && caret.X != 0)
+            // Check if caret is out of view, and adjust TextStartIndex
+            if (caret.X >= GetDisplayableCharactersCount())
             {
                 TextStartIndex++;
             }
-
-            if (caret.X != GetDisplayableCharactersCount() && TextStartIndex == 0)
+            else
             {
                 caret.X++;
             }
@@ -251,8 +248,15 @@ public partial class LineEdit : ClickableRectangle
                 caret.X = Text.Length;
             }
 
-            Text = Text.Insert(caret.X, text);
+            Text = Text.Insert(caret.X + TextStartIndex, text);
             caret.X += text.Length;
+
+            // Shift text if caret moves out of view
+            if (caret.X > GetDisplayableCharactersCount())
+            {
+                TextStartIndex = caret.X - GetDisplayableCharactersCount();
+            }
+
             TextChanged?.Invoke(this, Text);
 
             if (Text.Length == text.Length)
@@ -293,7 +297,7 @@ public partial class LineEdit : ClickableRectangle
     {
         int textLengthBeforeDeletion = Text.Length;
 
-        if (Text.Length > 0 && caret.X > 0)
+        if (Text.Length > 0)
         {
             // Remove the character before the caret
             Text = Text.Remove(caret.X - 1 + TextStartIndex, 1);

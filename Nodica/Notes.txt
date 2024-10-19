@@ -3,3 +3,5 @@
 > Different style for progress bar?
 
 > Reduce code duplication in button
+
+> non-screenshots are too big!

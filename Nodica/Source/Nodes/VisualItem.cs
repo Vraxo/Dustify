@@ -12,5 +12,5 @@ public abstract class VisualItem : Node2D
         base.Update();
     }
 
-    protected abstract void Draw();
+    protected virtual void Draw() { }
 }
