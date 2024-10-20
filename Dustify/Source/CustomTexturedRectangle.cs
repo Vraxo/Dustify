@@ -30,8 +30,15 @@ public class CustomTexturedRectangle : Node2D
 
     public void Draw()
     { 
-        Rectangle source = new(0, Height, Texture.Width, Texture.Height - Height);
-        Rectangle destination = new(GlobalPosition + new Vector2(0, Height), Size - new Vector2(0, Height));
+        Rectangle source = new(
+            0,
+            Height,
+            Texture.Width,
+            Texture.Height - Height);
+
+        Rectangle destination = new(
+            GlobalPosition + new Vector2(0, Height), 
+            Size - new Vector2(0, Height));
 
         Raylib.DrawTexturePro(
             Texture,

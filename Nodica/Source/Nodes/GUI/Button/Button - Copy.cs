@@ -198,7 +198,7 @@ public class Button : ClickableRectangle
 
     protected override void Draw()
     {
-        DrawOutlinedRectangle(GlobalPosition - Origin, Size, Styles.Current);
+        DrawBorderedRectangle(GlobalPosition - Origin, Size, Styles.Current);
         DrawText();
     }
 

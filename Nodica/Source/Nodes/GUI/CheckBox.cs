@@ -30,7 +30,7 @@ public class CheckBox : ClickableRectangle
         base.Update();
     }
 
-    private void Draw()
+    protected override void Draw()
     {
         Rectangle rectangle = new()
         {
@@ -54,13 +54,13 @@ public class CheckBox : ClickableRectangle
 
     private void DrawOutline(Rectangle rectangle)
     {
-        if (BackgroundStyle.Current.OutlineThickness > 0)
+        if (BackgroundStyle.Current.BorderLength > 0)
         {
             Raylib.DrawRectangleRoundedLines(
                 rectangle,
                 BackgroundStyle.Current.Roundness,
                 (int)Size.Y,
-                BackgroundStyle.Current.OutlineThickness,
+                BackgroundStyle.Current.BorderLength,
                 BackgroundStyle.Current.OutlineColor);
         }
     }

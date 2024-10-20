@@ -323,7 +323,7 @@
 //
 //    private void DrawShapeOutline()
 //    {
-//        if (Styles.Current.OutlineThickness <= 0)
+//        if (Styles.Current.BorderLength <= 0)
 //        {
 //            return;
 //        }
@@ -334,7 +334,7 @@
 //            Size = Size * Scale
 //        };
 //
-//        for (int i = 0; i <= Styles.Current.OutlineThickness; i++)
+//        for (int i = 0; i <= Styles.Current.BorderLength; i++)
 //        {
 //            Rectangle outlineRectangle = new()
 //            {

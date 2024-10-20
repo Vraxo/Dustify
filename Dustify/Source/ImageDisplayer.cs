@@ -46,7 +46,10 @@ public class ImageDisplayer : CustomTexturedRectangle
                 Particle particle = new()
                 {
                     Position = position,
-                    FillColor = new(color.R, color.G, color.B, color.A),
+                    Style = new()
+                    {
+                        FillColor = new(color.R, color.G, color.B, color.A)
+                    },
                     Speed = Speed
                 };
 

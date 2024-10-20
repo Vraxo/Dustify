@@ -4,8 +4,25 @@ public class Node2D : Node
 {
     public Vector2 Position { get; set; }  = Vector2.Zero;
 
-    private Vector2 _scale = Vector2.One;
+    public OriginPreset OriginPreset { get; set; } = OriginPreset.Center;
+    public bool InheritPosition      { get; set; } = true;
+    public bool InheritOrigin        { get; set; } = false;
 
+    public event EventHandler<Vector2>? SizeChanged;
+
+    private Vector2 _size = Vector2.Zero;
+    public Vector2 Size
+    {
+        get => _size;
+
+        set
+        {
+            _size = value;
+            SizeChanged?.Invoke(this, Size);
+        }
+    }
+
+    private Vector2 _scale = Vector2.One;
     public Vector2 Scale
     {
         get
@@ -20,26 +37,6 @@ public class Node2D : Node
         set
         {
             _scale = value;
-        }
-    }
-
-    public OriginPreset OriginPreset { get; set; } = OriginPreset.Center;
-    public bool InheritPosition { get; set; } = true;
-    public bool InheritOrigin { get; set; } = false;
-    public bool Visible { get; set; } = true;
-    public bool ReadyForVisibility = false;
-
-    public event EventHandler<Vector2>? SizeChanged;
-
-    private Vector2 _size = Vector2.Zero;
-    public Vector2 Size
-    {
-        get => _size;
-
-        set
-        {
-            _size = value;
-            SizeChanged?.Invoke(this, Size);
         }
     }
 
@@ -110,7 +107,6 @@ public class Node2D : Node
     public override void Update()
     {
         UpdateOrigin();
-        ReadyForVisibility = true;
     }
 
     private void UpdateOrigin()

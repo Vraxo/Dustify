@@ -73,10 +73,10 @@ public class ButtonStylePack
     {
         set
         {
-            Current.OutlineThickness = value;
-            Default.OutlineThickness = value;
-            Hover.OutlineThickness = value;
-            Pressed.OutlineThickness = value;
+            Current.BorderLength = value;
+            Default.BorderLength = value;
+            Hover.BorderLength = value;
+            Pressed.BorderLength = value;
         }
     }
 

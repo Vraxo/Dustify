@@ -4,12 +4,25 @@ namespace Nodica;
 
 public class Label : VisualItem
 {
-    public Color  Color          { get; set; } = ThemeLoader.Instance.Colors["Text"];
-    public uint   FontSize       { get; set; } = 16;
-    public Font   Font           { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
-    public int    MaxCharacters  { get; set; } = -1;
-    public string Ellipsis       { get; set; } = "...";
-    public bool   Clip           { get; set; } = true;
+    public class LabelStyle
+    {
+        public Font  Font        { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
+        public Color FontColor   { get; set; } = ThemeLoader.Instance.Colors["Text"];
+        public uint  FontSize    { get; set; } = 16;
+        public int   FontSpacing { get; set; } = 0;
+    }
+
+    public enum TextCase
+    {
+        Upper,
+        Lower,
+        Both
+    }
+
+    public LabelStyle Style    { get; set; } = new();
+    public bool       Clip     { get; set; } = true;
+    public string     Ellipsis { get; set; } = "...";
+    public TextCase   Case     { get; set; } = TextCase.Both;
 
     private string displayedText = "";
 
@@ -21,7 +34,6 @@ public class Label : VisualItem
         set
         {
             _text = value;
-            displayedText = value;
         }
     }
 
@@ -33,18 +45,19 @@ public class Label : VisualItem
     public override void Update()
     {
         LimitDisplayedText();
+        ApplyCase();
         base.Update();
     }
 
     protected override void Draw()
     {
         Raylib.DrawTextEx(
-            Font,
+            Style.Font,
             displayedText,
             GlobalPosition - Origin,
-            FontSize,
-            1,
-            Color);
+            Style.FontSize,
+            Style.FontSpacing,
+            Style.FontColor);
     }
 
     private void LimitDisplayedText()
@@ -54,30 +67,30 @@ public class Label : VisualItem
             return;
         }
 
-        int numFittingCharacters = (int)(Size.X / (GetCharacterWidth() + 1));
+        int numFittingCharacters = (int)(Size.X / (GetCharacterWidth() + Style.FontSpacing));
 
         if (numFittingCharacters <= 0)
         {
             displayedText = "";
         }
-        else if (numFittingCharacters < Text.Length)
+        else if (numFittingCharacters < _text.Length)
         {
-            string trimmedText = Text[..numFittingCharacters];
+            string trimmedText = _text[..numFittingCharacters];
             displayedText = ReplaceTextEndWithEllipsis(trimmedText);
         }
         else
         {
-            displayedText = Text;
+            displayedText = _text;
         }
     }
 
     private float GetCharacterWidth()
     {
         float width = Raylib.MeasureTextEx(
-            Font,
+            Style.Font,
             " ",
-            FontSize,
-            1).X;
+            Style.FontSize,
+            Style.FontSpacing).X;
 
         return width;
     }
@@ -93,5 +106,15 @@ public class Label : VisualItem
         {
             return input;
         }
+    }
+
+    private void ApplyCase()
+    {
+        displayedText = Case switch
+        {
+            TextCase.Upper => displayedText.ToUpper(),
+            TextCase.Lower => displayedText.ToLower(),
+            _ => _text
+        };
     }
 }

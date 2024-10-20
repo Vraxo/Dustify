@@ -31,12 +31,12 @@ public partial class LineEdit
 
         private void DrawOutline()
         {
-            if (parent.Style.Current.OutlineThickness <= 0)
+            if (parent.Style.Current.BorderLength <= 0)
             {
                 return;
             }
 
-            for (int i = 1; i <= parent.Style.Current.OutlineThickness; i++)
+            for (int i = 1; i <= parent.Style.Current.BorderLength; i++)
             {
                 Vector2 offset = new(i / 2f, i / 2f);
 

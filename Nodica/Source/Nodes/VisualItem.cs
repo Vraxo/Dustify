@@ -4,6 +4,9 @@ namespace Nodica;
 
 public abstract class VisualItem : Node2D
 {
+    public bool Visible { get; set; } = true;
+    public bool ReadyForVisibility = false;
+
     public override void Update()
     {
         if (Visible && ReadyForVisibility)
@@ -11,33 +14,39 @@ public abstract class VisualItem : Node2D
             Draw();
         }
 
+        ReadyForVisibility = true;
         base.Update();
     }
 
     protected virtual void Draw() { }
 
-    protected void DrawOutlinedRectangle(Vector2 position, Vector2 size, Style style)
+    protected void DrawBorderedRectangle(Vector2 position, Vector2 size, BoxStyle style)
     {
-        if (style.OutlineThickness > 0)
+        // Calculate the total border length by combining the four sides
+        float top = style.BorderLengthUp;
+        float right = style.BorderLengthRight;
+        float bottom = style.BorderLengthDown;
+        float left = style.BorderLengthLeft;
+
+        // Adjust the outer rectangle size based on the border lengths
+        Rectangle outerRectangle = new()
         {
-            for (int i = 1; i <= style.OutlineThickness; i++)
-            {
-                Vector2 offset = new(i / 2f, i / 2f);
+            Position = new Vector2(position.X - left, position.Y - top),
+            Size = new Vector2(size.X + left + right, size.Y + top + bottom)
+        };
 
-                Rectangle rectangle = new()
-                {
-                    Position = position - offset,
-                    Size = new(size.X + i, size.Y + i)
-                };
-
-                Raylib.DrawRectangleRounded(
-                    rectangle,
-                    style.Roundness,
-                    (int)size.Y,
-                    style.OutlineColor);
-            }
+        // Draw the outer rectangle (border)
+        if (top > 0 || right > 0 || bottom > 0 || left > 0)
+        {
+            Raylib.DrawRectangleRounded(
+                outerRectangle,
+                style.Roundness,
+                (int)size.Y,  // segments count, you can adjust it as needed
+                style.OutlineColor
+            );
         }
 
+        // Draw the inner rectangle (fill) with no offset
         Rectangle innerRectangle = new()
         {
             Position = position,
@@ -47,7 +56,8 @@ public abstract class VisualItem : Node2D
         Raylib.DrawRectangleRounded(
             innerRectangle,
             style.Roundness,
-            (int)size.Y,
-            style.FillColor);
+            (int)size.Y,  // segments count
+            style.FillColor
+        );
     }
 }

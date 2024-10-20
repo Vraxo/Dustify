@@ -2,9 +2,19 @@
 
 public class ProgressBar : VisualItem
 {
-    public float Percentage { get; set; } = 0f;
-    public Style EmptyStyle = new();
-    public Style FilledStyle = new();
+    public BoxStyle EmptyStyle = new();
+    public BoxStyle FilledStyle = new();
+
+    private float _percentage = 0;
+    public float Percentage 
+    {
+        get => _percentage;
+
+        set
+        {
+            _percentage = Math.Clamp(value, 0, 1);
+        }
+    }
 
     public ProgressBar()
     {
@@ -14,9 +24,14 @@ public class ProgressBar : VisualItem
 
     protected override void Draw()
     {
-        DrawOutlinedRectangle(GlobalPosition - Origin, Size, EmptyStyle);
+        DrawBorderedRectangle(GlobalPosition - Origin, Size, EmptyStyle);
+
+        if (Percentage == 0)
+        {
+            return;
+        }
 
         Vector2 filledSize = new(Size.X * Percentage, Size.Y);
-        DrawOutlinedRectangle(GlobalPosition - Origin, filledSize, FilledStyle);
+        DrawBorderedRectangle(GlobalPosition - Origin, filledSize, FilledStyle);
     }
 }

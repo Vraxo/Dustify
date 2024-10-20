@@ -1,11 +1,8 @@
-﻿using Raylib_cs;
-
-namespace Nodica;
+﻿namespace Nodica;
 
 public class ColorRectangle : ClickableRectangle
 {
-    public Color FillColor = ThemeLoader.Instance.Colors["Background"];
-    public Color OutlineColor = ThemeLoader.Instance.Colors["DefaultOutline"];
+    public BoxStyle Style = new();
 
     public ColorRectangle()
     {
@@ -13,23 +10,11 @@ public class ColorRectangle : ClickableRectangle
         OriginPreset = OriginPreset.TopLeft;
     }
 
-    public override void Update()
+    protected override void Draw()
     {
-        Draw();
-    }
-
-    private void Draw()
-    {
-        Raylib.DrawRectangleV(
-            GlobalPosition - Origin, 
-            Size, 
-            FillColor);
-
-        Raylib.DrawRectangleLines(
-            (int)(GlobalPosition.X - Origin.X),
-            (int)(GlobalPosition.Y - Origin.Y),
-            (int)Size.X,
-            (int)Size.Y,
-            OutlineColor);
+        DrawBorderedRectangle(
+            GlobalPosition - Origin,
+            Size,
+            Style);
     }
 }

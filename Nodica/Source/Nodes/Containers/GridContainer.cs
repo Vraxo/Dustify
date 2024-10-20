@@ -2,7 +2,7 @@
 
 namespace Nodica;
 
-public class GridContainer : Node2D
+public class GridContainer : VisualItem
 {
     public bool         ShowGrid         { get; set; } = false;
     public Vector2      Cells            { get; set; } = new(4, 5);
@@ -25,9 +25,9 @@ public class GridContainer : Node2D
         base.Update();
     }
 
-    private void Draw()
+    protected override void Draw()
     {
-        if (!ShowGrid || !Visible || !ReadyForVisibility)
+        if (!ShowGrid)
         {
             return;
         }

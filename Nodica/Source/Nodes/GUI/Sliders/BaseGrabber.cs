@@ -80,13 +80,8 @@ public partial class BaseSlider
             }
         }
 
-        private void Draw()
+        protected override void Draw()
         {
-            if (!(Visible && ReadyForVisibility))
-            {
-                return;
-            }
-
             DrawShape();
         }
 
@@ -95,7 +90,7 @@ public partial class BaseSlider
             DrawOutline();
             DrawInside();
         }
-
+        
         private void DrawInside()
         {
             Rectangle rectangle = new()
@@ -103,37 +98,37 @@ public partial class BaseSlider
                 Position = GlobalPosition - Origin,
                 Size = Size
             };
-
+        
             Raylib.DrawRectangleRounded(
                 rectangle,
                 Style.Current.Roundness,
                 (int)Size.Y,
                 Style.Current.FillColor);
         }
-
+        
         private void DrawOutline()
         {
-            if (Style.Current.OutlineThickness <= 0)
+            if (Style.Current.BorderLength <= 0)
             {
                 return;
             }
-
+        
             Vector2 position = GlobalPosition - Origin;
-
+        
             Rectangle rectangle = new()
             {
                 Position = position,
                 Size = Size
             };
-
-            for (int i = 0; i <= Style.Current.OutlineThickness; i++)
+        
+            for (int i = 0; i <= Style.Current.BorderLength; i++)
             {
                 Rectangle outlineRectangle = new()
                 {
                     Position = rectangle.Position - new Vector2(i, i),
                     Size = new(rectangle.Size.X + i + 1, rectangle.Size.Y + i + 1)
                 };
-
+        
                 Raylib.DrawRectangleRounded(
                     outlineRectangle,
                     Style.Current.Roundness,
@@ -175,12 +170,12 @@ public partial class BaseSlider
         //
         //private void DrawShapeOutline(Vector2 position)
         //{
-        //    if (EmptyStyle.Current.OutlineThickness < 0)
+        //    if (EmptyStyle.Current.BorderLength < 0)
         //    {
         //        return;
         //    }
         //
-        //    for (int i = 0; i <= EmptyStyle.Current.OutlineThickness; i++)
+        //    for (int i = 0; i <= EmptyStyle.Current.BorderLength; i++)
         //    {
         //        Rectangle rectangle = new()
         //        {

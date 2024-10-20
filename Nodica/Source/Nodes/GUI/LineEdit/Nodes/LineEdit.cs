@@ -71,7 +71,7 @@ public partial class LineEdit : ClickableRectangle
         SizeChanged += OnSizeChanged;
 
         Style.Pressed.FillColor = ThemeLoader.Instance.Colors["TextBoxPressedFill"];
-        Style.Pressed.OutlineThickness = 1;
+        Style.Pressed.BorderLength = 1;
         Style.Pressed.OutlineColor = ThemeLoader.Instance.Colors["Accent"];
 
         base.Start();
