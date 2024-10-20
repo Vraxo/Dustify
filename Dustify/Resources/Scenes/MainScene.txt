@@ -18,5 +18,5 @@ Styles/Roundness = 0.5
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
 
-[VerticalSlider "VerticalSlider" "Root"]
-Position = Vector2(600, 100)
+[HorizontalSlider "Slider" "Root"]
+Position = Vector2(500, 100)

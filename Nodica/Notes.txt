@@ -11,3 +11,5 @@
 > Exapnd for buttons
 
 > Make dialog -> color rectangle (?)
+
+> Change slider styles to regular styles

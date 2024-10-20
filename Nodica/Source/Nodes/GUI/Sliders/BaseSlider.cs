@@ -144,8 +144,6 @@ public abstract partial class BaseSlider : ClickableRectangle
 
     protected abstract void HandleClicks();
 
-    protected abstract void Draw();
-
     protected abstract void MoveGrabberToPercentage(float percentage);
 
     protected void OnPercentageChanged()
