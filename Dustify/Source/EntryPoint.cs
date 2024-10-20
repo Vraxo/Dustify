@@ -9,7 +9,7 @@ public class EntryPoint
     {
         App.Instance.Initialize(640, 720, "Dustify");
 
-        var rootNode = new Scene("MainScene.txt").Instantiate<MainScene>(true);
+        var rootNode = new SceneReference("MainScene.txt").Instantiate<MainScene>(true);
 
         App.Instance.Run();
     }

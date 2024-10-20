@@ -2,11 +2,11 @@
 
 namespace Nodica;
 
-public class Scene
+public class SceneReference
 {
     private string path;
 
-    public Scene(string path)
+    public SceneReference(string path)
     {
         if (!path.StartsWith("Resources/Scenes/"))
         {
@@ -59,7 +59,7 @@ public class Scene
                     }
 
                     // Recursively load the scene, using the specified type for the root node
-                    Scene referencedScene = new(scenePath);
+                    SceneReference referencedScene = new(scenePath);
                     Type rootNodeType = ResolveType(typeName);
                     var referencedRootNode = referencedScene.Instantiate(rootNodeType) as Node;
 
@@ -136,10 +136,9 @@ public class Scene
         return instance;
     }
 
-    // Helper to instantiate a scene with a given type for the root node
     private object Instantiate(Type type, bool isRootNode = false)
     {
-        MethodInfo method = typeof(Scene).GetMethod(nameof(Instantiate)).MakeGenericMethod(type);
+        MethodInfo method = typeof(SceneReference).GetMethod(nameof(Instantiate)).MakeGenericMethod(type);
         return method.Invoke(this, [isRootNode]);
     }
 
@@ -205,65 +204,25 @@ public class Scene
 
         if (propertyInfo != null && propertyInfo.CanWrite)
         {
-            if (propertyInfo.PropertyType == typeof(Vector2))
-            {
-                propertyInfo.SetValue(obj, ParseVector2(value.ToString()));
-                return;
-            }
+            string stringValue = value.ToString();
 
-            if (propertyInfo.PropertyType == typeof(Color))
+            object convertedValue = propertyInfo.PropertyType switch
             {
-                propertyInfo.SetValue(obj, ParseColor(value.ToString()));
-                return;
-            }
+                Type t when t == typeof(Vector2) => ParseVector2(stringValue),
+                Type t when t == typeof(Color)   => ParseColor(stringValue),
+                Type t when t.IsEnum             => Enum.Parse(propertyInfo.PropertyType, stringValue),
+                Type t when t == typeof(int)     => int.Parse(stringValue),
+                Type t when t == typeof(uint)    => uint.Parse(stringValue),
+                Type t when t == typeof(float)   => float.Parse(stringValue),
+                Type t when t == typeof(double)  => double.Parse(stringValue),
+                Type t when t == typeof(bool)    => bool.Parse(stringValue),
+                Type t when t == typeof(string)  => ExtractQuotedString(stringValue),
+                _ => value
+            };
 
-            if (propertyInfo.PropertyType.IsEnum)
-            {
-                var enumValue = Enum.Parse(propertyInfo.PropertyType, value.ToString());
-                propertyInfo.SetValue(obj, enumValue);
-                return;
-            }
-
-            if (propertyInfo.PropertyType == typeof(int))
-            {
-                propertyInfo.SetValue(obj, int.Parse(value.ToString()));
-                return;
-            }
-
-            if (propertyInfo.PropertyType == typeof(uint))
-            {
-                propertyInfo.SetValue(obj, uint.Parse(value.ToString()));
-                return;
-            }
-
-            if (propertyInfo.PropertyType == typeof(float))
-            {
-                propertyInfo.SetValue(obj, float.Parse(value.ToString()));
-                return;
-            }
-
-            if (propertyInfo.PropertyType == typeof(double))
-            {
-                propertyInfo.SetValue(obj, double.Parse(value.ToString()));
-                return;
-            }
-
-            if (propertyInfo.PropertyType == typeof(bool))
-            {
-                propertyInfo.SetValue(obj, bool.Parse(value.ToString()));
-                return;
-            }
-
-            if (propertyInfo.PropertyType == typeof(string))
-            {
-                propertyInfo.SetValue(obj, ExtractQuotedString(value.ToString()));
-                return;
-            }
-
-            propertyInfo.SetValue(obj, value);
+            propertyInfo.SetValue(obj, convertedValue);
         }
     }
-
 
     private static Vector2 ParseVector2(string value)
     {
