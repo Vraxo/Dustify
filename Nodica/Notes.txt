@@ -9,3 +9,5 @@
 > Remove OnUpdate() from: Buttons
 
 > Exapnd for buttons
+
+> Make dialog -> color rectangle (?)

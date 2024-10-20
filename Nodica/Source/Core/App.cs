@@ -55,12 +55,17 @@ public class App
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(ThemeLoader.Instance.Colors["Background"]);
-            MouseManager.Instance.Update();
+            UpdateSingletons();
             RootNode.Process();
             Raylib.EndDrawing();
 
             PrintTree();
         }
+    }
+
+    private void UpdateSingletons()
+    {
+        LayeredClickManager.Instance.Update();
     }
 
     private void PrintTree()

@@ -7,12 +7,12 @@ public abstract class Clickable : VisualItem
 
     public override void Start()
     {
-        MouseManager.Instance.Register(this);
+        LayeredClickManager.Instance.Register(this);
     }
 
     public override void Destroy()
     {
-        MouseManager.Instance.Unregister(this);
+        LayeredClickManager.Instance.Unregister(this);
         base.Destroy();
     }
 

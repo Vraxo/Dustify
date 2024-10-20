@@ -5,7 +5,7 @@ public partial class Dialog : Node2D
     public override void Start()
     {
         Origin = GetNode<ColorRectangle>("Background").Size / 2;
-        GetNode<ClickManager>("/root/ClickManager").MinLayer = ClickableLayer.DialogButtons;
+        LayeredClickManager.Instance.MinLayer = ClickableLayer.DialogButtons;
         GetNode<Button>("CloseButton").LeftClicked += OnCloseButtonLeftClicked;
     }
 
@@ -16,7 +16,7 @@ public partial class Dialog : Node2D
 
     protected void Close()
     {
-        GetNode<ClickManager>("/root/ClickManager").MinLayer = 0;
+        LayeredClickManager.Instance.MinLayer = 0;
         Destroy();
     }
 

@@ -2,16 +2,16 @@
 
 namespace Nodica;
 
-public class MouseManager : Node
+public class LayeredClickManager : Node
 {
-    public static MouseManager Instance => instance ??= new();
-    private static MouseManager? instance;
+    public static LayeredClickManager Instance => instance ??= new();
+    private static LayeredClickManager? instance;
 
     public int MinLayer = -1;
 
     private List<Clickable> clickables = [];
 
-    private MouseManager() { }
+    private LayeredClickManager() { }
 
     public void Register(Clickable clickable)
     {
