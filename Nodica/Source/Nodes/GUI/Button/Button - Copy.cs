@@ -10,6 +10,9 @@ public class Button : ClickableRectangle
         Limitless
     }
 
+    public enum ActionMode
+
+
     #region [ - - - Properties & Fields - - - ]
 
     public Vector2         TextPadding      { get; set; } = Vector2.Zero;
