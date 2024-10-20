@@ -19,7 +19,7 @@ public class FontLoader
 
     private FontLoader()
     {
-        Load("Resources/Fonts/RobotoMono.ttf", "RobotoMono 32", 32);
+        Load("Resources/Fonts/RobotoMono.ttf", "RobotoMono", 32);
     }
 
     public void Load(string path, string name, int size)
@@ -35,9 +35,11 @@ public class FontLoader
 
         Font font = Raylib.LoadFontEx(path, size, codepoints, codepoints.Length);
 
-        Fonts.Add(name, font);
+        string fullName = $"{name} {size}";
 
-        Texture2D texture = Fonts[name].Texture;
+        Fonts.Add(fullName, font);
+
+        Texture2D texture = Fonts[fullName].Texture;
         var filter = TextureFilter.Bilinear;
         Raylib.SetTextureFilter(texture, filter);
     }

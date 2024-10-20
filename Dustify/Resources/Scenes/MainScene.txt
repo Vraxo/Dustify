@@ -7,7 +7,7 @@ Styles/Roundness = 0
 [AspectRatioContainer "ARC" "ImageSelectionButton"]
 Size = Vector2(500, 500)
 
-[ImageDisplayer "TexturedRectangle" "ARC"]
+[ImageDisplayer "TextureRectangle" "ARC"]
 
 [Button "RenderButton" "Root"]
 Position = Vector2(500, 500)
@@ -18,5 +18,7 @@ Styles/Roundness = 0.5
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
 
-[VerticalSlider "Slider" "Root"]
-Position = Vector2(500, 100)
+[Label "Label" "TextureRectangle"]
+Size = Vector2(500, 500)
+Text = "Go fuck yoruself. But then Tony just figured out time travel. Practically"
+OriginPreset = Center

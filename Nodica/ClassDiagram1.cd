@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Nodica.Node" Collapsed="true">
+    <Position X="21.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAACBAEAFAAgIEQgQAEgBAgAAgAAAAAAQAAgA=</HashCode>
+      <FileName>Source\Nodes\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Node2D" Collapsed="true">
+    <Position X="20.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACQAAACAgAEgAAIAAAIAgAAAwAAMAAAAAAqAACA=</HashCode>
+      <FileName>Source\Nodes\Node2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.AudioPlayer" Collapsed="true">
+    <Position X="38.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQggAAIAAAAAgEgCAEAAIAIAAgABAACoAJBAAiAABA=</HashCode>
+      <FileName>Source\Nodes\AudioPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ColorRectangle" Collapsed="true">
+    <Position X="22.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Source\Nodes\ColorRectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ProgressBar" Collapsed="true">
+    <Position X="6.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIgAAAAAAAAAAAAgAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\ProgressBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.TextureRectangle" Collapsed="true">
+    <Position X="4.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAAFAAAAgAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\TextureRectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Timer" Collapsed="true">
+    <Position X="40.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAAIACAABAAAAAAQAAAAAAAEAAQAIiAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\Timer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.VisualItem" Collapsed="true">
+    <Position X="14.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\VisualItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Style" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAACAAAQAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Source\Nodes\GUI\Style.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Label" Collapsed="true">
+    <Position X="27" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAWAgAAAAAgAAAAAACkAAAAAAgAAIAAAAiAECAAA=</HashCode>
+      <FileName>Source\Nodes\GUI\Label.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.CheckBox" Collapsed="true">
+    <Position X="11.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgCAAAAAAAIAAQQAoAAAAAkAAAEAEAA=</HashCode>
+      <FileName>Source\Nodes\GUI\CheckBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ItemList" Collapsed="true">
+    <Position X="13.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAACEACgIAAAAABAAAwmAChIAECAAAAAMABAg=</HashCode>
+      <FileName>Source\Nodes\GUI\ItemList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.NumberLineEdit" Collapsed="true">
+    <Position X="20.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAgAAAAAAE=</HashCode>
+      <FileName>Source\Nodes\GUI\NumberLineEdit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.BaseSlider" Collapsed="true">
+    <Position X="17" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>TAQOAAAACDAFICIAAAAEAQhIAAhAAAEBMQAgAEEAEEA=</HashCode>
+      <FileName>Source\Nodes\GUI\Sliders\BaseSlider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.HorizontalSlider" Collapsed="true">
+    <Position X="15.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAgAAAAAAAQAAAAAAgAAAAAAAAEAAEAA=</HashCode>
+      <FileName>Source\Nodes\GUI\Sliders\HorizontalSlider\HorizontalGrabber.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.VerticalSlider" Collapsed="true">
+    <Position X="18" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAgAAAAAAAQAAAAAAgAAAAAAAAEAAEAA=</HashCode>
+      <FileName>Source\Nodes\GUI\Sliders\VerticalSlider\VerticalGrabber.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.LineEdit" Collapsed="true">
+    <Position X="20.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IEwA0EGAACQR1EAAAABgAAAEIQBIgAEADAAqKHEElEM=</HashCode>
+      <FileName>Source\Nodes\GUI\LineEdit\Nodes\LineEdit.BaseText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.CharacterSet" Collapsed="true">
+    <Position X="46.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\GUI\LineEdit\Accessories\CharacterSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.TextBoxStyle" Collapsed="true">
+    <Position X="46.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAIAACAJgAACAAAQAAAAAIAACgCAAI=</HashCode>
+      <FileName>Source\Nodes\GUI\LineEdit\Accessories\TextBoxStyle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.TextBoxStyleState" Collapsed="true">
+    <Position X="48.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQQAAAAAAIAAIAAAABgAAAAAAQAAAAAIAACgCAAA=</HashCode>
+      <FileName>Source\Nodes\GUI\LineEdit\Accessories\TextBoxStyleState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ConfirmDialog" Collapsed="true">
+    <Position X="29.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\GUI\Dialogs\ConfirmDialog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Dialog" Collapsed="true">
+    <Position X="29.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAACAAAAAAAAAAAAAAgAAAAAQAAACAAAA=</HashCode>
+      <FileName>Source\Nodes\GUI\Dialogs\Dialog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Button" Collapsed="true">
+    <Position X="24.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQACSAgAAEAAkQIAAIACGAABQAAAAEIBAAACBEGEII=</HashCode>
+      <FileName>Source\Nodes\GUI\Button\Button - Copy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ButtonStyle" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAIAAgAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Source\Nodes\GUI\Button\ButtonStyle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ButtonStylePack" Collapsed="true">
+    <Position X="45" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAYAAAAAAAAAAAAKAIgAACAAAQAAAAQAAAAgGAAA=</HashCode>
+      <FileName>Source\Nodes\GUI\Button\ButtonStylePack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.AspectRatioContainer" Collapsed="true">
+    <Position X="31.5" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\Containers\AspectRatioContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.CenterContainer" Collapsed="true">
+    <Position X="36.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\Containers\CenterContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.GridContainer" Collapsed="true">
+    <Position X="34" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQEACAIAAAAAggAAAIgAAAAAEAAAAAAAAAAAAEQAAA=</HashCode>
+      <FileName>Source\Nodes\Containers\GridContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Clickable" Collapsed="true">
+    <Position X="17" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAACAAgAAAAAAAAAAAAABAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\Clickables\Clickable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ClickableCircle" Collapsed="true">
+    <Position X="9" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\Clickables\ClickableCircle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ClickableLayer" Collapsed="true">
+    <Position X="48.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAABAAAAAAAAoBAAAAAAACAAA=</HashCode>
+      <FileName>Source\Nodes\Clickables\ClickableLayers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ClickableRectangle" Collapsed="true">
+    <Position X="18" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Nodes\Clickables\ClickableRectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.FontLoader" Collapsed="true">
+    <Position X="45" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Source\Core\Loaders\FontLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.TextureLoader" Collapsed="true">
+    <Position X="43.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAABAAAAABAAAAABAAAAAQAAAAAAQAAA=</HashCode>
+      <FileName>Source\Core\Loaders\TextureLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ThemeLoader" Collapsed="true">
+    <Position X="45" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAABAAAAAQAAAgAAAAAA=</HashCode>
+      <FileName>Source\Core\Loaders\ThemeLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.App" Collapsed="true">
+    <Position X="43.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQBIAAAAIAAQAAAAAAQAAAAABAAACAQAAAAAAAAAI=</HashCode>
+      <FileName>Source\Core\App.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.ExtensionMethods" Collapsed="true">
+    <Position X="43.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Core\ExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.MathUtilities" Collapsed="true">
+    <Position X="48.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Core\MathUtilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Monitor" Collapsed="true">
+    <Position X="43.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Core\Monitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.LayeredClickManager" Collapsed="true">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAEEAAAAAAgAABBBAAAQAAAAQAAEAA=</HashCode>
+      <FileName>Source\Core\LayeredClickManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.SceneReference" Collapsed="true">
+    <Position X="45" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAQAAQCAAQAABAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Source\Core\SceneReference.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Time" Collapsed="true">
+    <Position X="46.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Source\Core\Time.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Window" Collapsed="true">
+    <Position X="48.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAIAACAAAgBAAAA=</HashCode>
+      <FileName>Source\Core\Window.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nodica.Input.Input" Collapsed="true">
+    <Position X="46.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Source\Core\Input.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Nodica.OriginPreset" Collapsed="true">
+    <Position X="45" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAIAAAAABAAAQAAAQAAAAAAAAAAAAAAAAkIQEA=</HashCode>
+      <FileName>Source\Core\OriginPreset.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Nodica.Input.KeyboardKey" Collapsed="true">
+    <Position X="43.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BUIqAmIQAIAgSUAIkIEEgogHAy0NFAgCCRqMvv//5cM=</HashCode>
+      <FileName>Source\Core\KeyboardKey.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

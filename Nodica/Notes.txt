@@ -8,6 +8,4 @@
 
 > Make dialog -> color rectangle (?)
 
-> Change slider styles to regular styles
-
 > Bring vertical slider to the same level as horizontal slider

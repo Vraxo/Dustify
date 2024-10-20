@@ -423,7 +423,7 @@
 //        else if (numFittingCharacters < Text.Length)
 //        {
 //            string trimmedText = Text[..numFittingCharacters];
-//            displayedText = ReplaceLastThreeWithDots(trimmedText);
+//            displayedText = ReplaceTextEndWithEllipsis(trimmedText);
 //        }
 //        else
 //        {
@@ -442,7 +442,7 @@
 //        return width;
 //    }
 //
-//    private static string ReplaceLastThreeWithDots(string input)
+//    private static string ReplaceTextEndWithEllipsis(string input)
 //    {
 //        if (input.Length > 3)
 //        {

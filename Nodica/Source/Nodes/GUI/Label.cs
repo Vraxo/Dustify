@@ -2,14 +2,16 @@
 
 namespace Nodica;
 
-public class Label : Node2D
+public class Label : VisualItem
 {
-    public Color Color { get; set; } = ThemeLoader.Instance.Colors["Text"];
-    public uint FontSize { get; set; } = 16;
-    public Font Font { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
-    public int MaxCharacters = -1;
-    public float AvailableWidth { get; set; } = -1;
-    public Action<Label> OnUpdate = (label) => { };
+    public Color  Color          { get; set; } = ThemeLoader.Instance.Colors["Text"];
+    public uint   FontSize       { get; set; } = 16;
+    public Font   Font           { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
+    public int    MaxCharacters  { get; set; } = -1;
+    public string Ellipsis       { get; set; } = "...";
+    public bool   Clip           { get; set; } = true;
+
+    private string displayedText = "";
 
     private string _text = "";
     public string Text
@@ -23,8 +25,6 @@ public class Label : Node2D
         }
     }
 
-    private string displayedText = "";
-
     public Label()
     {
         OriginPreset = OriginPreset.CenterLeft;
@@ -32,52 +32,29 @@ public class Label : Node2D
 
     public override void Update()
     {
-        OnUpdate(this);
-        UpdateSize();
         LimitDisplayedText();
-        Draw();
         base.Update();
     }
 
-    private void UpdateSize()
+    protected override void Draw()
     {
-        Size = Raylib.MeasureTextEx(
-            Font, 
-            Text, 
-            FontSize, 
-            1);
-    }
-
-    private void Draw()
-    {
-        if (!(Visible && ReadyForVisibility))
-        {
-            return;
-        }
-
         Raylib.DrawTextEx(
-            Font, 
-            displayedText, 
-            GlobalPosition - Origin, 
-            FontSize, 
+            Font,
+            displayedText,
+            GlobalPosition - Origin,
+            FontSize,
             1,
             Color);
     }
 
     private void LimitDisplayedText()
     {
-        if (AvailableWidth < 1)
+        if (!Clip)
         {
-            if (Name == "Message")
-            {
-                Console.WriteLine("returning");
-            }
-
             return;
         }
 
-        float characterWidth = GetCharacterWidth();
-        int numFittingCharacters = (int)(AvailableWidth / characterWidth);
+        int numFittingCharacters = (int)(Size.X / (GetCharacterWidth() + 1));
 
         if (numFittingCharacters <= 0)
         {
@@ -86,7 +63,7 @@ public class Label : Node2D
         else if (numFittingCharacters < Text.Length)
         {
             string trimmedText = Text[..numFittingCharacters];
-            displayedText = ReplaceLastThreeWithDots(trimmedText);
+            displayedText = ReplaceTextEndWithEllipsis(trimmedText);
         }
         else
         {
@@ -105,12 +82,12 @@ public class Label : Node2D
         return width;
     }
 
-    private static string ReplaceLastThreeWithDots(string input)
+    private string ReplaceTextEndWithEllipsis(string input)
     {
         if (input.Length > 3)
         {
-            string trimmedText = input[..^3];
-            return trimmedText + "...";
+            string trimmedText = input[..^Ellipsis.Length];
+            return trimmedText + Ellipsis;
         }
         else
         {
