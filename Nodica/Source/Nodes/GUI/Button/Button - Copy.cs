@@ -198,80 +198,8 @@ public class Button : ClickableRectangle
 
     protected override void Draw()
     {
-        DrawShape();
+        DrawOutlinedRectangle(GlobalPosition - Origin, Size, Styles.Current);
         DrawText();
-    }
-
-    private void DrawShape()
-    {
-        DrawShapeOutline();
-        DrawShapeInside();
-    }
-
-    private void DrawShapeOutline()
-    {
-        //if (Styles.Current.OutlineThickness <= 0)
-        //{
-        //    return;
-        //}
-        //
-        //Rectangle rectangle = new()
-        //{
-        //    Position = GlobalPosition - Origin * Scale,
-        //    Size = Size * Scale
-        //};
-        //
-        //for (int i = 0; i <= Styles.Current.OutlineThickness; i++)
-        //{
-        //    Rectangle outlineRectangle = new()
-        //    {
-        //        Position = rectangle.Position - new Vector2(i, i),
-        //        Size = new(rectangle.Size.X + i + 1, rectangle.Size.Y + i + 1)
-        //    };
-        //
-        //    Raylib.DrawRectangleRounded(
-        //        outlineRectangle,
-        //        Styles.Current.Roundness,
-        //        (int)rectangle.Size.X,
-        //        Styles.Current.OutlineColor);
-        //}
-
-        if (Styles.Current.OutlineThickness <= 0)
-        {
-            return;
-        }
-
-        for (int i = 1; i <= Styles.Current.OutlineThickness; i++)
-        {
-            Vector2 offset = new(i / 2f, i / 2f);
-
-            Rectangle rectangle = new()
-            {
-                Position = GlobalPosition - Origin - offset,
-                Size = new(Size.X + i, Size.Y + i)
-            };
-
-            Raylib.DrawRectangleRounded(
-                rectangle,
-                Styles.Current.Roundness,
-                (int)Size.Y,
-                Styles.Current.OutlineColor);
-        }
-    }
-
-    private void DrawShapeInside()
-    {
-        Rectangle rectangle = new()
-        {
-            Position = GlobalPosition - Origin * Scale,
-            Size = Size * Scale
-        };
-
-        Raylib.DrawRectangleRounded(
-            rectangle,
-            Styles.Current.Roundness,
-            (int)Size.Y,
-            Styles.Current.FillColor);
     }
 
     private void DrawText()

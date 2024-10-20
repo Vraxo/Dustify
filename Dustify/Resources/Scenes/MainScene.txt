@@ -9,13 +9,10 @@ Size = Vector2(500, 500)
 
 [ImageDisplayer "TexturedRectangle" "ARC"]
 
-[Timer "Timer" "TexturedRectangle"]
-
 [Button "RenderButton" "Root"]
 Position = Vector2(500, 500)
 Text = "Render"
 Styles/Roundness = 0.5
-Styles/OutlineThickness = 5
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)

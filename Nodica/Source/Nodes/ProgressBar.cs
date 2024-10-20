@@ -1,5 +1,4 @@
-﻿using Raylib_cs;
-namespace Nodica;
+﻿namespace Nodica;
 
 public class ProgressBar : VisualItem
 {
@@ -15,25 +14,9 @@ public class ProgressBar : VisualItem
 
     protected override void Draw()
     {
-        DrawEmpty();
-        DrawFilled();
-    }
+        DrawOutlinedRectangle(GlobalPosition - Origin, Size, EmptyStyle);
 
-    private void DrawEmpty()
-    {
-        Raylib.DrawRectangleV(
-            GlobalPosition - Origin,
-            Size,
-            EmptyStyle.FillColor);
-    }
-
-    private void DrawFilled()
-    {
-        Vector2 size = new(Size.X * Percentage, Size.Y);
-
-        Raylib.DrawRectangleV(
-            GlobalPosition - Origin,
-            size,
-            FilledStyle.FillColor);
+        Vector2 filledSize = new(Size.X * Percentage, Size.Y);
+        DrawOutlinedRectangle(GlobalPosition - Origin, filledSize, FilledStyle);
     }
 }
