@@ -211,6 +211,12 @@ public class Scene
                 return;
             }
 
+            if (propertyInfo.PropertyType == typeof(Color))
+            {
+                propertyInfo.SetValue(obj, ParseColor(value.ToString()));
+                return;
+            }
+
             if (propertyInfo.PropertyType.IsEnum)
             {
                 var enumValue = Enum.Parse(propertyInfo.PropertyType, value.ToString());
@@ -258,6 +264,7 @@ public class Scene
         }
     }
 
+
     private static Vector2 ParseVector2(string value)
     {
         string stringValue = value.Trim();
@@ -282,6 +289,35 @@ public class Scene
         else
         {
             throw new Exception($"Invalid Vector2 format, expected format: Vector2(x, y)");
+        }
+    }
+
+    private static Color ParseColor(string value)
+    {
+        string stringValue = value.Trim();
+
+        if (stringValue.StartsWith("Color(") && stringValue.EndsWith(")"))
+        {
+            string colorValues = stringValue.Substring(6, stringValue.Length - 7);
+            string[] tokens = colorValues.Split(',');
+
+            if (tokens.Length == 4)
+            {
+                byte r = byte.Parse(tokens[0].Trim());
+                byte g = byte.Parse(tokens[1].Trim());
+                byte b = byte.Parse(tokens[2].Trim());
+                byte a = byte.Parse(tokens[3].Trim());
+
+                return new Color(r, g, b, a);
+            }
+            else
+            {
+                throw new Exception("Color should contain exactly four numeric values (r, g, b, a).");
+            }
+        }
+        else
+        {
+            throw new Exception($"Invalid Color format, expected format: Color(r, g, b, a)");
         }
     }
 }
