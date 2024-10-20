@@ -2,7 +2,7 @@
 
 [Button "ImageSelectionButton" "Root"]
 Size = Vector2(500, 500)
-Style/Roundness = 0
+Styles/Roundness = 0
 
 [AspectRatioContainer "ARC" "ImageSelectionButton"]
 Size = Vector2(500, 500)
@@ -14,7 +14,8 @@ Size = Vector2(500, 500)
 [Button "RenderButton" "Root"]
 Position = Vector2(500, 500)
 Text = "Render"
-Style/Roundness = 0.5
+Styles/Roundness = 0.5
+Styles/OutlineThickness = 5
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)

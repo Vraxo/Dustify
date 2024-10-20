@@ -12,29 +12,31 @@ public class Button : ClickableRectangle
 
     #region [ - - - Properties & Fields - - - ]
 
-    public Vector2 TextPadding { get; set; } = Vector2.Zero;
-    public Vector2 TextOrigin { get; set; } = Vector2.Zero;
-    public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
-    public ButtonStylePack Style { get; set; } = new();
-    public bool PressedLeft = false;
+    public Vector2         TextPadding      { get; set; } = Vector2.Zero;
+    public Vector2         TextOrigin       { get; set; } = Vector2.Zero;
+    public OriginPreset    TextOriginPreset { get; set; } = OriginPreset.Center;
+    public ButtonStylePack Styles           { get; set; } = new();
+    public bool            TruncateText     { get; set; } = false;
+    public float           AvailableWidth   { get; set; } = 0;
+    public ClickMode       LeftClickMode    { get; set; } = ClickMode.Limitless;
+    public ClickMode       RightClickMode   { get; set; } = ClickMode.Limitless;
+
+    public bool PressedLeft  = false;
     public bool PressedRight = false;
-    public bool TruncateText { get; set; } = false;
-    public float AvailableWidth { get; set; } = 0;
-    public ClickMode LeftClickMode { get; set; } = ClickMode.Limitless;
-    public ClickMode RightClickMode { get; set; } = ClickMode.Limitless;
 
     public Action<Button> OnUpdate = (button) => { };
 
     public event EventHandler? LeftClicked;
     public event EventHandler? RightClicked;
 
-    private bool alreadyClicked = false;
+    private bool   alreadyClicked = false;
     private string displayedText = "";
 
     private string _text = "";
     public string Text
     {
         get => _text;
+
         set
         {
             _text = value;
@@ -113,7 +115,7 @@ public class Button : ClickableRectangle
 
         if (IsMouseOver())
         {
-            Style.Current = Style.Hover;
+            Styles.Current = Styles.Hover;
 
             if (Raylib.IsMouseButtonReleased(button))
             {
@@ -135,13 +137,13 @@ public class Button : ClickableRectangle
 
                 if (pressed)
                 {
-                    Style.Current = Style.Pressed;
+                    Styles.Current = Styles.Pressed;
                 }
             }
         }
         else
         {
-            Style.Current = Style.Default;
+            Styles.Current = Styles.Default;
         }
 
         if (Raylib.IsMouseButtonReleased(button))
@@ -153,7 +155,7 @@ public class Button : ClickableRectangle
 
             pressed = false;
             alreadyClicked = false;
-            Style.Current = Style.Default;
+            Styles.Current = Styles.Default;
         }
     }
 
@@ -161,7 +163,7 @@ public class Button : ClickableRectangle
     {
         if (IsMouseOver())
         {
-            Style.Current = Style.Hover;
+            Styles.Current = Styles.Hover;
 
             if (Raylib.IsMouseButtonPressed(button) && onTop)
             {
@@ -171,13 +173,13 @@ public class Button : ClickableRectangle
 
             if (pressed)
             {
-                Style.Current = Style.Pressed;
+                Styles.Current = Styles.Pressed;
             }
         }
         else
         {
             pressed = false;
-            Style.Current = Style.Default;
+            Styles.Current = Styles.Default;
         }
 
         if (Raylib.IsMouseButtonReleased(button))
@@ -188,7 +190,7 @@ public class Button : ClickableRectangle
             }
 
             pressed = false;
-            Style.Current = Style.Default;
+            Styles.Current = Styles.Default;
         }
     }
 
@@ -206,6 +208,57 @@ public class Button : ClickableRectangle
         DrawShapeInside();
     }
 
+    private void DrawShapeOutline()
+    {
+        //if (Styles.Current.OutlineThickness <= 0)
+        //{
+        //    return;
+        //}
+        //
+        //Rectangle rectangle = new()
+        //{
+        //    Position = GlobalPosition - Origin * Scale,
+        //    Size = Size * Scale
+        //};
+        //
+        //for (int i = 0; i <= Styles.Current.OutlineThickness; i++)
+        //{
+        //    Rectangle outlineRectangle = new()
+        //    {
+        //        Position = rectangle.Position - new Vector2(i, i),
+        //        Size = new(rectangle.Size.X + i + 1, rectangle.Size.Y + i + 1)
+        //    };
+        //
+        //    Raylib.DrawRectangleRounded(
+        //        outlineRectangle,
+        //        Styles.Current.Roundness,
+        //        (int)rectangle.Size.X,
+        //        Styles.Current.OutlineColor);
+        //}
+
+        if (Styles.Current.OutlineThickness <= 0)
+        {
+            return;
+        }
+
+        for (int i = 1; i <= Styles.Current.OutlineThickness; i++)
+        {
+            Vector2 offset = new(i / 2f, i / 2f);
+
+            Rectangle rectangle = new()
+            {
+                Position = GlobalPosition - Origin - offset,
+                Size = new(Size.X + i, Size.Y + i)
+            };
+
+            Raylib.DrawRectangleRounded(
+                rectangle,
+                Styles.Current.Roundness,
+                (int)Size.Y,
+                Styles.Current.OutlineColor);
+        }
+    }
+
     private void DrawShapeInside()
     {
         Rectangle rectangle = new()
@@ -216,49 +269,20 @@ public class Button : ClickableRectangle
 
         Raylib.DrawRectangleRounded(
             rectangle,
-            Style.Current.Roundness,
+            Styles.Current.Roundness,
             (int)Size.Y,
-            Style.Current.FillColor);
-    }
-
-    private void DrawShapeOutline()
-    {
-        if (Style.Current.OutlineThickness <= 0)
-        {
-            return;
-        }
-
-        Rectangle rectangle = new()
-        {
-            Position = GlobalPosition - Origin * Scale,
-            Size = Size * Scale
-        };
-
-        for (int i = 0; i <= Style.Current.OutlineThickness; i++)
-        {
-            Rectangle outlineRectangle = new()
-            {
-                Position = rectangle.Position - new Vector2(i, i),
-                Size = new(rectangle.Size.X + i + 1, rectangle.Size.Y + i + 1)
-            };
-
-            Raylib.DrawRectangleRounded(
-                outlineRectangle,
-                Style.Current.Roundness,
-                (int)rectangle.Size.X,
-                Style.Current.OutlineColor);
-        }
+            Styles.Current.FillColor);
     }
 
     private void DrawText()
     {
         Raylib.DrawTextEx(
-            Style.Current.Font,
+            Styles.Current.Font,
             displayedText,
             GetTextPosition(),
-            Style.Current.FontSize,
+            Styles.Current.FontSize,
             1,
-            Style.Current.FontColor);
+            Styles.Current.FontColor);
     }
 
     // Text positioning
@@ -266,9 +290,9 @@ public class Button : ClickableRectangle
     private Vector2 GetTextPosition()
     {
         Vector2 fontDimensions = Raylib.MeasureTextEx(
-            Style.Current.Font,
+            Styles.Current.Font,
             Text,
-            Style.Current.FontSize,
+            Styles.Current.FontSize,
             1
         );
 
@@ -330,9 +354,9 @@ public class Button : ClickableRectangle
     private float GetCharacterWidth()
     {
         float width = Raylib.MeasureTextEx(
-            Style.Current.Font,
+            Styles.Current.Font,
             " ",
-            Style.Current.FontSize,
+            Styles.Current.FontSize,
             1).X;
 
         return width;

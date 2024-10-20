@@ -59,7 +59,7 @@ public class Scene
                     }
 
                     // Recursively load the scene, using the specified type for the root node
-                    Scene referencedScene = new Scene(scenePath);
+                    Scene referencedScene = new(scenePath);
                     Type rootNodeType = ResolveType(typeName);
                     var referencedRootNode = referencedScene.Instantiate(rootNodeType) as Node;
 

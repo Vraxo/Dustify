@@ -15,7 +15,7 @@
 //    public Vector2 TextPadding { get; set; } = Vector2.Zero;
 //    public Vector2 TextOrigin { get; set; } = Vector2.Zero;
 //    public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
-//    public ButtonStylePack Style { get; set; } = new();
+//    public ButtonStylePack Styles { get; set; } = new();
 //    public bool PressedLeft { get; set; } = false;
 //    public bool PressedRight { get; set; } = false;
 //    public bool TruncateText { get; set; } = false;
@@ -113,7 +113,7 @@
 //
 //        if (IsMouseOver())
 //        {
-//            Style.Current = Style.Hover;
+//            Styles.Current = Styles.Hover;
 //            
 //            if (Raylib.IsMouseButtonDown(MouseButton.Left))
 //            {
@@ -126,13 +126,13 @@
 //
 //                if (PressedLeft)
 //                {
-//                    Style.Current = Style.Pressed;
+//                    Styles.Current = Styles.Pressed;
 //                }
 //            }
 //        }
 //        else
 //        {
-//            Style.Current = Style.Default;
+//            Styles.Current = Styles.Default;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
@@ -144,7 +144,7 @@
 //
 //            PressedLeft = false;
 //            alreadyClicked = false;
-//            Style.Current = Style.Default;
+//            Styles.Current = Styles.Default;
 //        }
 //    }
 //
@@ -152,7 +152,7 @@
 //    {
 //        if (IsMouseOver())
 //        {
-//            Style.Current = Style.Hover;
+//            Styles.Current = Styles.Hover;
 //
 //            if (Raylib.IsMouseButtonPressed(MouseButton.Left) && OnTopLeft)
 //            {
@@ -162,13 +162,13 @@
 //
 //            if (PressedLeft)
 //            {
-//                Style.Current = Style.Pressed;
+//                Styles.Current = Styles.Pressed;
 //            }
 //        }
 //        else
 //        {
 //            PressedLeft = false;
-//            Style.Current = Style.Default;
+//            Styles.Current = Styles.Default;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
@@ -179,7 +179,7 @@
 //            }
 //
 //            PressedLeft = false;
-//            Style.Current = Style.Default;
+//            Styles.Current = Styles.Default;
 //        }
 //    }
 //
@@ -216,7 +216,7 @@
 //        {
 //            if (!PressedLeft)
 //            {
-//                Style.Current = Style.Hover;
+//                Styles.Current = Styles.Hover;
 //            }
 //
 //            if (Raylib.IsMouseButtonDown(MouseButton.Right))
@@ -230,13 +230,13 @@
 //
 //                if (PressedRight)
 //                {
-//                    Style.Current = Style.Pressed;
+//                    Styles.Current = Styles.Pressed;
 //                }
 //            }
 //        }
 //        else
 //        {
-//            Style.Current = Style.Default;
+//            Styles.Current = Styles.Default;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(MouseButton.Right))
@@ -248,7 +248,7 @@
 //
 //            PressedRight = false;
 //            alreadyClicked = false;
-//            Style.Current = Style.Default;
+//            Styles.Current = Styles.Default;
 //        }
 //    }
 //
@@ -256,7 +256,7 @@
 //    {
 //        if (IsMouseOver())
 //        {
-//            Style.Current = Style.Hover;
+//            Styles.Current = Styles.Hover;
 //
 //            if (Raylib.IsMouseButtonPressed(MouseButton.Right) && OnTopRight)
 //            {
@@ -266,13 +266,13 @@
 //
 //            if (PressedRight)
 //            {
-//                Style.Current = Style.Pressed;
+//                Styles.Current = Styles.Pressed;
 //            }
 //        }
 //        else
 //        {
 //            PressedRight = false;
-//            Style.Current = Style.Default;
+//            Styles.Current = Styles.Default;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(MouseButton.Right))
@@ -283,7 +283,7 @@
 //            }
 //
 //            PressedRight = false;
-//            Style.Current = Style.Default;
+//            Styles.Current = Styles.Default;
 //        }
 //    }
 //
@@ -316,14 +316,14 @@
 //
 //        Raylib.DrawRectangleRounded(
 //            rectangle,
-//            Style.Current.Roundness,
+//            Styles.Current.Roundness,
 //            (int)Size.Y,
-//            Style.Current.FillColor);
+//            Styles.Current.FillColor);
 //    }
 //
 //    private void DrawShapeOutline()
 //    {
-//        if (Style.Current.OutlineThickness <= 0)
+//        if (Styles.Current.OutlineThickness <= 0)
 //        {
 //            return;
 //        }
@@ -334,7 +334,7 @@
 //            Size = Size * Scale
 //        };
 //
-//        for (int i = 0; i <= Style.Current.OutlineThickness; i++)
+//        for (int i = 0; i <= Styles.Current.OutlineThickness; i++)
 //        {
 //            Rectangle outlineRectangle = new()
 //            {
@@ -344,21 +344,21 @@
 //
 //            Raylib.DrawRectangleRounded(
 //                outlineRectangle,
-//                Style.Current.Roundness,
+//                Styles.Current.Roundness,
 //                (int)rectangle.Size.X,
-//                Style.Current.OutlineColor);
+//                Styles.Current.OutlineColor);
 //        }
 //    }
 //
 //    private void DrawText()
 //    {
 //        Raylib.DrawTextEx(
-//            Style.Current.Font,
+//            Styles.Current.Font,
 //            displayedText,
 //            GetTextPosition(),
-//            Style.Current.FontSize,
+//            Styles.Current.FontSize,
 //            1,
-//            Style.Current.FontColor);
+//            Styles.Current.FontColor);
 //    }
 //
 //    // Text positioning
@@ -367,9 +367,9 @@
 //    {
 //        // Measure the dimensions of the TextDisplayer
 //        Vector2 fontDimensions = Raylib.MeasureTextEx(
-//            Style.Current.Font,
+//            Styles.Current.Font,
 //            Text,
-//            Style.Current.FontSize,
+//            Styles.Current.FontSize,
 //            1
 //        );
 //
@@ -434,9 +434,9 @@
 //    private float GetCharacterWidth()
 //    {
 //        float width = Raylib.MeasureTextEx(
-//            Style.Current.Font,
+//            Styles.Current.Font,
 //            " ",
-//            Style.Current.FontSize,
+//            Styles.Current.FontSize,
 //            1).X;
 //
 //        return width;
