@@ -37,7 +37,7 @@ public class Renderer : Node
         rendering = true;
         InitializeImageDisplayer(texture);
         totalFrames = CalculateTotalFrames(texture.Height);
-        qualitiesToGenerate = new List<VideoQuality>(qualities);
+        qualitiesToGenerate = new(qualities);
         progressBar = GetNode<ProgressBar>("/root/ProgressBar");
         progressBar.Percentage = 0;
     }
@@ -117,9 +117,14 @@ public class Renderer : Node
     {
         saveSemaphore.Wait();
 
+        if (!Directory.Exists("Resources/Output"))
+        {
+            Directory.CreateDirectory("Resources/Output");
+        }
+
         try
         {
-            foreach (var frame in framesToSave)
+            foreach (Image frame in framesToSave)
             {
                 SaveFrame(frame);
                 UpdateProgressBar();
@@ -139,7 +144,7 @@ public class Renderer : Node
         string filePath = $"Resources/Output/output_frame_{saveCounter:D4}.png";
         Raylib.ImageFlipVertical(ref frame);
         Raylib.ExportImage(frame, filePath);
-        Raylib.UnloadImage(frame);
+        //Raylib.UnloadImage(frame);
         saveCounter++;
     }
 

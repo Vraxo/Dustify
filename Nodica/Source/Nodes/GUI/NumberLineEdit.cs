@@ -24,7 +24,7 @@ public partial class NumberLineEdit : LineEdit
         RevertToDefaultText = true;
         DefaultText = "0";
         Text = "0";
-        AllowedCharacters = CharacterSet.Numbers;
+        ValidCharacters = CharacterSet.Numbers;
     }
 
     public override void Update()

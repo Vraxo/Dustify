@@ -194,13 +194,8 @@ public class Button : ClickableRectangle
 
     // Drawing
 
-    private void Draw()
+    protected override void Draw()
     {
-        if (!(Visible && ReadyForVisibility))
-        {
-            return;
-        }
-
         DrawShape();
         DrawText();
     }

@@ -8,21 +8,21 @@ public partial class LineEdit : ClickableRectangle
 
     public static readonly Vector2 DefaultSize = new(300, 25);
 
-    public string Text { get; set; } = "";
-    public string DefaultText { get; set; } = "";
-    public string PlaceholderText { get; set; } = "";
-    public Vector2 TextOrigin { get; set; } = new(8, 0);
-    public int MaxCharacters { get; set; } = int.MaxValue;
-    public int MinCharacters { get; set; } = 0;
-    public List<char> AllowedCharacters { get; set; } = [];
-    public ButtonStylePack Style { get; set; } = new();
-    public bool Selected { get; set; } = false;
-    public bool Editable { get; set; } = true;
-    public bool RevertToDefaultText { get; set; } = true;
-    public bool TemporaryDefaultText { get; set; } = true;
-    public bool Secret { get; set; } = false;
-    public char SecretCharacter { get; set; } = '*';
-    public bool ExpandToText { get; set; } = false;
+    public string Text                  { get; set; } = "";
+    public string DefaultText           { get; set; } = "";
+    public string PlaceholderText       { get; set; } = "";
+    public Vector2 TextOrigin           { get; set; } = new(8, 0);
+    public int MaxCharacters            { get; set; } = int.MaxValue;
+    public int MinCharacters            { get; set; } = 0;
+    public List<char> ValidCharacters   { get; set; } = [];
+    public ButtonStylePack Style        { get; set; } = new();
+    public bool Selected                { get; set; } = false;
+    public bool Editable                { get; set; } = true;
+    public bool ExpandToText            { get; set; } = false;
+    public bool RevertToDefaultText     { get; set; } = true;
+    public bool TemporaryDefaultText    { get; set; } = true;
+    public bool Secret                  { get; set; } = false;
+    public char SecretCharacter         { get; set; } = '*';
 
     public int TextStartIndex = 0;
 
@@ -33,18 +33,18 @@ public partial class LineEdit : ClickableRectangle
     public event EventHandler<string>? TextChanged;
     public event EventHandler<string>? Confirmed;
 
-    protected Caret caret;
-    private Shape shape;
-    private TextDisplayer textDisplayer;
-    private PlaceholderTextDisplayer placeholderTextDisplayer;
+    protected Caret                    caret;
+    private   Shape                    shape;
+    private   TextDisplayer            textDisplayer;
+    private   PlaceholderTextDisplayer placeholderTextDisplayer;
 
-    private const int minAscii = 32;
-    private const int maxAscii = 125;
+    private const int   minAscii       = 32;
+    private const int   maxAscii       = 125;
     private const float backspaceDelay = 0.5f;
     private const float backspaceSpeed = 0.05f;
 
     private float backspaceTimer = 0f;
-    private bool backspaceHeld = false;
+    private bool  backspaceHeld  = false;
 
     private float previousWidth = 0;
 
@@ -196,7 +196,7 @@ public partial class LineEdit : ClickableRectangle
 
         if (isKeyInRange && isSpaceLeft)
         {
-            if (AllowedCharacters.Count > 0 && !AllowedCharacters.Contains((char)key))
+            if (ValidCharacters.Count > 0 && !ValidCharacters.Contains((char)key))
             {
                 return;
             }

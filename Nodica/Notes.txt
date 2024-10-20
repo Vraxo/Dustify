@@ -1,7 +1,7 @@
-> Perhaps make derive a new class from Node2D for drawables? (to reduce visibility code duplication)
-
 > Different style for progress bar?
 
 > Reduce code duplication in button
 
 > non-screenshots are too big!
+
+> Expand to text vertically

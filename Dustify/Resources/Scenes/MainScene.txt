@@ -19,6 +19,3 @@ Style/Roundness = 0.5
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
-
-[LineEdit "LineEdit" "Root"]
-Position = Vector2(300, 100)
