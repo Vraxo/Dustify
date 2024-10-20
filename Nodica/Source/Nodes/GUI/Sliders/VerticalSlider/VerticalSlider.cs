@@ -62,13 +62,13 @@ public partial class VerticalSlider : BaseSlider
         DrawOutlinedRectangle(
             GlobalPosition - Origin,
             Size,
-            EmptyStyle.Current);
+            EmptyStyle);
 
         Vector2 filledSize = new(Size.X, Size.Y * Percentage);
 
         DrawOutlinedRectangle(
             GlobalPosition - Origin,
             filledSize,
-            FilledStyle.Current);
+            FilledStyle);
     }
 }

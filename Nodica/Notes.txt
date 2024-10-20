@@ -1,14 +1,10 @@
-> Different style for progress bar?
-
-> Reduce code duplication in button
-
 > non-screenshots are too big!
 
 > Expand to text vertically
 
 > Remove OnUpdate() from: Buttons
 
-> Exapnd for buttons
+> Expand for buttons
 
 > Make dialog -> color rectangle (?)
 

@@ -4,13 +4,13 @@ public abstract partial class BaseSlider : ClickableRectangle
 {
     #region [ - - - Properties & Fields - - - ]
 
-    public float           InitialPercentage     { get; set; } = -1;
-    public float           DefaultPercentage     { get; set; } = 0;
-    public float           MaxExternalValue      { get; set; } = 0;
-    public bool            HasButtons            { get; set; } = true;
-    public bool            ResetOnRitghtClick    { get; set; } = true;
-    public ButtonStylePack FilledStyle           { get; set; } = new();
-    public ButtonStylePack EmptyStyle            { get; set; } = new();
+    public float InitialPercentage  { get; set; } = -1;
+    public float DefaultPercentage  { get; set; } = 0;
+    public float MaxExternalValue   { get; set; } = 0;
+    public bool  HasButtons         { get; set; } = true;
+    public bool  ResetOnRitghtClick { get; set; } = true;
+    public Style FilledStyle        { get; set; } = new();
+    public Style EmptyStyle         { get; set; } = new();
 
     public BaseGrabber Grabber;
 
