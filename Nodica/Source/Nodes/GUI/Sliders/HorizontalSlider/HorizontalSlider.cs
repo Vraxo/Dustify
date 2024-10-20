@@ -93,7 +93,7 @@ public partial class HorizontalSlider : BaseSlider
     {
         DrawOutlinedRectangle(
             GlobalPosition - Origin,
-            Size, 
+            Size,
             EmptyStyle.Current);
 
         Vector2 filledSize = new(Size.X * Percentage, Size.Y);
@@ -103,3 +103,4 @@ public partial class HorizontalSlider : BaseSlider
             filledSize,
             FilledStyle.Current);
     }
+}

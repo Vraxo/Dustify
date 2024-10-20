@@ -59,62 +59,16 @@ public partial class VerticalSlider : BaseSlider
 
     protected override void Draw()
     {
-        if (!(Visible && ReadyForVisibility))
-        {
-            return;
-        }
+        DrawOutlinedRectangle(
+            GlobalPosition - Origin,
+            Size,
+            EmptyStyle.Current);
 
-        Vector2 position = GlobalPosition - Origin;
+        Vector2 filledSize = new(Size.X, Size.Y * Percentage);
 
-        Rectangle emptyRectangle = new()
-        {
-            Position = position,
-            Size = Size
-        };
-
-        DrawOutline(emptyRectangle, EmptyStyle.Current);
-
-        Raylib.DrawRectangleRounded(
-            emptyRectangle,
-            EmptyStyle.Current.Roundness,
-            (int)Size.X,
-            EmptyStyle.Current.FillColor);
-
-        Rectangle filledRectangle = new()
-        {
-            Position = position,  // Keep the filledRectangle's position the same as the emptyRectangle
-            Size = new(Size.X, Percentage * Size.Y)  // Adjust the size based on the Percentage
-        };
-
-        DrawOutline(filledRectangle, FilledStyle.Current);
-
-        Raylib.DrawRectangleRounded(
-            filledRectangle,
-            FilledStyle.Current.Roundness,
-            (int)Size.X,
-            FilledStyle.Current.FillColor);
-    }
-
-    private void DrawOutline(Rectangle rectangle, ButtonStyle style)
-    {
-        if (style.OutlineThickness <= 0)
-        {
-            return;
-        }
-
-        for (int i = 0; i <= style.OutlineThickness; i++)
-        {
-            Rectangle outlineRectangle = new()
-            {
-                Position = rectangle.Position - new Vector2(i, i),
-                Size = new(rectangle.Size.X + i + 1, rectangle.Size.Y + i + 1)
-            };
-
-            Raylib.DrawRectangleRounded(
-                outlineRectangle,
-                style.Roundness,
-                (int)rectangle.Size.X,
-                style.OutlineColor);
-        }
+        DrawOutlinedRectangle(
+            GlobalPosition - Origin,
+            filledSize,
+            FilledStyle.Current);
     }
 }
