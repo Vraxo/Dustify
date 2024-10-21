@@ -27,6 +27,8 @@ public class Button : ClickableRectangle
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
     public bool StayPressed { get; set; } = false;
     public bool ClipText { get; set; } = false;
+    public bool ExpandWidthToText { get; set; } = true;
+    public Vector2 TextMargin { get; set; } = new(10, 5); // New property to add extra space around the text
     public string Ellipsis { get; set; } = "...";
 
     public bool PressedLeft = false;
@@ -49,12 +51,15 @@ public class Button : ClickableRectangle
         {
             _text = value;
             displayedText = value;
+
+            if (ExpandWidthToText)
+            {
+                UpdateSizeToFitText();
+            }
         }
     }
 
     #endregion
-
-    // Public
 
     public Button()
     {
@@ -66,6 +71,7 @@ public class Button : ClickableRectangle
         OnUpdate(this);
         ClipDisplayedText();
         UpdateTextOrigin();
+        HandleClicks();
         Draw();
         base.Update();
     }
@@ -75,7 +81,7 @@ public class Button : ClickableRectangle
     private void HandleClicks()
     {
         HandleClick(
-            ref PressedLeft, 
+            ref PressedLeft,
             MouseButton.Left,
             LeftClickActionMode,
             LeftClicked);
@@ -182,6 +188,21 @@ public class Button : ClickableRectangle
             OriginPreset.None => Origin,
             _ => Origin,
         };
+    }
+
+    // Text resizing
+
+    private void UpdateSizeToFitText()
+    {
+        // Measure text width using Raylib
+        int textWidth = (int)Raylib.MeasureTextEx(
+            Styles.Current.Font,
+            Text,
+            Styles.Current.FontSize,
+            1).X;
+
+        // Update button size to fit the text width plus margin and padding
+        Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
     }
 
     // Displayed text truncating

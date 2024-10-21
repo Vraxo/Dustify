@@ -366,14 +366,20 @@ public partial class LineEdit : ClickableRectangle
 
         if (pressedLeftControl && pressedV)
         {
-            char[] clipboardContent = [.. Raylib.GetClipboardText_()];
+            string clipboardText = Raylib.GetClipboardText_();
 
-            foreach (char character in clipboardContent)
+            if (!string.IsNullOrEmpty(clipboardText))
             {
-                InsertCharacter(character);
+                char[] clipboardContent = [..clipboardText];
+
+                foreach (char character in clipboardContent)
+                {
+                    InsertCharacter(character);
+                }
             }
         }
     }
+
 
     private void Confirm()
     {

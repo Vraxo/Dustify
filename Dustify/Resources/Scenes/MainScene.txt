@@ -13,13 +13,11 @@ Size = Vector2(500, 500)
 Position = Vector2(500, 500)
 Text = "Render"
 Styles/Roundness = 0.5
+ExpandWidthToText = true
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
-
-[ColorRectangle "cr" "Root"]
-Position = Vector2(25, 25)
 
 [LineEdit "li" "Root"]
 Position = Vector2(15, 15)
