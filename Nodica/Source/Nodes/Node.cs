@@ -258,7 +258,7 @@ public class Node
         {
             node.Start();
         }
-        
+
         Children.Add(node);
     }
 
@@ -266,14 +266,14 @@ public class Node
     {
         node.Name = node.GetType().Name;
         node.Parent = this;
-        
+
         node.Build();
 
         if (start)
         {
             node.Start();
         }
-        
+
         Children.Add(node);
     }
 

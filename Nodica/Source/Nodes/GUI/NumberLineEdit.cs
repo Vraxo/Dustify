@@ -7,7 +7,7 @@ public partial class NumberLineEdit : LineEdit
 
     public float Value
     {
-        get 
+        get
         {
             if (!string.IsNullOrEmpty(Text))
             {

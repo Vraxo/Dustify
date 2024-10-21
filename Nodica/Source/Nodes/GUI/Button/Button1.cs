@@ -18,10 +18,10 @@
 //    public ButtonStylePack Styles { get; set; } = new();
 //    public bool PressedLeft { get; set; } = false;
 //    public bool PressedRight { get; set; } = false;
-//    public bool TruncateText { get; set; } = false;
+//    public bool ClipText { get; set; } = false;
 //    public float AvailableWidth { get; set; } = 0;
-//    public ClickMode LeftClickMode { get; set; } = ClickMode.Limitless;
-//    public ClickMode RightClickMode { get; set; } = ClickMode.Limitless;
+//    public ClickMode _LeftClickMode { get; set; } = ClickMode.Limitless;
+//    public ClickMode _RightClickMode { get; set; } = ClickMode.Limitless;
 //
 //    public Action<Button> OnUpdate = (button) => { };
 //
@@ -55,16 +55,16 @@
 //    public override void Update()
 //    {
 //        OnUpdate(this);
-//        LimitDisplayedText();
+//        ClipDisplayedText();
 //        UpdateTextOrigin();
-//        HandleClicks();
+//        HandleClick();
 //        Draw();
 //        base.Update();
 //    }
 //
 //    // Click handling
 //
-//    private void HandleClicks()
+//    private void HandleClick()
 //    {
 //        HandleLeftClicks();
 //        HandleRightClicks();
@@ -79,7 +79,7 @@
 //            return;
 //        }
 //
-//        if (LeftClickMode == ClickMode.Limitless)
+//        if (_LeftClickMode == ClickMode.Limitless)
 //        {
 //            HandleLeftClickLimitless();
 //        }
@@ -132,7 +132,7 @@
 //        }
 //        else
 //        {
-//            Styles.Current = Styles.Default;
+//            Styles.Current = Styles.Normal;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
@@ -144,7 +144,7 @@
 //
 //            PressedLeft = false;
 //            alreadyClicked = false;
-//            Styles.Current = Styles.Default;
+//            Styles.Current = Styles.Normal;
 //        }
 //    }
 //
@@ -168,7 +168,7 @@
 //        else
 //        {
 //            PressedLeft = false;
-//            Styles.Current = Styles.Default;
+//            Styles.Current = Styles.Normal;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
@@ -179,7 +179,7 @@
 //            }
 //
 //            PressedLeft = false;
-//            Styles.Current = Styles.Default;
+//            Styles.Current = Styles.Normal;
 //        }
 //    }
 //
@@ -192,7 +192,7 @@
 //            return;
 //        }
 //
-//        if (RightClickMode == ClickMode.Limitless)
+//        if (_RightClickMode == ClickMode.Limitless)
 //        {
 //            HandleRightClickLimitless();
 //        }
@@ -236,7 +236,7 @@
 //        }
 //        else
 //        {
-//            Styles.Current = Styles.Default;
+//            Styles.Current = Styles.Normal;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(MouseButton.Right))
@@ -248,7 +248,7 @@
 //
 //            PressedRight = false;
 //            alreadyClicked = false;
-//            Styles.Current = Styles.Default;
+//            Styles.Current = Styles.Normal;
 //        }
 //    }
 //
@@ -272,7 +272,7 @@
 //        else
 //        {
 //            PressedRight = false;
-//            Styles.Current = Styles.Default;
+//            Styles.Current = Styles.Normal;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(MouseButton.Right))
@@ -283,7 +283,7 @@
 //            }
 //
 //            PressedRight = false;
-//            Styles.Current = Styles.Default;
+//            Styles.Current = Styles.Normal;
 //        }
 //    }
 //
@@ -406,9 +406,9 @@
 //
 //    // Displayed text truncating
 //
-//    private void LimitDisplayedText()
+//    private void ClipDisplayedText()
 //    {
-//        if (!TruncateText)
+//        if (!ClipText)
 //        {
 //            return;
 //        }
@@ -423,7 +423,7 @@
 //        else if (numFittingCharacters < Text.Length)
 //        {
 //            string trimmedText = Text[..numFittingCharacters];
-//            displayedText = ReplaceTextEndWithEllipsis(trimmedText);
+//            displayedText = ClipTextWithEllipsis(trimmedText);
 //        }
 //        else
 //        {
@@ -442,7 +442,7 @@
 //        return width;
 //    }
 //
-//    private static string ReplaceTextEndWithEllipsis(string input)
+//    private static string ClipTextWithEllipsis(string input)
 //    {
 //        if (input.Length > 3)
 //        {

@@ -10,7 +10,7 @@ public static class Window
     public static Vector2 Size
     {
         get => new(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-    
+
         set
         {
             Raylib.SetWindowSize((int)value.X, (int)value.Y);

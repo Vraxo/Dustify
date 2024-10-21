@@ -6,10 +6,10 @@ public class Label : VisualItem
 {
     public class LabelStyle
     {
-        public Font  Font        { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
-        public Color FontColor   { get; set; } = ThemeLoader.Instance.Colors["Text"];
-        public uint  FontSize    { get; set; } = 16;
-        public int   FontSpacing { get; set; } = 0;
+        public Font Font { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
+        public Color FontColor { get; set; } = ThemeLoader.Instance.Colors["Text"];
+        public uint FontSize { get; set; } = 16;
+        public int FontSpacing { get; set; } = 0;
     }
 
     public enum TextCase
@@ -19,10 +19,10 @@ public class Label : VisualItem
         Both
     }
 
-    public LabelStyle Style    { get; set; } = new();
-    public bool       Clip     { get; set; } = true;
-    public string     Ellipsis { get; set; } = "...";
-    public TextCase   Case     { get; set; } = TextCase.Both;
+    public LabelStyle Style { get; set; } = new();
+    public bool Clip { get; set; } = true;
+    public string Ellipsis { get; set; } = "...";
+    public TextCase Case { get; set; } = TextCase.Both;
 
     private string displayedText = "";
 
@@ -76,7 +76,7 @@ public class Label : VisualItem
         else if (numFittingCharacters < _text.Length)
         {
             string trimmedText = _text[..numFittingCharacters];
-            displayedText = ReplaceTextEndWithEllipsis(trimmedText);
+            displayedText = ClipTextWithEllipsis(trimmedText);
         }
         else
         {
@@ -95,7 +95,7 @@ public class Label : VisualItem
         return width;
     }
 
-    private string ReplaceTextEndWithEllipsis(string input)
+    private string ClipTextWithEllipsis(string input)
     {
         if (input.Length > 3)
         {
@@ -114,7 +114,7 @@ public class Label : VisualItem
         {
             TextCase.Upper => displayedText.ToUpper(),
             TextCase.Lower => displayedText.ToLower(),
-            _ => _text
+            _ => displayedText
         };
     }
 }

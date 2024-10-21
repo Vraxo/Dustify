@@ -65,7 +65,8 @@ public class MainScene : Node
 
     private void OnRenderButtonLeftClicked(object? sender, EventArgs e)
     {
-        StartRendering(Renderer.VideoQuality.Low, Renderer.VideoQuality.Medium, Renderer.VideoQuality.High);
+        Console.WriteLine("hit render button");
+        //StartRendering(Renderer.VideoQuality.Low, Renderer.VideoQuality.Medium, Renderer.VideoQuality.High);
     }
 
     private void StartRendering(params Renderer.VideoQuality[] qualities)

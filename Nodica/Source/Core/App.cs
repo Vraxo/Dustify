@@ -18,7 +18,7 @@ public class App
 
         SetCurrentDirectory();
         SetWindowFlags();
-        
+
         Raylib.InitWindow(width, height, title);
         Raylib.SetWindowMinSize(width, height);
         Raylib.InitAudioDevice();
@@ -42,7 +42,7 @@ public class App
     private static void SetWindowFlags()
     {
         Raylib.SetConfigFlags(
-            ConfigFlags.VSyncHint | 
+            ConfigFlags.VSyncHint |
             ConfigFlags.Msaa4xHint |
             ConfigFlags.HighDpiWindow |
             ConfigFlags.ResizableWindow |

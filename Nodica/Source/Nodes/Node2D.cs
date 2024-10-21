@@ -2,11 +2,11 @@
 
 public class Node2D : Node
 {
-    public Vector2 Position { get; set; }  = Vector2.Zero;
+    public Vector2 Position { get; set; } = Vector2.Zero;
 
     public OriginPreset OriginPreset { get; set; } = OriginPreset.Center;
-    public bool InheritPosition      { get; set; } = true;
-    public bool InheritOrigin        { get; set; } = false;
+    public bool InheritPosition { get; set; } = true;
+    public bool InheritOrigin { get; set; } = false;
 
     public event EventHandler<Vector2>? SizeChanged;
 

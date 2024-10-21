@@ -116,7 +116,7 @@ public class AudioPlayer : Node
         {
             return;
         }
-     
+
         timestamp = Math.Clamp(timestamp, 0.1f, AudioLength);
 
         if (timestamp >= AudioLength - 0.1f)

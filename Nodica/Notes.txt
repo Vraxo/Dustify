@@ -9,3 +9,7 @@
 > Make dialog -> color rectangle (?)
 
 > Bring vertical slider to the same level as horizontal slider
+
+
+
+> Turn params into list

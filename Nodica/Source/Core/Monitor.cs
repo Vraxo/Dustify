@@ -14,5 +14,5 @@ public static class Monitor
 
             return new(width, height);
         }
-    } 
+    }
 }

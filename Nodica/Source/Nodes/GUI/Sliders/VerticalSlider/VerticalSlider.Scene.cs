@@ -31,7 +31,7 @@ public partial class VerticalSlider : BaseSlider
                 float y = Size.Y - Origin.Y + grabber.Size.Y * 1.5f - 1;
 
                 button.Position = new(x, y);
-                
+
             },
         }, "IncrementButton");
     }

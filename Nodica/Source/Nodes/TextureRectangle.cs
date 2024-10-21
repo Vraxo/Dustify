@@ -5,7 +5,7 @@ namespace Nodica;
 public class TextureRectangle : VisualItem
 {
     public Texture2D Texture { get; set; } = Raylib.LoadTexture("");
-    public bool HasTexture = false; 
+    public bool HasTexture = false;
     public int Height = 0;
 
     public TextureRectangle()

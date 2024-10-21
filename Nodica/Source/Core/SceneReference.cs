@@ -209,14 +209,14 @@ public class SceneReference
             object convertedValue = propertyInfo.PropertyType switch
             {
                 Type t when t == typeof(Vector2) => ParseVector2(stringValue),
-                Type t when t == typeof(Color)   => ParseColor(stringValue),
-                Type t when t.IsEnum             => Enum.Parse(propertyInfo.PropertyType, stringValue),
-                Type t when t == typeof(int)     => int.Parse(stringValue),
-                Type t when t == typeof(uint)    => uint.Parse(stringValue),
-                Type t when t == typeof(float)   => float.Parse(stringValue),
-                Type t when t == typeof(double)  => double.Parse(stringValue),
-                Type t when t == typeof(bool)    => bool.Parse(stringValue),
-                Type t when t == typeof(string)  => ExtractQuotedString(stringValue),
+                Type t when t == typeof(Color) => ParseColor(stringValue),
+                Type t when t.IsEnum => Enum.Parse(propertyInfo.PropertyType, stringValue),
+                Type t when t == typeof(int) => int.Parse(stringValue),
+                Type t when t == typeof(uint) => uint.Parse(stringValue),
+                Type t when t == typeof(float) => float.Parse(stringValue),
+                Type t when t == typeof(double) => double.Parse(stringValue),
+                Type t when t == typeof(bool) => bool.Parse(stringValue),
+                Type t when t == typeof(string) => ExtractQuotedString(stringValue),
                 _ => value
             };
 

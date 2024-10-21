@@ -4,10 +4,10 @@ namespace Nodica;
 
 public class GridContainer : VisualItem
 {
-    public bool         ShowGrid         { get; set; } = false;
-    public Vector2      Cells            { get; set; } = new(4, 5);
-    public Vector2      ItemSize         { get; set; } = new(80, 64);
-    public Vector2      CellOrigin       { get; set; } = Vector2.Zero;
+    public bool ShowGrid { get; set; } = false;
+    public Vector2 Cells { get; set; } = new(4, 5);
+    public Vector2 ItemSize { get; set; } = new(80, 64);
+    public Vector2 CellOrigin { get; set; } = Vector2.Zero;
     public OriginPreset CellOriginPreset { get; set; } = OriginPreset.Center;
 
     public Action<GridContainer> OnUpdate = (button) => { };

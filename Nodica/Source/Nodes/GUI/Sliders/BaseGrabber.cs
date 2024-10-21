@@ -64,7 +64,7 @@ public partial class BaseSlider
             }
             else
             {
-                Style.Current = Style.Default;
+                Style.Current = Style.Normal;
             }
 
             if (Pressed)
@@ -75,7 +75,7 @@ public partial class BaseSlider
             if (Raylib.IsMouseButtonReleased(MouseButton.Left))
             {
                 Pressed = false;
-                Style.Current = Style.Default;
+                Style.Current = Style.Normal;
                 alreadyClicked = false;
             }
         }
@@ -90,7 +90,7 @@ public partial class BaseSlider
             DrawOutline();
             DrawInside();
         }
-        
+
         private void DrawInside()
         {
             Rectangle rectangle = new()
@@ -98,29 +98,29 @@ public partial class BaseSlider
                 Position = GlobalPosition - Origin,
                 Size = Size
             };
-        
+
             Raylib.DrawRectangleRounded(
                 rectangle,
                 Style.Current.Roundness,
                 (int)Size.Y,
                 Style.Current.FillColor);
         }
-        
+
         private void DrawOutline()
         {
             if (Style.Current.BorderLength <= 0)
             {
                 return;
             }
-        
+
             Vector2 position = GlobalPosition - Origin;
-        
+
             Rectangle rectangle = new()
             {
                 Position = position,
                 Size = Size
             };
-        
+
             for (int i = 0; i <= Style.Current.BorderLength; i++)
             {
                 Rectangle outlineRectangle = new()
@@ -128,7 +128,7 @@ public partial class BaseSlider
                     Position = rectangle.Position - new Vector2(i, i),
                     Size = new(rectangle.Size.X + i + 1, rectangle.Size.Y + i + 1)
                 };
-        
+
                 Raylib.DrawRectangleRounded(
                     outlineRectangle,
                     Style.Current.Roundness,

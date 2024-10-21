@@ -6,7 +6,7 @@ public class ProgressBar : VisualItem
     public BoxStyle FilledStyle = new();
 
     private float _percentage = 0;
-    public float Percentage 
+    public float Percentage
     {
         get => _percentage;
 

@@ -18,10 +18,5 @@ Styles/Roundness = 0.5
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
 
-[Label "Label" "TextureRectangle"]
-Size = Vector2(500, 500)
-Text = "Go fuck yoruself. But then Tony just figured out time travel. Practically"
-OriginPreset = Center
-
 [ColorRectangle "cr" "Root"]
 Position = Vector2(25, 25)

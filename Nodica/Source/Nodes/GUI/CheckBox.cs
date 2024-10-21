@@ -18,8 +18,8 @@ public class CheckBox : ClickableRectangle
 
         BackgroundStyle.Roundness = 1;
 
-        CheckStyle.Default.FillColor = new(71, 114, 179, 255);
-        CheckStyle.Current = CheckStyle.Default;
+        CheckStyle.Normal.FillColor = new(71, 114, 179, 255);
+        CheckStyle.Current = CheckStyle.Normal;
     }
 
     public override void Update()
