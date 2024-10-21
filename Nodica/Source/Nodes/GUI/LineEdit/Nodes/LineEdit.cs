@@ -18,7 +18,7 @@ public partial class LineEdit : ClickableRectangle
     public ButtonStylePack Style { get; set; } = new();
     public bool Selected { get; set; } = false;
     public bool Editable { get; set; } = true;
-    public bool ExpandToText { get; set; } = false;
+    public bool ExpandWidthToText { get; set; } = false;
     public bool RevertToDefaultText { get; set; } = true;
     public bool TemporaryDefaultText { get; set; } = true;
     public bool Secret { get; set; } = false;
@@ -55,12 +55,6 @@ public partial class LineEdit : ClickableRectangle
         Size = DefaultSize;
     }
 
-    public override void Build()
-    {
-        //AddChild(new TextDisplayer());
-        //AddChild(new PlaceholderTextDisplayer());
-    }
-
     public override void Start()
     {
         shape = new(this);
@@ -71,15 +65,14 @@ public partial class LineEdit : ClickableRectangle
         SizeChanged += OnSizeChanged;
 
         Style.Pressed.FillColor = ThemeLoader.Instance.Colors["TextBoxPressedFill"];
-        Style.Pressed.BorderLength = 1;
-        Style.Pressed.OutlineColor = ThemeLoader.Instance.Colors["Accent"];
+        Style.Pressed.BorderLength = 2;
+        Style.Pressed.BorderColor = ThemeLoader.Instance.Colors["Accent"];
 
         base.Start();
     }
 
     public override void Update()
     {
-        OnUpdate(this);
         HandleInput();
         PasteText();
         UpdateSizeToFitText();
@@ -103,7 +96,7 @@ public partial class LineEdit : ClickableRectangle
 
     private void UpdateSizeToFitText()
     {
-        if (!ExpandToText)
+        if (!ExpandWidthToText)
         {
             return;
         }
@@ -114,7 +107,7 @@ public partial class LineEdit : ClickableRectangle
             Style.Current.FontSize,
             Style.Current.FontSpacing).X;
 
-        Size = new Vector2(textWidth + TextOrigin.X * 2, Size.Y);
+        Size = new(textWidth + TextOrigin.X * 2, Size.Y);
     }
 
     public void Insert(string input)
@@ -297,28 +290,32 @@ public partial class LineEdit : ClickableRectangle
     {
         int textLengthBeforeDeletion = Text.Length;
 
+        // Check if there are characters to delete
         if (Text.Length > 0)
         {
-            // Remove the character before the caret
-            Text = Text.Remove(caret.X - 1 + TextStartIndex, 1);
-
-            // Adjust TextStartIndex if necessary
-            if (caret.X == GetDisplayableCharactersCount() && TextStartIndex > 0)
+            // If caret is at 0 but TextStartIndex is greater than 0, move the start index left to delete hidden characters
+            if (caret.X == 0 && TextStartIndex > 0)
             {
-                TextStartIndex--;
+                TextStartIndex--; // Move start index to the left
+                Text = Text.Remove(TextStartIndex, 1); // Remove the character at the new start index
             }
-
-            // Move caret left after deletion, but don't exceed bounds
-            caret.X = Math.Clamp(caret.X - 1, 0, Math.Min(Text.Length, GetDisplayableCharactersCount()));
+            else if (caret.X > 0)
+            {
+                // Regular deletion when caret is not at the very start
+                int removeIndex = caret.X - 1 + TextStartIndex;
+                if (removeIndex >= TextStartIndex && removeIndex < Text.Length)
+                {
+                    Text = Text.Remove(removeIndex, 1);
+                    caret.X = Math.Clamp(caret.X - 1, 0, Math.Min(Text.Length, GetDisplayableCharactersCount()));
+                }
+            }
         }
 
-        // Revert text to default if it's empty
         RevertTextToDefaultIfEmpty();
 
-        // Fire the TextChanged event
         TextChanged?.Invoke(this, Text);
 
-        // Fire Cleared event if the text was just cleared
+        // Check if text was cleared
         if (Text.Length == 0 && textLengthBeforeDeletion != 0)
         {
             Cleared?.Invoke(this, EventArgs.Empty);

@@ -133,7 +133,7 @@ public partial class BaseSlider
                     outlineRectangle,
                     Style.Current.Roundness,
                     (int)rectangle.Size.X,
-                    Style.Current.OutlineColor);
+                    Style.Current.BorderColor);
             }
         }
 
@@ -187,7 +187,7 @@ public partial class BaseSlider
         //            rectangle,
         //            EmptyStyle.Current.Roundness,
         //            (int)Size.Y,
-        //            EmptyStyle.Current.OutlineColor);
+        //            EmptyStyle.Current.BorderColor);
         //    }
         //}
     }

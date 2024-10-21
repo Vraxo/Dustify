@@ -10,6 +10,6 @@
 
 > Bring vertical slider to the same level as horizontal slider
 
-
+> Slight problem with LineEdit: deleting last character after index mispositions caret slightly
 
 > Turn params into list

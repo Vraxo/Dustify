@@ -346,7 +346,7 @@
 //                outlineRectangle,
 //                Styles.Current.Roundness,
 //                (int)rectangle.Size.X,
-//                Styles.Current.OutlineColor);
+//                Styles.Current.BorderColor);
 //        }
 //    }
 //

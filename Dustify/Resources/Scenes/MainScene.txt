@@ -20,3 +20,9 @@ Size = Vector2(500, 10)
 
 [ColorRectangle "cr" "Root"]
 Position = Vector2(25, 25)
+
+[LineEdit "li" "Root"]
+Position = Vector2(15, 15)
+Size = Vector2(75, 25)
+OriginPreset = CenterLeft
+ExpandWidthToText = false

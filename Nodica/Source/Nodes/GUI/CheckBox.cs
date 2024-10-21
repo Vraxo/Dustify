@@ -61,7 +61,7 @@ public class CheckBox : ClickableRectangle
                 BackgroundStyle.Current.Roundness,
                 (int)Size.Y,
                 BackgroundStyle.Current.BorderLength,
-                BackgroundStyle.Current.OutlineColor);
+                BackgroundStyle.Current.BorderColor);
         }
     }
 

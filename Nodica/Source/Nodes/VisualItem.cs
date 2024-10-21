@@ -42,7 +42,7 @@ public abstract class VisualItem : Node2D
                 outerRectangle,
                 style.Roundness,
                 (int)size.Y,  // segments count, you can adjust it as needed
-                style.OutlineColor
+                style.BorderColor
             );
         }
 

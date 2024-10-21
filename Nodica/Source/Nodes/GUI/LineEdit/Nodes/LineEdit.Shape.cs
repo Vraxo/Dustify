@@ -50,7 +50,7 @@ public partial class LineEdit
                     rectangle,
                     parent.Style.Current.Roundness,
                     (int)parent.Size.Y,
-                    parent.Style.Current.OutlineColor);
+                    parent.Style.Current.BorderColor);
             }
         }
 

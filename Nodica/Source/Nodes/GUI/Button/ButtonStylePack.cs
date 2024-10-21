@@ -95,10 +95,10 @@ public class ButtonStylePack
     {
         set
         {
-            Current.OutlineColor = value;
-            Normal.OutlineColor = value;
-            Hover.OutlineColor = value;
-            Pressed.OutlineColor = value;
+            Current.BorderColor = value;
+            Normal.BorderColor = value;
+            Hover.BorderColor = value;
+            Pressed.BorderColor = value;
         }
     }
 }

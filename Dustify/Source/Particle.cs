@@ -11,7 +11,7 @@ public class Particle : ColorRectangle
 
     public Particle()
     {
-        Style.OutlineColor = Color.Blank;
+        Style.BorderColor = Color.Blank;
         Size = new(2);
     }
 
