@@ -6,7 +6,7 @@ public partial class BaseSlider
 {
     public abstract class BaseGrabber : ClickableRectangle
     {
-        public ButtonStylePack Style = new();
+        public ButtonThemePack Style = new();
         public bool Pressed = false;
         public Action<BaseGrabber> OnUpdate = (button) => { };
 

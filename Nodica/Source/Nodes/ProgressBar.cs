@@ -2,8 +2,8 @@
 
 public class ProgressBar : VisualItem
 {
-    public BoxStyle EmptyStyle = new();
-    public BoxStyle FilledStyle = new();
+    public RectangleStyle EmptyStyle = new();
+    public RectangleStyle FilledStyle = new();
 
     private float _percentage = 0;
     public float Percentage

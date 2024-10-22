@@ -1,6 +1,6 @@
 ﻿namespace Nodica;
 
-public class BoxStyle
+public class RectangleStyle
 {
     public float Roundness { get; set; } = 0.5f;
     public float BorderLength { get; set; } = 0;

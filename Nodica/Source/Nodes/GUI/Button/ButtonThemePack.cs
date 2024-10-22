@@ -1,22 +1,29 @@
 ﻿using Nodica;
 
-public class ButtonStylePack
+public class ButtonThemePack
 {
     // States
 
-    public ButtonStyle Current { get; set; } = new();
+    public ButtonTheme Current { get; set; } = new();
 
-    public ButtonStyle Normal { get; set; } = new();
+    public ButtonTheme Normal { get; set; } = new();
 
-    public ButtonStyle Hover { get; set; } = new()
+    public ButtonTheme Hover { get; set; } = new()
     {
         FillColor = ThemeLoader.Instance.Colors["HoverFill"]
     };
 
-    public ButtonStyle Pressed { get; set; } = new()
+    public ButtonTheme Pressed { get; set; } = new()
     {
         FillColor = ThemeLoader.Instance.Colors["Accent"]
     };
+
+    public ButtonTheme Disabled { get; set; } = new()
+    {
+        FillColor = Color.Red
+    };
+
+    // Setters
 
     public float FontSpacing
     {
@@ -99,6 +106,17 @@ public class ButtonStylePack
             Normal.BorderColor = value;
             Hover.BorderColor = value;
             Pressed.BorderColor = value;
+        }
+    }
+
+    public float BorderLengthUp
+    {
+        set
+        {
+            Current.BorderLengthUp = value;
+            Normal.BorderLengthUp = value;
+            Hover.BorderLengthUp = value;
+            Pressed.BorderLengthUp = value;
         }
     }
 }

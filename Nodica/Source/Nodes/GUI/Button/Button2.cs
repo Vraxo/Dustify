@@ -22,7 +22,7 @@
 //    public Vector2         TextPadding          { get; set; } = Vector2.Zero;
 //    public Vector2         TextOrigin           { get; set; } = Vector2.Zero;
 //    public OriginPreset    TextOriginPreset     { get; set; } = OriginPreset.Center;
-//    public ButtonStylePack Styles               { get; set; } = new();
+//    public ButtonThemePack Styles               { get; set; } = new();
 //    public float           AvailableWidth       { get; set; } = 0;
 //    public ClickMode       _LeftClickMode       { get; set; } = ClickMode.Limitless;
 //    public ClickMode       _RightClickMode      { get; set; } = ClickMode.Limitless;

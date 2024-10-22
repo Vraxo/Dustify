@@ -14,6 +14,7 @@ Position = Vector2(500, 500)
 Text = "Render"
 Styles/Roundness = 0.5
 ExpandWidthToText = true
+ThemeFile = "Resources/ButtonTheme.txt"
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
@@ -24,4 +25,3 @@ Position = Vector2(15, 15)
 Size = Vector2(75, 25)
 OriginPreset = CenterLeft
 ExpandWidthToText = false
-

@@ -5,8 +5,8 @@ namespace Nodica;
 public class CheckBox : ClickableRectangle
 {
     public Vector2 CheckSize = new(10, 10);
-    public ButtonStylePack BackgroundStyle = new();
-    public ButtonStylePack CheckStyle = new();
+    public ButtonThemePack BackgroundStyle = new();
+    public ButtonThemePack CheckStyle = new();
     public bool Checked = false;
     public Action<CheckBox> OnUpdate = (checkBox) => { };
     public event EventHandler? Toggled;

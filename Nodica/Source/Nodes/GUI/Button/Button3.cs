@@ -21,15 +21,16 @@ public class Button : ClickableRectangle
     public Vector2 TextPadding { get; set; } = Vector2.Zero;
     public Vector2 TextOrigin { get; set; } = Vector2.Zero;
     public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
-    public ButtonStylePack Styles { get; set; } = new();
+    public ButtonThemePack Styles { get; set; } = new();
     public float AvailableWidth { get; set; } = 0;
     public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
     public bool StayPressed { get; set; } = false;
     public bool ClipText { get; set; } = false;
     public bool ExpandWidthToText { get; set; } = true;
-    public Vector2 TextMargin { get; set; } = new(10, 5); // New property to add extra space around the text
+    public Vector2 TextMargin { get; set; } = new(10, 5);
     public string Ellipsis { get; set; } = "...";
+    public bool Disabled { get; set; } = false;
 
     public bool PressedLeft = false;
     public bool PressedRight = false;
@@ -46,16 +47,26 @@ public class Button : ClickableRectangle
     public string Text
     {
         get => _text;
-
         set
         {
             _text = value;
             displayedText = value;
-
             if (ExpandWidthToText)
             {
                 UpdateSizeToFitText();
             }
+        }
+    }
+
+    private string _themeFile = "";
+    public string ThemeFile
+    {
+        get => _themeFile;
+
+        set
+        {
+            _themeFile = value;
+            Styles = StyleLoader.LoadStyle<ButtonThemePack>("Resources/ButtonTheme.txt");
         }
     }
 
@@ -68,10 +79,13 @@ public class Button : ClickableRectangle
 
     public override void Update()
     {
-        OnUpdate(this);
-        ClipDisplayedText();
-        UpdateTextOrigin();
-        HandleClicks();
+        if (!Disabled)
+        {
+            OnUpdate(this);
+            ClipDisplayedText();
+            UpdateTextOrigin();
+            HandleClicks();
+        }
         Draw();
         base.Update();
     }
@@ -80,6 +94,8 @@ public class Button : ClickableRectangle
 
     private void HandleClicks()
     {
+        if (Disabled) return;
+
         HandleClick(
             ref PressedLeft,
             MouseButton.Left,
@@ -95,7 +111,7 @@ public class Button : ClickableRectangle
 
     private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
     {
-        if (clickHandler is null)
+        if (clickHandler is null || Disabled)
         {
             return;
         }
@@ -136,7 +152,11 @@ public class Button : ClickableRectangle
 
     protected override void Draw()
     {
-        DrawBorderedRectangle(GlobalPosition - Origin, Size, Styles.Current);
+        DrawBorderedRectangle(
+            GlobalPosition - Origin, 
+            Size, 
+            Disabled ? Styles.Disabled : Styles.Current);
+
         DrawText();
     }
 
@@ -194,14 +214,12 @@ public class Button : ClickableRectangle
 
     private void UpdateSizeToFitText()
     {
-        // Measure text width using Raylib
         int textWidth = (int)Raylib.MeasureTextEx(
             Styles.Current.Font,
             Text,
             Styles.Current.FontSize,
             1).X;
 
-        // Update button size to fit the text width plus margin and padding
         Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
     }
 
@@ -234,13 +252,11 @@ public class Button : ClickableRectangle
 
     private float GetCharacterWidth()
     {
-        float width = Raylib.MeasureTextEx(
+        return Raylib.MeasureTextEx(
             Styles.Current.Font,
             " ",
             Styles.Current.FontSize,
             1).X;
-
-        return width;
     }
 
     private string ClipTextWithEllipsis(string input)
