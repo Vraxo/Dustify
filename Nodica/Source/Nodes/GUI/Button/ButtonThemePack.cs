@@ -20,7 +20,16 @@ public class ButtonThemePack
 
     public ButtonTheme Disabled { get; set; } = new()
     {
-        FillColor = Color.Red
+        FillColor = DefaultTheme.DisabledFill,
+        BorderColor = DefaultTheme.DisabledBorder,
+        FontColor = DefaultTheme.DisabledText
+    };
+
+    public ButtonTheme Focused { get; set; } = new()
+    {
+        FillColor = DefaultTheme.FocusFill,
+        BorderColor = DefaultTheme.FocusBorder,
+        FontColor = DefaultTheme.FocusText
     };
 
     // Setters

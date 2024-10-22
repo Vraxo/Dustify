@@ -15,6 +15,7 @@ Text = "Render"
 Styles/Roundness = 0.5
 ExpandWidthToText = true
 ThemeFile = "Resources/ButtonTheme.txt"
+FocusOnClick = true
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)

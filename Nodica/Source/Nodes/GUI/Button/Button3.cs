@@ -4,17 +4,8 @@ namespace Nodica;
 
 public class Button : ClickableRectangle
 {
-    public enum ClickMode
-    {
-        Limited,
-        Limitless
-    }
-
-    public enum ActionMode
-    {
-        Release,
-        Press
-    }
+    public enum ClickMode { Limited, Limitless }
+    public enum ActionMode { Release, Press }
 
     #region [ - - - Properties & Fields - - - ]
 
@@ -30,7 +21,7 @@ public class Button : ClickableRectangle
     public bool ExpandWidthToText { get; set; } = true;
     public Vector2 TextMargin { get; set; } = new(10, 5);
     public string Ellipsis { get; set; } = "...";
-    public bool Disabled { get; set; } = false;
+    public bool FocusOnClick { get; set; } = true;
 
     public bool PressedLeft = false;
     public bool PressedRight = false;
@@ -40,7 +31,32 @@ public class Button : ClickableRectangle
     public event EventHandler? LeftClicked;
     public event EventHandler? RightClicked;
 
-    private bool alreadyClicked = false;
+    private bool _focused = false;
+    public bool Focused
+    {
+        get => _focused;
+        set
+        {
+            if (_focused != value)
+            {
+                _focused = value;
+                Styles.Current = _focused ? Styles.Focused : Styles.Normal;
+            }
+        }
+    }
+
+    private bool _disabled = false;
+    public bool Disabled
+    {
+        get => _disabled;
+
+        set
+        {
+            _disabled = value;
+            Styles.Current = Styles.Disabled;
+        }
+    }
+
     private string displayedText = "";
 
     private string _text = "";
@@ -83,15 +99,34 @@ public class Button : ClickableRectangle
         {
             OnUpdate(this);
             ClipDisplayedText();
-            UpdateTextOrigin();
             HandleClicks();
+            HandleKeyboardInput();
         }
+        
+        UpdateFocusOnMouseOut();
+        UpdateTextOrigin();
         Draw();
         base.Update();
     }
 
-    // Click handling
+    private void UpdateFocusOnMouseOut()
+    {
+        if (!IsMouseOver() && Raylib.IsMouseButtonPressed(MouseButton.Left))
+        {
+            Focused = false;
+        }
+    }
 
+    private void HandleKeyboardInput()
+    {
+        if (Focused && Raylib.IsKeyPressed(KeyboardKey.Enter))
+        {
+            LeftClicked?.Invoke(this, EventArgs.Empty);
+            RightClicked?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    // Click handling
     private void HandleClicks()
     {
         if (Disabled) return;
@@ -111,20 +146,23 @@ public class Button : ClickableRectangle
 
     private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
     {
-        if (clickHandler is null || Disabled)
-        {
-            return;
-        }
+        if (clickHandler is null || Disabled) return;
 
         bool mouseOver = IsMouseOver();
 
         if (mouseOver)
         {
-            Styles.Current = pressed ? Styles.Pressed : Styles.Hover;
+            Styles.Current = pressed ? Styles.Pressed : (Focused ? Styles.Focused : Styles.Hover);
 
             if (Raylib.IsMouseButtonPressed(button) && OnTopLeft)
             {
                 pressed = true;
+
+                // Set focus based on FocusOnClick
+                if (FocusOnClick)
+                {
+                    Focused = true;
+                }
 
                 if (actionMode == ActionMode.Press)
                 {
@@ -134,7 +172,7 @@ public class Button : ClickableRectangle
         }
         else if (!pressed || !StayPressed)
         {
-            Styles.Current = Styles.Normal;
+            Styles.Current = Focused ? Styles.Focused : Styles.Normal;
         }
 
         if (Raylib.IsMouseButtonReleased(button))
@@ -149,12 +187,11 @@ public class Button : ClickableRectangle
     }
 
     // Drawing
-
     protected override void Draw()
     {
         DrawBorderedRectangle(
-            GlobalPosition - Origin, 
-            Size, 
+            GlobalPosition - Origin,
+            Size,
             Disabled ? Styles.Disabled : Styles.Current);
 
         DrawText();
@@ -172,15 +209,13 @@ public class Button : ClickableRectangle
     }
 
     // Text positioning
-
     private Vector2 GetTextPosition()
     {
         Vector2 fontDimensions = Raylib.MeasureTextEx(
             Styles.Current.Font,
             Text,
             Styles.Current.FontSize,
-            1
-        );
+            1);
 
         Vector2 center = Size / 2;
 
@@ -211,7 +246,6 @@ public class Button : ClickableRectangle
     }
 
     // Text resizing
-
     private void UpdateSizeToFitText()
     {
         int textWidth = (int)Raylib.MeasureTextEx(
@@ -224,13 +258,9 @@ public class Button : ClickableRectangle
     }
 
     // Displayed text truncating
-
     private void ClipDisplayedText()
     {
-        if (!ClipText)
-        {
-            return;
-        }
+        if (!ClipText) return;
 
         float characterWidth = GetCharacterWidth();
         int numFittingCharacters = (int)(AvailableWidth / characterWidth);

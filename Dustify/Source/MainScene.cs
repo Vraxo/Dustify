@@ -72,6 +72,7 @@ public class MainScene : Node
     {
         if (!imageDisplayer.HasTexture)
         {
+            Console.WriteLine("can't render");
             return;
         }
 
