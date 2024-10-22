@@ -13,3 +13,5 @@
 > Slight problem with LineEdit: deleting last character after index mispositions caret slightly
 
 > Turn params into list
+
+> Problem with label size and origin?

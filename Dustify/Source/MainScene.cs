@@ -17,7 +17,7 @@ public class MainScene : Node
         imageSelectionButton = GetNode<Button>("ImageSelectionButton");
         imageSelectionButton.LeftClicked += OnImageSelectionButtonLeftClicked;
 
-        imageDisplayer = GetNode<ImageDisplayer>("ImageSelectionButton/ARC/TexturedRectangle");
+        imageDisplayer = GetNode<ImageDisplayer>("ImageSelectionButton/ARC/TextureRectangle");
 
         renderButton = GetNode<Button>("RenderButton");
         renderButton.LeftClicked += OnRenderButtonLeftClicked;
@@ -65,12 +65,16 @@ public class MainScene : Node
 
     private void OnRenderButtonLeftClicked(object? sender, EventArgs e)
     {
-        Console.WriteLine("hit render button");
-        //StartRendering(Renderer.VideoQuality.Low, Renderer.VideoQuality.Medium, Renderer.VideoQuality.High);
+        StartRendering(Renderer.VideoQuality.Low, Renderer.VideoQuality.Medium, Renderer.VideoQuality.High);
     }
 
     private void StartRendering(params Renderer.VideoQuality[] qualities)
     {
+        if (!imageDisplayer.HasTexture)
+        {
+            return;
+        }
+
         AddChild(new Renderer());
 
         Texture2D texture = imageDisplayer.Texture;
@@ -94,7 +98,7 @@ public class MainScene : Node
 
             imageDisplayer.BitmapData = bitmap;
             //imageDisplayer.OriginalImage = bitmap;
-            //File.Delete(pngPath);  // Now you can safely delete the PNG
+            File.Delete(pngPath);  // Now you can safely delete the PNG
         }
         else
         {
@@ -174,18 +178,5 @@ public class MainScene : Node
         image.SaveAsPng(pngPath);
 
         return pngPath;
-    }
-
-    private static Bitmap ResizeBitmap(Bitmap original, int width, int height)
-    {
-        return original;
-        Bitmap resizedBitmap = new(width, height);
-        using (Graphics graphics = Graphics.FromImage(resizedBitmap))
-        {
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            graphics.DrawImage(original, 0, 0, width, height);
-        }
-        return original;
-        return resizedBitmap;
     }
 }

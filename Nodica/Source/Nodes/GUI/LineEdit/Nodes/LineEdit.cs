@@ -380,7 +380,6 @@ public partial class LineEdit : ClickableRectangle
         }
     }
 
-
     private void Confirm()
     {
         if (Raylib.IsKeyDown(KeyboardKey.Enter))
@@ -401,15 +400,15 @@ public partial class LineEdit : ClickableRectangle
 
     private int GetDisplayableCharactersCount()
     {
+        float availableWidth = Size.X - TextOrigin.X * 2;
+
         float oneCharacterWidth = Raylib.MeasureTextEx(
             Style.Current.Font,
             ".",
             Style.Current.FontSize,
             Style.Current.FontSpacing).X;
 
-        float avaiableWidth = Size.X * 0.85f;
-
-        int displayableCharactersCount = (int)(avaiableWidth / oneCharacterWidth);
+        int displayableCharactersCount = (int)(availableWidth / oneCharacterWidth);
 
         return displayableCharactersCount;
     }

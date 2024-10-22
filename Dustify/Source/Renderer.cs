@@ -69,7 +69,7 @@ public class Renderer : Node
     private void InitializeImageDisplayer(Texture2D texture)
     {
         imageDisplayer = new();
-        var textureRectangle = App.Instance.RootNode.GetNode<ImageDisplayer>("ImageSelectionButton/ARC/TexturedRectangle");
+        var textureRectangle = App.Instance.RootNode.GetNode<ImageDisplayer>("ImageSelectionButton/ARC/TextureRectangle");
 
         imageDisplayer.InheritPosition = false;
         imageDisplayer.GlobalPosition = new(500);

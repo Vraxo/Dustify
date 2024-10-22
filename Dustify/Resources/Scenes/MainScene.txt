@@ -24,3 +24,4 @@ Position = Vector2(15, 15)
 Size = Vector2(75, 25)
 OriginPreset = CenterLeft
 ExpandWidthToText = false
+
