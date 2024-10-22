@@ -63,8 +63,8 @@ public abstract partial class BaseSlider : ClickableRectangle
 
     public BaseSlider()
     {
-        EmptyStyle.FillColor = ThemeLoader.Instance.Colors["SliderEmptyFill"];
-        FilledStyle.FillColor = ThemeLoader.Instance.Colors["Accent"];
+        EmptyStyle.FillColor = DefaultTheme.SliderEmptyFill;
+        FilledStyle.FillColor = DefaultTheme.Accent;
     }
 
     public override void Start()

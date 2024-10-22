@@ -54,7 +54,7 @@ public class App
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(ThemeLoader.Instance.Colors["Background"]);
+            Raylib.ClearBackground(DefaultTheme.Background);
             UpdateSingletons();
             RootNode.Process();
             Raylib.EndDrawing();

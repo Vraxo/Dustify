@@ -10,12 +10,12 @@ public class ButtonThemePack
 
     public ButtonTheme Hover { get; set; } = new()
     {
-        FillColor = ThemeLoader.Instance.Colors["HoverFill"]
+        FillColor = DefaultTheme.HoverFill
     };
 
     public ButtonTheme Pressed { get; set; } = new()
     {
-        FillColor = ThemeLoader.Instance.Colors["Accent"]
+        FillColor = DefaultTheme.Accent
     };
 
     public ButtonTheme Disabled { get; set; } = new()

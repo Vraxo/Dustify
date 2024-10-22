@@ -7,7 +7,7 @@ public class Label : VisualItem
     public class LabelStyle
     {
         public Font Font { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
-        public Color FontColor { get; set; } = ThemeLoader.Instance.Colors["Text"];
+        public Color FontColor { get; set; } = DefaultTheme.Text;
         public uint FontSize { get; set; } = 16;
         public int FontSpacing { get; set; } = 0;
     }

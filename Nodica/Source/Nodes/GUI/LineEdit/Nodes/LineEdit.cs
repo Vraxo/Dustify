@@ -15,7 +15,6 @@ public partial class LineEdit : ClickableRectangle
     public int MaxCharacters { get; set; } = int.MaxValue;
     public int MinCharacters { get; set; } = 0;
     public List<char> ValidCharacters { get; set; } = [];
-    public ButtonThemePack Style { get; set; } = new();
     public bool Selected { get; set; } = false;
     public bool Editable { get; set; } = true;
     public bool ExpandWidthToText { get; set; } = false;
@@ -23,6 +22,16 @@ public partial class LineEdit : ClickableRectangle
     public bool TemporaryDefaultText { get; set; } = true;
     public bool Secret { get; set; } = false;
     public char SecretCharacter { get; set; } = '*';
+
+    public ButtonThemePack Style { get; set; } = new()
+    {
+        Pressed = new()
+        {
+            BorderLength = 1,
+            FillColor = DefaultTheme.TextBoxPressedFill,
+            BorderColor = DefaultTheme.Accent
+        },
+    };
 
     public int TextStartIndex = 0;
 
@@ -63,11 +72,7 @@ public partial class LineEdit : ClickableRectangle
         placeholderTextDisplayer = new(this);
 
         SizeChanged += OnSizeChanged;
-
-        Style.Pressed.FillColor = ThemeLoader.Instance.Colors["TextBoxPressedFill"];
-        Style.Pressed.BorderLength = 2;
-        Style.Pressed.BorderColor = ThemeLoader.Instance.Colors["Accent"];
-
+        
         base.Start();
     }
 

@@ -45,24 +45,24 @@ public class CheckBox : ClickableRectangle
 
     private void DrawInside(Rectangle rectangle)
     {
-        Raylib.DrawRectangleRounded(
-            rectangle,
-            BackgroundStyle.Current.Roundness,
-            (int)Size.Y,
-            BackgroundStyle.Current.FillColor);
+        //Raylib.DrawRectangleRounded(
+        //    rectangle,
+        //    BackgroundStyle.Current.Roundness,
+        //    (int)Size.Y,
+        //    BackgroundStyle.Current.FillColor);
     }
 
     private void DrawOutline(Rectangle rectangle)
     {
-        if (BackgroundStyle.Current.BorderLength > 0)
-        {
-            Raylib.DrawRectangleRoundedLines(
-                rectangle,
-                BackgroundStyle.Current.Roundness,
-                (int)Size.Y,
-                BackgroundStyle.Current.BorderLength,
-                BackgroundStyle.Current.BorderColor);
-        }
+        //if (BackgroundStyle.Current.BorderLength > 0)
+        //{
+        //    Raylib.DrawRectangleRoundedLines(
+        //        rectangle,
+        //        BackgroundStyle.Current.Roundness,
+        //        (int)Size.Y,
+        //        BackgroundStyle.Current.BorderLength,
+        //        BackgroundStyle.Current.BorderColor);
+        //}
     }
 
     private void DrawCheck()

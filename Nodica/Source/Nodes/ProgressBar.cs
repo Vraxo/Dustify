@@ -3,7 +3,11 @@
 public class ProgressBar : VisualItem
 {
     public RectangleStyle EmptyStyle = new();
-    public RectangleStyle FilledStyle = new();
+
+    public RectangleStyle FilledStyle = new()
+    { 
+        FillColor = DefaultTheme.Accent
+    };
 
     private float _percentage = 0;
     public float Percentage
@@ -19,7 +23,6 @@ public class ProgressBar : VisualItem
     public ProgressBar()
     {
         Size = new(250, 10);
-        FilledStyle.FillColor = ThemeLoader.Instance.Colors["Accent"];
     }
 
     protected override void Draw()

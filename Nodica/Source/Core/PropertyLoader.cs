@@ -99,7 +99,16 @@ public static class StyleLoader
 
     private static Color ParseColor(string value)
     {
-        string[] components = value.Trim('(', ')').Split(',');
-        return new Color(byte.Parse(components[0]), byte.Parse(components[1]), byte.Parse(components[2]), byte.Parse(components[3]));
+        string numericPart = value.Replace("Color", "").Trim('(', ')');
+
+        string[] components = numericPart.Split(',');
+
+        // Parse each component as a byte
+        return new Color(
+            byte.Parse(components[0].Trim()),
+            byte.Parse(components[1].Trim()),
+            byte.Parse(components[2].Trim()),
+            byte.Parse(components[3].Trim())
+        );
     }
 }
