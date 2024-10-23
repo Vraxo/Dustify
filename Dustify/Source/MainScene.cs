@@ -21,6 +21,7 @@ public class MainScene : Node
 
         renderButton = GetNode<Button>("RenderButton");
         renderButton.LeftClicked += OnRenderButtonLeftClicked;
+        renderButton.RightClicked += OnRenderButtonLeftClicked;
 
         progressBar = GetNode<ProgressBar>("ProgressBar");
 
