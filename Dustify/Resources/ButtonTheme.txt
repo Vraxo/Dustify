@@ -1,2 +1,1 @@
-﻿BorderLengthUp = 1
-Hover/BorderColor = Color(255, 0, 0, 255)
+﻿

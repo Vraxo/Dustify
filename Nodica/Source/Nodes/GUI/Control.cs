@@ -4,7 +4,7 @@ namespace Nodica;
 
 public class Control : ClickableRectangle
 {
-    public bool FocusOnClick { get; set; } = true;
+    public bool FocusOnClick { get; set; } = false;
     public bool EnableArrowNavigation { get; set; } = true;
     public string? UpControlPath { get; set; }
     public string? DownControlPath { get; set; }

@@ -4,10 +4,9 @@ namespace Nodica;
 
 public class Button : Control
 {
-    public enum ButtonState { Normal, Focused, Pressed, Disabled }
-
     public enum ClickMode { Limited, Limitless }
     public enum ActionMode { Release, Press }
+    public enum ButtonState { Normal, Hover, Pressed, Focused }
 
     #region [ - - - Properties & Fields - - - ]
 
@@ -24,8 +23,6 @@ public class Button : Control
     public Vector2 TextMargin { get; set; } = new(10, 5);
     public string Ellipsis { get; set; } = "...";
 
-    public ButtonState State { get; private set; } = ButtonState.Normal;
-
     public bool PressedLeft = false;
     public bool PressedRight = false;
 
@@ -33,6 +30,17 @@ public class Button : Control
 
     public event EventHandler? LeftClicked;
     public event EventHandler? RightClicked;
+
+    private bool _disabled = false;
+    public bool Disabled
+    {
+        get => _disabled;
+        set
+        {
+            _disabled = value;
+            UpdateStyle();
+        }
+    }
 
     private string displayedText = "";
 
@@ -62,16 +70,8 @@ public class Button : Control
         }
     }
 
-    private bool _disabled = false;
-    public bool Disabled
-    {
-        get => _disabled;
-        set
-        {
-            _disabled = value;
-            State = value ? ButtonState.Disabled : ButtonState.Normal;
-        }
-    }
+    // Public state property with a private setter
+    public ButtonState State { get; private set; } = ButtonState.Normal;
 
     #endregion
 
@@ -92,7 +92,6 @@ public class Button : Control
         }
 
         UpdateTextOrigin();
-        UpdateCurrentStyle();
         Draw();
         base.Update();
     }
@@ -100,6 +99,7 @@ public class Button : Control
     private void OnFocusChanged(bool focused)
     {
         State = focused ? ButtonState.Focused : ButtonState.Normal;
+        UpdateStyle();
     }
 
     private void HandleKeyboardInput()
@@ -112,7 +112,6 @@ public class Button : Control
     }
 
     // Click handling
-
     private void HandleClicks()
     {
         if (Disabled) return;
@@ -138,7 +137,8 @@ public class Button : Control
 
         if (mouseOver)
         {
-            State = pressed ? ButtonState.Pressed : State;
+            State = pressed ? ButtonState.Pressed : ButtonState.Hover;
+            UpdateStyle();
 
             if (Raylib.IsMouseButtonPressed(button))
             {
@@ -154,6 +154,7 @@ public class Button : Control
         else if (!pressed || !StayPressed)
         {
             State = Focused ? ButtonState.Focused : ButtonState.Normal;
+            UpdateStyle();
         }
 
         if (Raylib.IsMouseButtonReleased(button))
@@ -167,25 +168,33 @@ public class Button : Control
         }
     }
 
-    // Update current style based on the state
-
-    private void UpdateCurrentStyle()
+    // Update the style based on the current state
+    private void UpdateStyle()
     {
-        Styles.Current = State switch
+        if (Disabled)
         {
-            ButtonState.Normal => Styles.Normal,
-            ButtonState.Focused => Styles.Focused,
-            ButtonState.Pressed => Styles.Pressed,
-            ButtonState.Disabled => Styles.Disabled,
-            _ => Styles.Normal
-        };
+            Styles.Current = Styles.Disabled;
+        }
+        else
+        {
+            Styles.Current = State switch
+            {
+                ButtonState.Pressed => Styles.Pressed,
+                ButtonState.Hover => Styles.Hover,
+                ButtonState.Focused => Styles.Focused,
+                _ => Styles.Normal
+            };
+        }
     }
 
     // Drawing
-
     protected override void Draw()
     {
-        DrawBorderedRectangle(GlobalPosition - Origin, Size, Styles.Current);
+        DrawBorderedRectangle(
+            GlobalPosition - Origin,
+            Size,
+            Styles.Current);
+
         DrawText();
     }
 
@@ -201,7 +210,6 @@ public class Button : Control
     }
 
     // Text positioning
-
     private Vector2 GetTextPosition()
     {
         Vector2 fontDimensions = Raylib.MeasureTextEx(
@@ -239,7 +247,6 @@ public class Button : Control
     }
 
     // Text resizing
-
     private void UpdateSizeToFitText()
     {
         int textWidth = (int)Raylib.MeasureTextEx(
@@ -252,7 +259,6 @@ public class Button : Control
     }
 
     // Displayed text truncating
-
     private void ClipDisplayedText()
     {
         if (!ClipText) return;
