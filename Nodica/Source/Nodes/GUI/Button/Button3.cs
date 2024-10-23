@@ -20,7 +20,7 @@ public class Button : Control
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
     public bool StayPressed { get; set; } = false;
     public bool ClipText { get; set; } = false;
-    public bool ExpandWidthToText { get; set; } = true;
+    public bool AutoWidth { get; set; } = true;
     public Vector2 TextMargin { get; set; } = new(10, 5);
     public string Ellipsis { get; set; } = "...";
 
@@ -44,7 +44,7 @@ public class Button : Control
         {
             _text = value;
             displayedText = value;
-            if (ExpandWidthToText)
+            if (AutoWidth)
             {
                 UpdateSizeToFitText();
             }
