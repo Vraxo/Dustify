@@ -23,7 +23,6 @@ public class Button : Control
     public bool AutoWidth { get; set; } = true;
     public Vector2 TextMargin { get; set; } = new(10, 5);
     public string Ellipsis { get; set; } = "...";
-    public ButtonState State { get; private set; } = ButtonState.Normal;
     public ClickBehavior Behavior { get; set; } = ClickBehavior.Both;
 
     public bool PressedLeft = false;
@@ -74,8 +73,7 @@ public class Button : Control
     }
 
     // Public state property with a private setter
-
-    // New property to set click behavior
+    public ButtonState State { get; private set; } = ButtonState.Normal;
 
     #endregion
 
@@ -148,28 +146,32 @@ public class Button : Control
             if (PressedRight) anyPressed = true;
         }
 
-        // Update state based on whether any button is pressed
-        if (mouseOver)
+        // Prioritize Focused state over Hover state
+        if (Focused)
+        {
+            State = anyPressed ? ButtonState.Pressed : ButtonState.Focused;
+        }
+        else if (mouseOver)
         {
             State = anyPressed ? ButtonState.Pressed : ButtonState.Hover;
         }
         else
         {
-            State = Focused ? ButtonState.Focused : ButtonState.Normal;
+            State = ButtonState.Normal;
         }
 
         UpdateStyle();
     }
 
+
     private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
     {
+        if (Disabled) return;
+
         bool mouseOver = IsMouseOver();
 
         if (mouseOver)
         {
-            State = pressed ? ButtonState.Pressed : ButtonState.Hover;
-            UpdateStyle();
-
             if (Raylib.IsMouseButtonPressed(button))
             {
                 pressed = true;
@@ -178,14 +180,8 @@ public class Button : Control
                 if (actionMode == ActionMode.Press)
                 {
                     clickHandler?.Invoke(this, EventArgs.Empty);
-                    Styles.Current = Styles.Pressed;
                 }
             }
-        }
-        else if (!pressed || !StayPressed)
-        {
-            State = Focused ? ButtonState.Focused : ButtonState.Normal;
-            UpdateStyle();
         }
 
         if (Raylib.IsMouseButtonReleased(button))

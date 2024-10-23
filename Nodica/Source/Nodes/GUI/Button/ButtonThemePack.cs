@@ -27,9 +27,8 @@ public class ButtonThemePack
 
     public ButtonTheme Focused { get; set; } = new()
     {
-        FillColor = DefaultTheme.FocusFill,
         BorderColor = DefaultTheme.FocusBorder,
-        FontColor = DefaultTheme.FocusText
+        BorderLength = 1
     };
 
     // Setters

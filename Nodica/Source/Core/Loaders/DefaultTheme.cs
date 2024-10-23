@@ -27,8 +27,5 @@ public static class DefaultTheme
     public static readonly Color DisabledBorder = new(50, 50, 50, 255);
     public static readonly Color DisabledText = new(150, 150, 150, 255);
 
-    // Focus Colors (Using Accent Color for visual emphasis)
-    public static readonly Color FocusFill = new(61, 94, 159, 255);   // Based on AccentDarker for focus effect
-    public static readonly Color FocusBorder = new(91, 134, 199, 255); // Slightly lighter border for focus
-    public static readonly Color FocusText = new(255, 255, 255, 255);  // Keep text white for focus readability
+    public static readonly Color FocusBorder = new(71, 114, 179, 255); // Slightly lighter border for focus
 }
