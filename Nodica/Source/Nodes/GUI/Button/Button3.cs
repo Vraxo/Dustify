@@ -2,8 +2,10 @@
 
 namespace Nodica;
 
-public class Button : ClickableRectangle
+public class Button : Control
 {
+    public enum ButtonState { Normal, Focused, Pressed, Disabled }
+
     public enum ClickMode { Limited, Limitless }
     public enum ActionMode { Release, Press }
 
@@ -21,7 +23,8 @@ public class Button : ClickableRectangle
     public bool ExpandWidthToText { get; set; } = true;
     public Vector2 TextMargin { get; set; } = new(10, 5);
     public string Ellipsis { get; set; } = "...";
-    public bool FocusOnClick { get; set; } = true;
+
+    public ButtonState State { get; private set; } = ButtonState.Normal;
 
     public bool PressedLeft = false;
     public bool PressedRight = false;
@@ -30,32 +33,6 @@ public class Button : ClickableRectangle
 
     public event EventHandler? LeftClicked;
     public event EventHandler? RightClicked;
-
-    private bool _focused = false;
-    public bool Focused
-    {
-        get => _focused;
-        set
-        {
-            if (_focused != value)
-            {
-                _focused = value;
-                Styles.Current = _focused ? Styles.Focused : Styles.Normal;
-            }
-        }
-    }
-
-    private bool _disabled = false;
-    public bool Disabled
-    {
-        get => _disabled;
-
-        set
-        {
-            _disabled = value;
-            Styles.Current = Styles.Disabled;
-        }
-    }
 
     private string displayedText = "";
 
@@ -78,11 +55,21 @@ public class Button : ClickableRectangle
     public string ThemeFile
     {
         get => _themeFile;
-
         set
         {
             _themeFile = value;
             Styles = StyleLoader.LoadStyle<ButtonThemePack>("Resources/ButtonTheme.txt");
+        }
+    }
+
+    private bool _disabled = false;
+    public bool Disabled
+    {
+        get => _disabled;
+        set
+        {
+            _disabled = value;
+            State = value ? ButtonState.Disabled : ButtonState.Normal;
         }
     }
 
@@ -91,6 +78,7 @@ public class Button : ClickableRectangle
     public Button()
     {
         Size = new(100, 26);
+        FocusChanged += OnFocusChanged;
     }
 
     public override void Update()
@@ -102,19 +90,16 @@ public class Button : ClickableRectangle
             HandleClicks();
             HandleKeyboardInput();
         }
-        
-        UpdateFocusOnMouseOut();
+
         UpdateTextOrigin();
+        UpdateCurrentStyle();
         Draw();
         base.Update();
     }
 
-    private void UpdateFocusOnMouseOut()
+    private void OnFocusChanged(bool focused)
     {
-        if (!IsMouseOver() && Raylib.IsMouseButtonPressed(MouseButton.Left))
-        {
-            Focused = false;
-        }
+        State = focused ? ButtonState.Focused : ButtonState.Normal;
     }
 
     private void HandleKeyboardInput()
@@ -127,6 +112,7 @@ public class Button : ClickableRectangle
     }
 
     // Click handling
+
     private void HandleClicks()
     {
         if (Disabled) return;
@@ -152,17 +138,12 @@ public class Button : ClickableRectangle
 
         if (mouseOver)
         {
-            Styles.Current = pressed ? Styles.Pressed : (Focused ? Styles.Focused : Styles.Hover);
+            State = pressed ? ButtonState.Pressed : State;
 
-            if (Raylib.IsMouseButtonPressed(button) && OnTopLeft)
+            if (Raylib.IsMouseButtonPressed(button))
             {
                 pressed = true;
-
-                // Set focus based on FocusOnClick
-                if (FocusOnClick)
-                {
-                    Focused = true;
-                }
+                HandleClickFocus();
 
                 if (actionMode == ActionMode.Press)
                 {
@@ -172,7 +153,7 @@ public class Button : ClickableRectangle
         }
         else if (!pressed || !StayPressed)
         {
-            Styles.Current = Focused ? Styles.Focused : Styles.Normal;
+            State = Focused ? ButtonState.Focused : ButtonState.Normal;
         }
 
         if (Raylib.IsMouseButtonReleased(button))
@@ -186,14 +167,25 @@ public class Button : ClickableRectangle
         }
     }
 
+    // Update current style based on the state
+
+    private void UpdateCurrentStyle()
+    {
+        Styles.Current = State switch
+        {
+            ButtonState.Normal => Styles.Normal,
+            ButtonState.Focused => Styles.Focused,
+            ButtonState.Pressed => Styles.Pressed,
+            ButtonState.Disabled => Styles.Disabled,
+            _ => Styles.Normal
+        };
+    }
+
     // Drawing
+
     protected override void Draw()
     {
-        DrawBorderedRectangle(
-            GlobalPosition - Origin,
-            Size,
-            Disabled ? Styles.Disabled : Styles.Current);
-
+        DrawBorderedRectangle(GlobalPosition - Origin, Size, Styles.Current);
         DrawText();
     }
 
@@ -209,6 +201,7 @@ public class Button : ClickableRectangle
     }
 
     // Text positioning
+
     private Vector2 GetTextPosition()
     {
         Vector2 fontDimensions = Raylib.MeasureTextEx(
@@ -246,6 +239,7 @@ public class Button : ClickableRectangle
     }
 
     // Text resizing
+
     private void UpdateSizeToFitText()
     {
         int textWidth = (int)Raylib.MeasureTextEx(
@@ -258,6 +252,7 @@ public class Button : ClickableRectangle
     }
 
     // Displayed text truncating
+
     private void ClipDisplayedText()
     {
         if (!ClipText) return;

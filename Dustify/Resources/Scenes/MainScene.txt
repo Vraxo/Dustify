@@ -16,6 +16,11 @@ Styles/Roundness = 0.5
 ExpandWidthToText = true
 ThemeFile = "Resources/ButtonTheme.txt"
 FocusOnClick = true
+RightControlPath = "/root/FocusTestButton"
+
+[Button "FocusTestButton" "Root"]
+Position = Vector2(600, 500)
+Text = "Focus"
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
