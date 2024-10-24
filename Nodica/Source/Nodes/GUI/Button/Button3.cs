@@ -18,12 +18,17 @@ public class Button : Control
     public float AvailableWidth { get; set; } = 0;
     public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
-    public bool StayPressed { get; set; } = true;
+    public bool StayPressed { get; set; } = false;
     public bool ClipText { get; set; } = false;
-    public bool AutoWidth { get; set; } = true;
+    public bool AutoWidth { get; set; } = false;
     public Vector2 TextMargin { get; set; } = new(10, 5);
     public string Ellipsis { get; set; } = "...";
     public ClickBehavior Behavior { get; set; } = ClickBehavior.Both;
+    public ButtonState State { get; private set; } = ButtonState.Normal;
+    public float IconMargin { get; set; } = 12;
+
+    public Texture2D Icon { get; set; } = Raylib.LoadTexture("");
+    public bool HasIcon = false;
 
     public bool PressedLeft = false;
     public bool PressedRight = false;
@@ -50,13 +55,14 @@ public class Button : Control
     public string Text
     {
         get => _text;
+
         set
         {
             _text = value;
             displayedText = value;
             if (AutoWidth)
             {
-                UpdateSizeToFitText();
+                ResizeToFitText();
             }
         }
     }
@@ -65,14 +71,13 @@ public class Button : Control
     public string ThemeFile
     {
         get => _themeFile;
+
         set
         {
             _themeFile = value;
-            Styles = StyleLoader.LoadStyle<ButtonThemePack>("Resources/ButtonTheme.txt");
+            Styles = StyleLoader.LoadStyle<ButtonThemePack>(value);
         }
     }
-
-    public ButtonState State { get; private set; } = ButtonState.Normal;
 
     #endregion
 
@@ -143,22 +148,29 @@ public class Button : Control
 
         if (StayPressed && (PressedLeft || PressedRight))
         {
-            State = ButtonState.Pressed;
+            Styles.Current = Styles.Pressed;
         }
         else if (Focused)
         {
-            State = anyPressed ? ButtonState.Pressed : ButtonState.Focused;
+            if (mouseOver)
+            {
+                Styles.Current = anyPressed ? Styles.Pressed : Styles.Focused;
+            }
+            else
+            {
+                Styles.Current = Focused ? Styles.Focused : Styles.Normal;
+            }
         }
         else if (mouseOver)
         {
-            State = anyPressed ? ButtonState.Pressed : ButtonState.Hover;
+            Styles.Current = anyPressed ? Styles.Pressed : Styles.Hover;
         }
         else
         {
-            State = ButtonState.Normal;
+            Styles.Current = Styles.Normal;
         }
 
-        UpdateStyle();
+        //UpdateStyle();
     }
 
     private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
@@ -183,7 +195,7 @@ public class Button : Control
 
         if (Raylib.IsMouseButtonReleased(button))
         {
-            if ((mouseOver || StayPressed) && pressed && actionMode == ActionMode.Release)
+            if (mouseOver && pressed && actionMode == ActionMode.Release) // (mouseOver || StayPressed)
             {
                 clickHandler?.Invoke(this, EventArgs.Empty);
             }
@@ -212,12 +224,27 @@ public class Button : Control
 
     protected override void Draw()
     {
+        DrawBox();
+        DrawIcon();
+        DrawText();
+    }
+
+    private void DrawBox()
+    {
         DrawBorderedRectangle(
             GlobalPosition - Origin,
             Size,
             Styles.Current);
+    }
 
-        DrawText();
+    private void DrawIcon()
+    {
+        var iconOrigin = new Vector2(Icon.Width, Icon.Height) / 2f;
+
+        Raylib.DrawTextureV(
+            Icon,
+            GlobalPosition - new Vector2(Origin.X - IconMargin, 0) - iconOrigin,
+            Color.White);
     }
 
     private void DrawText()
@@ -267,8 +294,13 @@ public class Button : Control
         };
     }
 
-    private void UpdateSizeToFitText()
+    private void ResizeToFitText()
     {
+        if (!AutoWidth)
+        {
+            return;
+        }
+
         int textWidth = (int)Raylib.MeasureTextEx(
             Styles.Current.Font,
             Text,

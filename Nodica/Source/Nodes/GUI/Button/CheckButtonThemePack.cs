@@ -1,78 +1,37 @@
 ﻿using Nodica;
 
-public class ButtonThemePack
+public class CheckButtonThemePack
 {
     // States
 
-    public ButtonTheme Current { get; set; } = new();
+    public BoxStyle Current { get; set; } = new();
 
-    public ButtonTheme Normal { get; set; } = new();
+    public BoxStyle Normal { get; set; } = new();
 
-    public ButtonTheme Hover { get; set; } = new()
+    public BoxStyle Hover { get; set; } = new()
     {
         FillColor = DefaultTheme.HoverFill
     };
 
-    public ButtonTheme Pressed { get; set; } = new()
+    public BoxStyle Pressed { get; set; } = new()
     {
         FillColor = DefaultTheme.Accent
     };
 
-    public ButtonTheme Disabled { get; set; } = new()
+    public BoxStyle Disabled { get; set; } = new()
     {
         FillColor = DefaultTheme.DisabledFill,
         BorderColor = DefaultTheme.DisabledBorder,
-        FontColor = DefaultTheme.DisabledText
     };
 
-    public ButtonTheme Focused { get; set; } = new()
+    public BoxStyle Focused { get; set; } = new()
     {
         BorderColor = DefaultTheme.FocusBorder,
         BorderLength = 1
     };
 
     // Setters
-
-    public float FontSpacing
-    {
-        set
-        {
-            Normal.FontSpacing = value;
-            Hover.FontSpacing = value;
-            Pressed.FontSpacing = value;
-        }
-    }
-
-    public float FontSize
-    {
-        set
-        {
-            Normal.FontSize = value;
-            Hover.FontSize = value;
-            Pressed.FontSize = value;
-        }
-    }
-
-    public Font Font
-    {
-        set
-        {
-            Normal.Font = value;
-            Hover.Font = value;
-            Pressed.Font = value;
-        }
-    }
-
-    public Color FontColor
-    {
-        set
-        {
-            Normal.FontColor = value;
-            Hover.FontColor = value;
-            Pressed.FontColor = value;
-        }
-    }
-
+    
     public float Roundness
     {
         set
@@ -86,7 +45,7 @@ public class ButtonThemePack
         }
     }
 
-    public float BorderLength
+    public float OutlineThickness
     {
         set
         {
@@ -94,7 +53,6 @@ public class ButtonThemePack
             Normal.BorderLength = value;
             Hover.BorderLength = value;
             Pressed.BorderLength = value;
-            Disabled.BorderLength = value;
         }
     }
 
@@ -106,7 +64,6 @@ public class ButtonThemePack
             Normal.FillColor = value;
             Hover.FillColor = value;
             Pressed.FillColor = value;
-            Disabled.FillColor = value;
         }
     }
 
@@ -118,7 +75,6 @@ public class ButtonThemePack
             Normal.BorderColor = value;
             Hover.BorderColor = value;
             Pressed.BorderColor = value;
-            Disabled.BorderColor = value;
         }
     }
 
@@ -130,7 +86,6 @@ public class ButtonThemePack
             Normal.BorderLengthUp = value;
             Hover.BorderLengthUp = value;
             Pressed.BorderLengthUp = value;
-            Disabled.BorderLengthUp = value;
         }
     }
 }

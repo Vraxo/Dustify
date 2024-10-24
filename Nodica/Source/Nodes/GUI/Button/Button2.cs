@@ -22,7 +22,7 @@
 //    public Vector2         TextPadding          { get; set; } = Vector2.Zero;
 //    public Vector2         TextOrigin           { get; set; } = Vector2.Zero;
 //    public OriginPreset    TextOriginPreset     { get; set; } = OriginPreset.Center;
-//    public ButtonThemePack Styles               { get; set; } = new();
+//    public ButtonThemePack BackgroundStyles               { get; set; } = new();
 //    public float           AvailableWidth       { get; set; } = 0;
 //    public ClickMode       _LeftClickMode       { get; set; } = ClickMode.Limitless;
 //    public ClickMode       _RightClickMode      { get; set; } = ClickMode.Limitless;
@@ -125,7 +125,7 @@
 //
 //        if (IsMouseOver())
 //        {
-//            Styles.Current = Styles.Hover;
+//            BackgroundStyles.Current = BackgroundStyles.Hover;
 //
 //            if (Raylib.IsMouseButtonReleased(button))
 //            {
@@ -147,13 +147,13 @@
 //
 //                if (pressed)
 //                {
-//                    Styles.Current = Styles.Pressed;
+//                    BackgroundStyles.Current = BackgroundStyles.Pressed;
 //                }
 //            }
 //        }
 //        else
 //        {
-//            Styles.Current = Styles.Normal;
+//            BackgroundStyles.Current = BackgroundStyles.Normal;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(button))
@@ -165,7 +165,7 @@
 //
 //            pressed = false;
 //            alreadyClicked = false;
-//            Styles.Current = Styles.Normal;
+//            BackgroundStyles.Current = BackgroundStyles.Normal;
 //        }
 //    }
 //
@@ -173,7 +173,7 @@
 //    {
 //        if (IsMouseOver())
 //        {
-//            Styles.Current = Styles.Hover;
+//            BackgroundStyles.Current = BackgroundStyles.Hover;
 //
 //            if (Raylib.IsMouseButtonPressed(button) && onTop)
 //            {
@@ -183,13 +183,13 @@
 //
 //            if (pressed)
 //            {
-//                Styles.Current = Styles.Pressed;
+//                BackgroundStyles.Current = BackgroundStyles.Pressed;
 //            }
 //        }
 //        else
 //        {
 //            pressed = false;
-//            Styles.Current = Styles.Normal;
+//            BackgroundStyles.Current = BackgroundStyles.Normal;
 //        }
 //
 //        if (Raylib.IsMouseButtonReleased(button))
@@ -200,7 +200,7 @@
 //            }
 //
 //            pressed = false;
-//            Styles.Current = Styles.Normal;
+//            BackgroundStyles.Current = BackgroundStyles.Normal;
 //        }
 //    }
 //
@@ -208,19 +208,19 @@
 //
 //    protected override void Draw()
 //    {
-//        DrawBorderedRectangle(GlobalPosition - Origin, Size, Styles.Current);
+//        DrawBorderedRectangle(GlobalPosition - Origin, Size, BackgroundStyles.Current);
 //        DrawText();
 //    }
 //
 //    private void DrawText()
 //    {
 //        Raylib.DrawTextEx(
-//            Styles.Current.Font,
+//            BackgroundStyles.Current.Font,
 //            displayedText,
 //            GetTextPosition(),
-//            Styles.Current.FontSize,
+//            BackgroundStyles.Current.FontSize,
 //            1,
-//            Styles.Current.FontColor);
+//            BackgroundStyles.Current.FontColor);
 //    }
 //
 //    // Text positioning
@@ -228,9 +228,9 @@
 //    private Vector2 GetTextPosition()
 //    {
 //        Vector2 fontDimensions = Raylib.MeasureTextEx(
-//            Styles.Current.Font,
+//            BackgroundStyles.Current.Font,
 //            Text,
-//            Styles.Current.FontSize,
+//            BackgroundStyles.Current.FontSize,
 //            1
 //        );
 //
@@ -292,9 +292,9 @@
 //    private float GetCharacterWidth()
 //    {
 //        float width = Raylib.MeasureTextEx(
-//            Styles.Current.Font,
+//            BackgroundStyles.Current.Font,
 //            " ",
-//            Styles.Current.FontSize,
+//            BackgroundStyles.Current.FontSize,
 //            1).X;
 //
 //        return width;

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Raylib_cs;
+using System.Reflection;
 
 namespace Nodica;
 
@@ -41,40 +42,36 @@ public class SceneReference
             if (trimmedLine.StartsWith("[") && trimmedLine.EndsWith("]"))
             {
                 string content = trimmedLine[1..^1].Trim();
-                string[] parts = content.Split([' '], 4); // Handle up to 4 parts (with scene reference)
+                string[] parts = content.Split(new[] { ' ' }, 4); // Handle up to 4 parts (with scene reference)
 
                 string typeName = parts[0];
                 string nodeName = ExtractQuotedString(parts[1]);
                 string parentName = parts.Length >= 3 ? ExtractQuotedString(parts[2]) : null;
 
-                // Check if it's a SceneReference (based on having 4 parts)
                 if (parts.Length == 4)
                 {
                     string scenePath = ExtractQuotedString(parts[3]);
 
-                    // Only prepend Resources/Scenes/ if not already present
                     if (!scenePath.StartsWith("Resources/Scenes/"))
                     {
                         scenePath = $"Resources/Scenes/{scenePath}";
                     }
 
-                    // Recursively load the scene, using the specified type for the root node
                     SceneReference referencedScene = new(scenePath);
                     Type rootNodeType = ResolveType(typeName);
                     var referencedRootNode = referencedScene.Instantiate(rootNodeType) as Node;
 
-                    // Set the name of the root node of the referenced scene
                     referencedRootNode.Name = nodeName;
 
                     if (parentName == null && firstNode)
                     {
-                        instance = (T)(object)referencedRootNode; // Cast to T and assign as the root
+                        instance = (T)(object)referencedRootNode;
                         namedNodes[nodeName] = referencedRootNode;
                         firstNode = false;
                     }
                     else if (namedNodes.TryGetValue(parentName, out Node parentNode))
                     {
-                        parentNode.AddChild(referencedRootNode, nodeName, true); // Add the referenced scene's root node as a child
+                        parentNode.AddChild(referencedRootNode, nodeName, true);
                         namedNodes[nodeName] = referencedRootNode;
                     }
                     else
@@ -84,7 +81,6 @@ public class SceneReference
                 }
                 else
                 {
-                    // Normal node creation (existing behavior)
                     Type type = ResolveType(typeName);
                     obj = Activator.CreateInstance(type);
 
@@ -127,22 +123,16 @@ public class SceneReference
         (instance as Node).Build();
         (instance as Node).Start();
 
-        for (int i = 0; i < (instance as Node).Children.Count; i++)
-        {
-            // (instance as Node).Children[i].Build();
-            // (instance as Node).Children[i].Start();
-        }
-
         return instance;
     }
 
     private object Instantiate(Type type, bool isRootNode = false)
     {
         MethodInfo method = typeof(SceneReference).GetMethod(nameof(Instantiate)).MakeGenericMethod(type);
-        return method.Invoke(this, [isRootNode]);
+        return method.Invoke(this, new object[] { isRootNode });
     }
 
-    private string ExtractQuotedString(string str)
+    private static string ExtractQuotedString(string str)
     {
         if (str.Length >= 2 && str.StartsWith("\"") && str.EndsWith("\""))
         {
@@ -154,19 +144,16 @@ public class SceneReference
 
     private Type ResolveType(string typeName)
     {
-        // Get all loaded assemblies
         Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
         foreach (Assembly assembly in assemblies)
         {
-            // Try to find the type in the current assembly
             var type = assembly.GetType(typeName, false, true);
             if (type != null)
             {
                 return type;
             }
 
-            // Try to find the type with a default Nodica if applicable
             var defaultNamespace = assembly.GetName().Name;
             var namespacedTypeName = defaultNamespace + "." + typeName;
             type = assembly.GetType(namespacedTypeName, false, true);
@@ -210,6 +197,7 @@ public class SceneReference
             {
                 Type t when t == typeof(Vector2) => ParseVector2(stringValue),
                 Type t when t == typeof(Color) => ParseColor(stringValue),
+                Type t when t == typeof(Texture2D) => ParseTexture(stringValue),
                 Type t when t.IsEnum => Enum.Parse(propertyInfo.PropertyType, stringValue),
                 Type t when t == typeof(int) => int.Parse(stringValue),
                 Type t when t == typeof(uint) => uint.Parse(stringValue),
@@ -277,6 +265,21 @@ public class SceneReference
         else
         {
             throw new Exception($"Invalid Color format, expected format: Color(r, g, b, a)");
+        }
+    }
+
+    private static Texture2D ParseTexture(string value)
+    {
+        string stringValue = value.Trim();
+
+        if (stringValue.StartsWith("Texture(") && stringValue.EndsWith(")"))
+        {
+            string texturePath = ExtractQuotedString(stringValue[8..^1]);
+            return TextureLoader.Instance.Get(texturePath);
+        }
+        else
+        {
+            throw new Exception($"Invalid Texture format, expected format: Texture(\"path\")");
         }
     }
 }

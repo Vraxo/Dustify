@@ -9,25 +9,18 @@ Size = Vector2(500, 500)
 
 [ImageDisplayer "TextureRectangle" "ARC"]
 
-
-
 [Button "RenderButton" "Root"]
 Position = Vector2(500, 500)
-Styles/Roundness = 0.5
+Styles/Roundness = 0
 Text = "Render"
-AutoWidth = true
 ThemeFile = "Resources/ButtonTheme.txt"
-
+RightControlPath = "/root/FocusTestButton"
+Icon = Texture("Resources/ReturnIcon.png")
 
 [CheckButton "FocusTestButton" "Root"]
 Position = Vector2(600, 500)
-Size = Vector2(100, 100)
+LeftControlPath = "/root/RenderButton"
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
-
-[LineEdit "li" "Root"]
-Position = Vector2(15, 15)
-Size = Vector2(75, 25)
-OriginPreset = CenterLeft

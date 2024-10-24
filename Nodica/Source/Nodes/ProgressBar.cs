@@ -2,9 +2,9 @@
 
 public class ProgressBar : VisualItem
 {
-    public RectangleStyle EmptyStyle = new();
+    public BoxStyle EmptyStyle = new();
 
-    public RectangleStyle FilledStyle = new()
+    public BoxStyle FilledStyle = new()
     { 
         FillColor = DefaultTheme.Accent
     };

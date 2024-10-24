@@ -2,7 +2,7 @@
 
 public class ColorRectangle : ClickableRectangle
 {
-    public RectangleStyle Style = new();
+    public BoxStyle Style = new();
 
     public ColorRectangle()
     {

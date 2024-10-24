@@ -17,3 +17,5 @@
 > Problem with label size and origin?
 
 > StayPressed in button does not work
+
+> add everything to style omni setters

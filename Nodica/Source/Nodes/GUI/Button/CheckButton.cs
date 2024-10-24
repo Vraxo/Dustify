@@ -4,26 +4,23 @@ namespace Nodica;
 
 public class CheckButton : Control
 {
+    public enum ClickMode { Limited, Limitless }
     public enum ActionMode { Release, Press }
     public enum ButtonState { Normal, Hover, Pressed, Focused }
     public enum ClickBehavior { Left, Right, Both }
 
     #region [ - - - Properties & Fields - - - ]
 
-    public ButtonThemePack Styles { get; set; } = new();
+    public ButtonThemePack BackgroundStyles { get; set; } = new();
+    public BoxStyle CheckStyles { get; set; } = new();
+    public Vector2 CheckSize { get; set; } = new();
     public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
     public bool StayPressed { get; set; } = false;
-    public ButtonState State { get; private set; } = ButtonState.Normal;
     public ClickBehavior Behavior { get; set; } = ClickBehavior.Both;
-
-    public bool Toggled { get; set; } = false;
 
     public bool PressedLeft = false;
     public bool PressedRight = false;
-
-    public event EventHandler? LeftClicked;
-    public event EventHandler? RightClicked;
 
     private bool _disabled = false;
     public bool Disabled
@@ -36,12 +33,32 @@ public class CheckButton : Control
         }
     }
 
+    private string _themeFile = "";
+    public string ThemeFile
+    {
+        get => _themeFile;
+
+        set
+        {
+            _themeFile = value;
+            BackgroundStyles = StyleLoader.LoadStyle<ButtonThemePack>(value);
+        }
+    }
+
+    public ButtonState State { get; private set; } = ButtonState.Normal;
+
+    public bool Toggled { get; set; } = false;
+
     #endregion
 
     public CheckButton()
     {
-        Size = new(100, 26);
+        Size = new(26, 26);
         FocusChanged += OnFocusChanged;
+        CheckSize = Size / 2;
+        BackgroundStyles.Roundness = 1;
+        CheckStyles.Roundness = 1;
+        CheckStyles.FillColor = DefaultTheme.Accent;
     }
 
     public override void Update()
@@ -72,17 +89,14 @@ public class CheckButton : Control
     {
         if (Focused && Raylib.IsKeyPressed(KeyboardKey.Enter))
         {
-            LeftClicked?.Invoke(this, EventArgs.Empty);
-            RightClicked?.Invoke(this, EventArgs.Empty);
+            Toggle();
         }
     }
 
-    // Click handling
     private void HandleClicks()
     {
         if (Disabled) return;
 
-        // Check if the button is currently being pressed
         bool mouseOver = IsMouseOver();
         bool anyPressed = false;
 
@@ -91,10 +105,8 @@ public class CheckButton : Control
             HandleClick(
                 ref PressedLeft,
                 MouseButton.Left,
-                LeftClickActionMode,
-                LeftClicked);
+                LeftClickActionMode);
 
-            // Update anyPressed if left button is pressed
             if (PressedLeft) anyPressed = true;
         }
 
@@ -103,35 +115,39 @@ public class CheckButton : Control
             HandleClick(
                 ref PressedRight,
                 MouseButton.Right,
-                RightClickActionMode,
-                RightClicked);
+                RightClickActionMode);
 
-            // Update anyPressed if right button is pressed
             if (PressedRight) anyPressed = true;
         }
 
-        // Update state based on whether any button is pressed
-        if (mouseOver)
+        if (StayPressed && (PressedLeft || PressedRight))
+        {
+            State = ButtonState.Pressed;
+        }
+        else if (Focused)
+        {
+            State = anyPressed ? ButtonState.Pressed : ButtonState.Focused;
+        }
+        else if (mouseOver)
         {
             State = anyPressed ? ButtonState.Pressed : ButtonState.Hover;
         }
         else
         {
-            State = Focused ? ButtonState.Focused : ButtonState.Normal;
+            State = ButtonState.Normal;
         }
 
         UpdateStyle();
     }
 
-    private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
+    private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode)
     {
+        if (Disabled) return;
+
         bool mouseOver = IsMouseOver();
 
         if (mouseOver)
         {
-            State = pressed ? ButtonState.Pressed : ButtonState.Hover;
-            UpdateStyle();
-
             if (Raylib.IsMouseButtonPressed(button))
             {
                 pressed = true;
@@ -139,55 +155,53 @@ public class CheckButton : Control
 
                 if (actionMode == ActionMode.Press)
                 {
-                    clickHandler?.Invoke(this, EventArgs.Empty);
-                    Styles.Current = Styles.Pressed;
+                    Toggle();
                 }
             }
-        }
-        else if (!pressed || !StayPressed)
-        {
-            State = Focused ? ButtonState.Focused : ButtonState.Normal;
-            UpdateStyle();
         }
 
         if (Raylib.IsMouseButtonReleased(button))
         {
-            if (mouseOver && pressed && actionMode == ActionMode.Release)
+            if ((mouseOver || StayPressed) && pressed && actionMode == ActionMode.Release)
             {
-                clickHandler?.Invoke(this, EventArgs.Empty);
+                Toggle();
             }
 
             pressed = false;
         }
     }
 
-    // Update the style based on the current state
     private void UpdateStyle()
     {
         if (Disabled)
         {
-            Styles.Current = Styles.Disabled;
+            BackgroundStyles.Current = BackgroundStyles.Disabled;
         }
         else
         {
-            Styles.Current = State switch
+            BackgroundStyles.Current = State switch
             {
-                ButtonState.Pressed => Styles.Pressed,
-                ButtonState.Hover => Styles.Hover,
-                ButtonState.Focused => Styles.Focused,
-                _ => Styles.Normal
+                ButtonState.Pressed => BackgroundStyles.Pressed,
+                ButtonState.Hover => BackgroundStyles.Hover,
+                ButtonState.Focused => BackgroundStyles.Focused,
+                _ => BackgroundStyles.Normal
             };
         }
     }
 
-    // Drawing
     protected override void Draw()
     {
         DrawBorderedRectangle(
             GlobalPosition - Origin,
             Size,
-            Styles.Current);
+            BackgroundStyles.Current);
 
-        // No text to draw
+        if (Toggled)
+        {
+            DrawBorderedRectangle(
+                GlobalPosition - Origin / 2,
+                CheckSize,
+                CheckStyles);
+        }
     }
 }

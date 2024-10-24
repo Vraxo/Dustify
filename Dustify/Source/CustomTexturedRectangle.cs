@@ -22,7 +22,7 @@ public class CustomTexturedRectangle : Node2D
 
     public void LoadTexture(string name, bool resize = false)
     {
-        Texture = TextureLoader.Instance.Textures[name];
+        Texture = TextureLoader.Instance.Get(name);
         HasTexture = true;
 
         Size = new(Texture.Width, Texture.Height);

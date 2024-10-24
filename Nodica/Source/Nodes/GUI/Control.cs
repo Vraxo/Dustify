@@ -4,8 +4,8 @@ namespace Nodica;
 
 public class Control : ClickableRectangle
 {
-    public bool FocusOnClick { get; set; } = true;
-    public bool EnableArrowNavigation { get; set; } = true;
+    public bool FocusOnClick { get; set; } = false;
+    public bool ArrowNavigation { get; set; } = true;
     public string? UpControlPath { get; set; }
     public string? DownControlPath { get; set; }
     public string? LeftControlPath { get; set; }
@@ -29,7 +29,7 @@ public class Control : ClickableRectangle
 
     public override void Update()
     {
-        if (EnableArrowNavigation && Focused)
+        if (ArrowNavigation && Focused)
         {
             HandleArrowNavigation();
         }

@@ -1,34 +1,37 @@
 ﻿using Raylib_cs;
 
-namespace Nodica;
-
-public class TextureLoader
+namespace Nodica
 {
-    public static TextureLoader Instance => instance ??= new();
-    private static TextureLoader? instance;
-
-    public Dictionary<string, Texture2D> Textures = [];
-
-    private TextureLoader() { }
-
-    public void Add(string name, string path)
+    public class TextureLoader
     {
-        if (!Textures.ContainsKey(name))
+        public static TextureLoader Instance => instance ??= new();
+        private static TextureLoader? instance;
+
+        private Dictionary<string, Texture2D> textures = new();
+
+        private TextureLoader() { }
+
+        public Texture2D Get(string path)
         {
-            Textures.Add(name, Raylib.LoadTexture(path));
+            if (!textures.ContainsKey(path))
+            {
+                textures[path] = Raylib.LoadTexture(path);
+            }
+            return textures[path];
         }
-    }
 
-    public void Remove(string name)
-    {
-        if (Textures.ContainsKey(name))
+        public void Remove(string path)
         {
-            Textures.Remove(name);
+            if (textures.ContainsKey(path))
+            {
+                Raylib.UnloadTexture(textures[path]); // Unload the texture to free memory
+                textures.Remove(path);
+            }
         }
-    }
 
-    public bool Contains(string name)
-    {
-        return Textures.ContainsKey(name);
+        public bool Contains(string path)
+        {
+            return textures.ContainsKey(path);
+        }
     }
 }

@@ -21,7 +21,7 @@ public class TextureRectangle : VisualItem
 
     public void LoadTexture(string name, bool resize = false)
     {
-        Texture = TextureLoader.Instance.Textures[name];
+        Texture = TextureLoader.Instance.Get(name);
         HasTexture = true;
 
         if (resize)

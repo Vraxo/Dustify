@@ -90,7 +90,7 @@ public class MainScene : Node
         if (Path.GetExtension(selectedFile).ToLower() != ".png")
         {
             string pngPath = ConvertToPng(selectedFile);
-            TextureLoader.Instance.Add(pngPath, pngPath);
+            TextureLoader.Instance.Get(pngPath);
             imageDisplayer.LoadTexture(pngPath, true);
 
             using (var tempBitmap = (Bitmap)System.Drawing.Image.FromFile(pngPath))
@@ -104,7 +104,7 @@ public class MainScene : Node
         }
         else
         {
-            TextureLoader.Instance.Add(selectedFile, selectedFile);
+            TextureLoader.Instance.Get(selectedFile);
             imageDisplayer.LoadTexture(selectedFile, true);
 
             using (var tempBitmap = (Bitmap)System.Drawing.Image.FromFile(selectedFile))

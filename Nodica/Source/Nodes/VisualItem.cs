@@ -20,7 +20,7 @@ public abstract class VisualItem : Node2D
 
     protected virtual void Draw() { }
 
-    protected void DrawBorderedRectangle(Vector2 position, Vector2 size, RectangleStyle style)
+    protected void DrawBorderedRectangle(Vector2 position, Vector2 size, BoxStyle style)
     {
         // Calculate the total border length by combining the four sides
         float top = style.BorderLengthUp;
