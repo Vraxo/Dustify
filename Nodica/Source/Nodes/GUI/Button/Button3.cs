@@ -18,7 +18,7 @@ public class Button : Control
     public float AvailableWidth { get; set; } = 0;
     public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
-    public bool StayPressed { get; set; } = false;
+    public bool StayPressed { get; set; } = true;
     public bool ClipText { get; set; } = false;
     public bool AutoWidth { get; set; } = true;
     public Vector2 TextMargin { get; set; } = new(10, 5);
@@ -72,7 +72,6 @@ public class Button : Control
         }
     }
 
-    // Public state property with a private setter
     public ButtonState State { get; private set; } = ButtonState.Normal;
 
     #endregion
@@ -113,12 +112,10 @@ public class Button : Control
         }
     }
 
-    // Click handling
     private void HandleClicks()
     {
         if (Disabled) return;
 
-        // Check if the button is currently being pressed
         bool mouseOver = IsMouseOver();
         bool anyPressed = false;
 
@@ -130,7 +127,6 @@ public class Button : Control
                 LeftClickActionMode,
                 LeftClicked);
 
-            // Update anyPressed if left button is pressed
             if (PressedLeft) anyPressed = true;
         }
 
@@ -142,12 +138,14 @@ public class Button : Control
                 RightClickActionMode,
                 RightClicked);
 
-            // Update anyPressed if right button is pressed
             if (PressedRight) anyPressed = true;
         }
 
-        // Prioritize Focused state over Hover state
-        if (Focused)
+        if (StayPressed && (PressedLeft || PressedRight))
+        {
+            State = ButtonState.Pressed;
+        }
+        else if (Focused)
         {
             State = anyPressed ? ButtonState.Pressed : ButtonState.Focused;
         }
@@ -162,7 +160,6 @@ public class Button : Control
 
         UpdateStyle();
     }
-
 
     private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
     {
@@ -186,7 +183,7 @@ public class Button : Control
 
         if (Raylib.IsMouseButtonReleased(button))
         {
-            if (mouseOver && pressed && actionMode == ActionMode.Release)
+            if ((mouseOver || StayPressed) && pressed && actionMode == ActionMode.Release)
             {
                 clickHandler?.Invoke(this, EventArgs.Empty);
             }
@@ -195,7 +192,6 @@ public class Button : Control
         }
     }
 
-    // Update the style based on the current state
     private void UpdateStyle()
     {
         if (Disabled)
@@ -214,7 +210,6 @@ public class Button : Control
         }
     }
 
-    // Drawing
     protected override void Draw()
     {
         DrawBorderedRectangle(
@@ -236,7 +231,6 @@ public class Button : Control
             Styles.Current.FontColor);
     }
 
-    // Text positioning
     private Vector2 GetTextPosition()
     {
         Vector2 fontDimensions = Raylib.MeasureTextEx(
@@ -273,7 +267,6 @@ public class Button : Control
         };
     }
 
-    // Text resizing
     private void UpdateSizeToFitText()
     {
         int textWidth = (int)Raylib.MeasureTextEx(
@@ -285,7 +278,6 @@ public class Button : Control
         Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
     }
 
-    // Displayed text truncating
     private void ClipDisplayedText()
     {
         if (!ClipText) return;
