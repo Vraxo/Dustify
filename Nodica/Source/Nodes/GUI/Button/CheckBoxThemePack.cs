@@ -1,6 +1,6 @@
 ﻿using Nodica;
 
-public class CheckButtonThemePack
+public class CheckBoxThemePack
 {
     // States
 

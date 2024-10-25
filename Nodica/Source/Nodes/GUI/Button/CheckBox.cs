@@ -2,7 +2,7 @@
 
 namespace Nodica;
 
-public class CheckButton : Control
+public class CheckBox : Control
 {
     public enum ClickMode { Limited, Limitless }
     public enum ActionMode { Release, Press }
@@ -29,7 +29,6 @@ public class CheckButton : Control
         set
         {
             _disabled = value;
-            UpdateStyle();
         }
     }
 
@@ -45,13 +44,11 @@ public class CheckButton : Control
         }
     }
 
-    public ButtonState State { get; private set; } = ButtonState.Normal;
-
     public bool Toggled { get; set; } = false;
 
     #endregion
 
-    public CheckButton()
+    public CheckBox()
     {
         Size = new(26, 26);
         FocusChanged += OnFocusChanged;
@@ -81,8 +78,9 @@ public class CheckButton : Control
 
     private void OnFocusChanged(bool focused)
     {
-        State = focused ? ButtonState.Focused : ButtonState.Normal;
-        UpdateStyle();
+        BackgroundStyles.Current = focused ? 
+                                   BackgroundStyles.Focused : 
+                                   BackgroundStyles.Normal;
     }
 
     private void HandleKeyboardInput()
@@ -122,22 +120,27 @@ public class CheckButton : Control
 
         if (StayPressed && (PressedLeft || PressedRight))
         {
-            State = ButtonState.Pressed;
+            BackgroundStyles.Current = BackgroundStyles.Pressed;
         }
         else if (Focused)
         {
-            State = anyPressed ? ButtonState.Pressed : ButtonState.Focused;
+            if (mouseOver)
+            {
+                BackgroundStyles.Current = anyPressed ? BackgroundStyles.Pressed : BackgroundStyles.Focused;
+            }
+            else
+            {
+                BackgroundStyles.Current = Focused ? BackgroundStyles.Focused : BackgroundStyles.Normal;
+            }
         }
         else if (mouseOver)
         {
-            State = anyPressed ? ButtonState.Pressed : ButtonState.Hover;
+            BackgroundStyles.Current = anyPressed ? BackgroundStyles.Pressed : BackgroundStyles.Hover;
         }
         else
         {
-            State = ButtonState.Normal;
+            BackgroundStyles.Current = BackgroundStyles.Normal;
         }
-
-        UpdateStyle();
     }
 
     private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode)
@@ -168,24 +171,6 @@ public class CheckButton : Control
             }
 
             pressed = false;
-        }
-    }
-
-    private void UpdateStyle()
-    {
-        if (Disabled)
-        {
-            BackgroundStyles.Current = BackgroundStyles.Disabled;
-        }
-        else
-        {
-            BackgroundStyles.Current = State switch
-            {
-                ButtonState.Pressed => BackgroundStyles.Pressed,
-                ButtonState.Hover => BackgroundStyles.Hover,
-                ButtonState.Focused => BackgroundStyles.Focused,
-                _ => BackgroundStyles.Normal
-            };
         }
     }
 

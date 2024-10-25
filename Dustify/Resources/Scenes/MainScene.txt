@@ -17,7 +17,7 @@ ThemeFile = "Resources/ButtonTheme.txt"
 RightControlPath = "/root/FocusTestButton"
 Icon = Texture("Resources/ReturnIcon.png")
 
-[CheckButton "FocusTestButton" "Root"]
+[CheckBox "FocusTestButton" "Root"]
 Position = Vector2(600, 500)
 LeftControlPath = "/root/RenderButton"
 
