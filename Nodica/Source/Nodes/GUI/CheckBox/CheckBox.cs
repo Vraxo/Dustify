@@ -165,7 +165,7 @@ public class CheckBox : Control
 
         if (Raylib.IsMouseButtonReleased(button))
         {
-            if ((mouseOver || StayPressed) && pressed && actionMode == ActionMode.Release)
+            if (mouseOver && pressed && actionMode == ActionMode.Release)
             {
                 Toggle();
             }

@@ -6,8 +6,6 @@ public partial class LineEdit
 {
     private abstract class BaseText
     {
-        public TextBoxStyle Style;
-
         protected LineEdit parent;
 
         private Vector2 position = Vector2.Zero;

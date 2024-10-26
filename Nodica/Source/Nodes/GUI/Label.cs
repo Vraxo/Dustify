@@ -10,6 +10,9 @@ public class Label : VisualItem
         public Color FontColor { get; set; } = DefaultTheme.Text;
         public uint FontSize { get; set; } = 16;
         public int FontSpacing { get; set; } = 0;
+        public bool EnableShadow { get; set; } = false;
+        public Color ShadowColor { get; set; } = Color.Black;
+        public Vector2 ShadowOffset { get; set; } = new Vector2(1);
     }
 
     public enum TextCase
@@ -24,7 +27,7 @@ public class Label : VisualItem
     public string Ellipsis { get; set; } = "...";
     public TextCase Case { get; set; } = TextCase.Both;
 
-    private int _visibleCharacters = -1;  // -1 means show all characters
+    private int _visibleCharacters = -1;
     public int VisibleCharacters
     {
         get => _visibleCharacters;
@@ -32,11 +35,11 @@ public class Label : VisualItem
         set
         {
             _visibleCharacters = value;
-            UpdateVisibleRatio();  // Keep the ratio updated when characters change
+            UpdateVisibleRatio();
         }
     }
 
-    private float _visibleRatio = 1.0f;  // 1.0 means all characters are displayed
+    private float _visibleRatio = 1.0f;
     public float VisibleRatio
     {
         get => _visibleRatio;
@@ -44,7 +47,7 @@ public class Label : VisualItem
         set
         {
             _visibleRatio = value;
-            UpdateVisibleCharacters();  // Keep the characters updated when ratio changes
+            UpdateVisibleCharacters();
         }
     }
 
@@ -54,10 +57,11 @@ public class Label : VisualItem
     public string Text
     {
         get => _text;
+
         set
         {
             _text = value;
-            UpdateVisibleCharacters();  // Recalculate when text changes
+            UpdateVisibleCharacters();
         }
     }
 
@@ -75,6 +79,28 @@ public class Label : VisualItem
 
     protected override void Draw()
     {
+        DrawShadow();
+        DrawText();
+    }
+
+    private void DrawShadow()
+    {
+        if (!Style.EnableShadow)
+        {
+            return;
+        }
+
+        Raylib.DrawTextEx(
+            Style.Font,
+            displayedText,
+            GlobalPosition - Origin + Style.ShadowOffset,
+            Style.FontSize,
+            Style.FontSpacing,
+            Style.ShadowColor);
+    }
+
+    private void DrawText()
+    {
         Raylib.DrawTextEx(
             Style.Font,
             displayedText,
@@ -86,8 +112,9 @@ public class Label : VisualItem
 
     private void LimitDisplayedText()
     {
-        // Determine how much of the text is visible, either by VisibleCharacters or VisibleRatio
-        string textToConsider = VisibleCharacters == -1 ? _text : _text[..Math.Min(VisibleCharacters, _text.Length)];
+        string textToConsider = VisibleCharacters == -1 ? 
+                                _text : 
+                                _text[..Math.Min(VisibleCharacters, _text.Length)];
 
         if (!Clip)
         {
@@ -97,7 +124,6 @@ public class Label : VisualItem
 
         int numFittingCharacters = (int)(Size.X / (GetCharacterWidth() + Style.FontSpacing));
 
-        // Limit the number of characters we consider based on VisibleCharacters
         if (VisibleCharacters != -1)
         {
             numFittingCharacters = Math.Min(numFittingCharacters, VisibleCharacters);
@@ -154,23 +180,25 @@ public class Label : VisualItem
 
     private void UpdateVisibleCharacters()
     {
-        // If VisibleRatio is set, recalculate the number of characters to display based on the ratio
         if (_text.Length > 0)
         {
-            VisibleCharacters = (int)(_text.Length * VisibleRatio);
+            _visibleCharacters = (int)(_text.Length * _visibleRatio);
+        }
+        else
+        {
+            _visibleCharacters = -1; // Show all characters by default
         }
     }
 
     private void UpdateVisibleRatio()
     {
-        // Update VisibleRatio when VisibleCharacters changes
         if (_text.Length > 0)
         {
-            _visibleRatio = (float)VisibleCharacters / _text.Length;
+            _visibleRatio = _visibleCharacters / (float)_text.Length;
         }
         else
         {
-            _visibleRatio = 1.0f;  // If there's no text, set it to full
+            _visibleRatio = 1.0f; // Show all characters by default
         }
     }
 }

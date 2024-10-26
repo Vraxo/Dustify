@@ -3,11 +3,11 @@ using System.Reflection;
 
 namespace Nodica;
 
-public class SceneReference
+public class PackedScene
 {
     private string path;
 
-    public SceneReference(string path)
+    public PackedScene(string path)
     {
         if (!path.StartsWith("Resources/Scenes/"))
         {
@@ -57,7 +57,7 @@ public class SceneReference
                         scenePath = $"Resources/Scenes/{scenePath}";
                     }
 
-                    SceneReference referencedScene = new(scenePath);
+                    PackedScene referencedScene = new(scenePath);
                     Type rootNodeType = ResolveType(typeName);
                     var referencedRootNode = referencedScene.Instantiate(rootNodeType) as Node;
 
@@ -128,7 +128,7 @@ public class SceneReference
 
     private object Instantiate(Type type, bool isRootNode = false)
     {
-        MethodInfo method = typeof(SceneReference).GetMethod(nameof(Instantiate)).MakeGenericMethod(type);
+        MethodInfo method = typeof(PackedScene).GetMethod(nameof(Instantiate)).MakeGenericMethod(type);
         return method.Invoke(this, new object[] { isRootNode });
     }
 

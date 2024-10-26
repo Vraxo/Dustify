@@ -24,3 +24,8 @@ LeftControlPath = "/root/RenderButton"
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
+
+[Label "Label" "Root"]
+Position = Vector2(10, 10)
+Size = Vector2(100, 16)
+Text = "Go fuck yourself you fucking retarded piece of shit"
