@@ -117,11 +117,13 @@ public class PackedScene
 
         if (isRootNode)
         {
-            App.Instance.RootNode = instance as Node;
+            App.Instance.SetRootNode(instance as Node, true);
         }
-
-        (instance as Node).Build();
-        (instance as Node).Start();
+        else
+        {
+            (instance as Node).Build();
+            (instance as Node).Start();
+        }
 
         return instance;
     }

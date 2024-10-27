@@ -160,52 +160,6 @@ public class Node
         }
     }
 
-    //public T? GetNode1000<T>(string path) where T : Node
-    //{
-    //    if (path == "")
-    //    {
-    //        return (T)App.Instance.RootNode;
-    //    }
-    //
-    //    string[] nodeNames = path.Split('/');
-    //
-    //    Node currentNode = App.Instance.RootNode;
-    //
-    //    for (int i = 0; i < nodeNames.Length; i++)
-    //    {
-    //        currentNode = currentNode.GetChild(nodeNames[i]);
-    //    }
-    //
-    //    return (T)currentNode;
-    //}
-    //
-    //public T? GetNode<T>() where T : Node
-    //{
-    //    string typeName = typeof(T).Name;
-    //    return GetNode1000<T>(typeName);
-    //}
-    //
-    //public Node GetNode(string path)
-    //{
-    //    if (path == "")
-    //    {
-    //        return App.Instance.RootNode;
-    //    }
-    //
-    //    string[] nodeNames = path.Split('/');
-    //
-    //    Node currentNode = Program.RootNode;
-    //
-    //    for (int i = 0; i < nodeNames.Length; i++)
-    //    {
-    //        currentNode = currentNode.GetChild(nodeNames[i]);
-    //    }
-    //
-    //    return currentNode;
-    //}
-
-    // Get child
-
     public T? GetChild<T>(string name) where T : Node
     {
         foreach (Node child in Children)
@@ -247,7 +201,7 @@ public class Node
 
     // AddItem child
 
-    public void AddChild(Node node, string name, bool start = true)
+    public Node AddChild(Node node, string name, bool start = true)
     {
         node.Name = name;
         node.Parent = this;
@@ -260,9 +214,11 @@ public class Node
         }
 
         Children.Add(node);
+
+        return node;
     }
 
-    public void AddChild(Node node, bool start = true)
+    public Node AddChild(Node node, bool start = true)
     {
         node.Name = node.GetType().Name;
         node.Parent = this;
@@ -275,6 +231,8 @@ public class Node
         }
 
         Children.Add(node);
+
+        return node;
     }
 
     // Change scene

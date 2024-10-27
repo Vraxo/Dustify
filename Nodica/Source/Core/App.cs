@@ -25,6 +25,18 @@ public class App
         Raylib.SetWindowIcon(Raylib.LoadImage("Resources/Icon/Icon.png"));
     }
 
+    public void SetRootNode(Node node, bool packedScene = false)
+    {
+        RootNode = node;
+
+        if (!packedScene)
+        {
+            RootNode.Build();
+        }
+
+        RootNode.Start();
+    }
+
     public void Run()
     {
         //RootNode.Build();

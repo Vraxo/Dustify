@@ -6,13 +6,16 @@ public class Button : Control
 {
     public enum ClickMode { Limited, Limitless }
     public enum ActionMode { Release, Press }
-    public enum ButtonState { Normal, Hover, Pressed, Focused }
     public enum ClickBehavior { Left, Right, Both }
 
     #region [ - - - Properties & Fields - - - ]
 
     public Vector2 TextPadding { get; set; } = Vector2.Zero;
     public Vector2 TextOrigin { get; set; } = Vector2.Zero;
+
+    public HorizontalAlignment HorizontalAlignment { get; set; } = HorizontalAlignment.Center;
+    public VerticalAlignment VerticalAlignment { get; set; } = VerticalAlignment.Center;
+
     public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
     public ButtonThemePack Styles { get; set; } = new();
     public float AvailableWidth { get; set; } = 0;
@@ -23,8 +26,7 @@ public class Button : Control
     public bool AutoWidth { get; set; } = false;
     public Vector2 TextMargin { get; set; } = new(10, 5);
     public string Ellipsis { get; set; } = "...";
-    public ClickBehavior Behavior { get; set; } = ClickBehavior.Both;
-    public ButtonState State { get; private set; } = ButtonState.Normal;
+    public ClickBehavior Behavior { get; set; } = ClickBehavior.Left;
     public float IconMargin { get; set; } = 12;
 
     public Texture2D Icon { get; set; } = Raylib.LoadTexture("");
@@ -45,7 +47,7 @@ public class Button : Control
         set
         {
             _disabled = value;
-            UpdateStyle();
+            Styles.Current = Styles.Disabled;
         }
     }
 
@@ -84,7 +86,6 @@ public class Button : Control
     public Button()
     {
         Size = new(100, 26);
-        FocusChanged += OnFocusChanged;
     }
 
     public override void Update()
@@ -98,14 +99,7 @@ public class Button : Control
         }
 
         UpdateTextOrigin();
-        Draw();
         base.Update();
-    }
-
-    private void OnFocusChanged(bool focused)
-    {
-        State = focused ? ButtonState.Focused : ButtonState.Normal;
-        UpdateStyle();
     }
 
     private void HandleKeyboardInput()
@@ -169,8 +163,6 @@ public class Button : Control
         {
             Styles.Current = Styles.Normal;
         }
-
-        //UpdateStyle();
     }
 
     private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
@@ -201,24 +193,6 @@ public class Button : Control
             }
 
             pressed = false;
-        }
-    }
-
-    private void UpdateStyle()
-    {
-        if (Disabled)
-        {
-            Styles.Current = Styles.Disabled;
-        }
-        else
-        {
-            Styles.Current = State switch
-            {
-                ButtonState.Pressed => Styles.Pressed,
-                ButtonState.Hover => Styles.Hover,
-                ButtonState.Focused => Styles.Focused,
-                _ => Styles.Normal
-            };
         }
     }
 
@@ -260,38 +234,58 @@ public class Button : Control
 
     private Vector2 GetTextPosition()
     {
-        Vector2 fontDimensions = Raylib.MeasureTextEx(
+        Vector2 textSize = Raylib.MeasureTextEx(
             Styles.Current.Font,
             Text,
             Styles.Current.FontSize,
             1);
+        
+        //Vector2 center = Size / 2;
+        //
+        //Vector2 alignmentAdjustment = new(
+        //    TextOrigin.X < center.X ? 0 : TextOrigin.X > center.X ? -textSize.X : -textSize.X / 2,
+        //    TextOrigin.Y < center.Y ? 0 : TextOrigin.Y > center.Y ? -textSize.Y : -textSize.Y / 2
+        //);
+        //
+        //return GlobalPosition + TextOrigin + alignmentAdjustment - Origin + TextPadding;
 
-        Vector2 center = Size / 2;
+        float x = HorizontalAlignment switch
+        {
+            HorizontalAlignment.Center => Size.X / 2,
+            HorizontalAlignment.Right => Size.X - textSize.X / 2
+        };
 
-        Vector2 alignmentAdjustment = new(
-            TextOrigin.X < center.X ? 0 : TextOrigin.X > center.X ? -fontDimensions.X : -fontDimensions.X / 2,
-            TextOrigin.Y < center.Y ? 0 : TextOrigin.Y > center.Y ? -fontDimensions.Y : -fontDimensions.Y / 2
-        );
+        float y = VerticalAlignment switch
+        {
+            VerticalAlignment.Center => Size.Y / 2
+        };
 
-        return GlobalPosition + TextOrigin + alignmentAdjustment - Origin + TextPadding;
+        Vector2 origin = new(x, y);
+
+        return GlobalPosition - Origin + origin - textSize / 2 + TextOrigin;
     }
 
     private void UpdateTextOrigin()
     {
-        TextOrigin = TextOriginPreset switch
+        if (TextOriginPreset == OriginPreset.None)
         {
-            OriginPreset.Center => Size / 2,
-            OriginPreset.CenterLeft => new(0, Size.Y / 2),
-            OriginPreset.CenterRight => new(Size.X, Size.Y / 2),
-            OriginPreset.TopLeft => new(0, 0),
-            OriginPreset.TopRight => new(Size.X, 0),
-            OriginPreset.TopCenter => new(Size.X / 2, 0),
-            OriginPreset.BottomLeft => new(0, Size.Y),
-            OriginPreset.BottomRight => Size,
-            OriginPreset.BottomCenter => new(Size.X / 2, Size.Y),
-            OriginPreset.None => Origin,
-            _ => Origin,
-        };
+            return;
+        }
+
+        //TextOrigin = TextOriginPreset switch
+        //{
+        //    OriginPreset.Center => Size / 2,
+        //    OriginPreset.CenterLeft => new(0, Size.Y / 2),
+        //    OriginPreset.CenterRight => new(Size.X, Size.Y / 2),
+        //    OriginPreset.TopLeft => new(0, 0),
+        //    OriginPreset.TopRight => new(Size.X, 0),
+        //    OriginPreset.TopCenter => new(Size.X / 2, 0),
+        //    OriginPreset.BottomLeft => new(0, Size.Y),
+        //    OriginPreset.BottomRight => Size,
+        //    OriginPreset.BottomCenter => new(Size.X / 2, Size.Y),
+        //    OriginPreset.None => Origin,
+        //    _ => Origin,
+        //};
     }
 
     private void ResizeToFitText()

@@ -13,9 +13,8 @@ public abstract class VisualItem : Node2D
         {
             Draw();
         }
-
-        ReadyForVisibility = true;
         base.Update();
+        ReadyForVisibility = true;
     }
 
     protected virtual void Draw() { }

@@ -6,7 +6,6 @@ public class CheckBox : Control
 {
     public enum ClickMode { Limited, Limitless }
     public enum ActionMode { Release, Press }
-    public enum ButtonState { Normal, Hover, Pressed, Focused }
     public enum ClickBehavior { Left, Right, Both }
 
     #region [ - - - Properties & Fields - - - ]
@@ -29,6 +28,7 @@ public class CheckBox : Control
         set
         {
             _disabled = value;
+            BackgroundStyles.Current = BackgroundStyles.Disabled;
         }
     }
 

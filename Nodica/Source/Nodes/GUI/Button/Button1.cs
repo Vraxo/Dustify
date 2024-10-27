@@ -2,33 +2,53 @@
 //
 //namespace Nodica;
 //
-//public class Button : ClickableRectangle
+//public class Option : Control
 //{
-//    public enum ClickMode
-//    {
-//        Limited,
-//        Limitless
-//    }
+//    public enum ClickMode { Limited, Limitless }
+//    public enum ActionMode { Release, Press }
+//    public enum ButtonState { Normal, Hover, Pressed, Focused }
+//    public enum ClickBehavior { Left, Right, Both }
 //
 //    #region [ - - - Properties & Fields - - - ]
 //
 //    public Vector2 TextPadding { get; set; } = Vector2.Zero;
 //    public Vector2 TextOrigin { get; set; } = Vector2.Zero;
 //    public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
-//    public ButtonThemePack BackgroundStyles { get; set; } = new();
-//    public bool PressedLeft { get; set; } = false;
-//    public bool PressedRight { get; set; } = false;
-//    public bool ClipText { get; set; } = false;
+//    public ButtonThemePack Styles { get; set; } = new();
 //    public float AvailableWidth { get; set; } = 0;
-//    public ClickMode _LeftClickMode { get; set; } = ClickMode.Limitless;
-//    public ClickMode _RightClickMode { get; set; } = ClickMode.Limitless;
+//    public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
+//    public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
+//    public bool StayPressed { get; set; } = false;
+//    public bool ClipText { get; set; } = false;
+//    public bool AutoWidth { get; set; } = false;
+//    public Vector2 TextMargin { get; set; } = new(10, 5);
+//    public string Ellipsis { get; set; } = "...";
+//    public ClickBehavior Behavior { get; set; } = ClickBehavior.Both;
+//    public ButtonState State { get; private set; } = ButtonState.Normal;
+//    public float IconMargin { get; set; } = 12;
 //
-//    public Action<Button> OnUpdate = (button) => { };
+//    public Texture2D Icon { get; set; } = Raylib.LoadTexture("");
+//    public bool HasIcon = false;
+//
+//    public bool PressedLeft = false;
+//    public bool PressedRight = false;
+//
+//    public Action<Option> OnUpdate = (button) => { };
 //
 //    public event EventHandler? LeftClicked;
 //    public event EventHandler? RightClicked;
 //
-//    private bool alreadyClicked = false;
+//    private bool _disabled = false;
+//    public bool Disabled
+//    {
+//        get => _disabled;
+//        set
+//        {
+//            _disabled = value;
+//            UpdateStyle();
+//        }
+//    }
+//
 //    private string displayedText = "";
 //
 //    private string _text = "";
@@ -40,349 +60,219 @@
 //        {
 //            _text = value;
 //            displayedText = value;
+//            if (AutoWidth)
+//            {
+//                ResizeToFitText();
+//            }
+//        }
+//    }
+//
+//    private string _themeFile = "";
+//    public string ThemeFile
+//    {
+//        get => _themeFile;
+//
+//        set
+//        {
+//            _themeFile = value;
+//            Styles = StyleLoader.LoadStyle<ButtonThemePack>(value);
 //        }
 //    }
 //
 //    #endregion
 //
-//    // Public
-//
-//    public Button()
+//    public Option()
 //    {
 //        Size = new(100, 26);
+//        FocusChanged += OnFocusChanged;
 //    }
 //
 //    public override void Update()
 //    {
-//        OnUpdate(this);
-//        ClipDisplayedText();
+//        if (!Disabled)
+//        {
+//            OnUpdate(this);
+//            ClipDisplayedText();
+//            HandleClicks();
+//            HandleKeyboardInput();
+//        }
+//
 //        UpdateTextOrigin();
-//        HandleClick();
 //        Draw();
 //        base.Update();
 //    }
 //
-//    // Click handling
-//
-//    private void HandleClick()
+//    private void OnFocusChanged(bool focused)
 //    {
-//        HandleLeftClicks();
-//        HandleRightClicks();
+//        State = focused ? ButtonState.Focused : ButtonState.Normal;
+//        UpdateStyle();
 //    }
 //
-//    // Left click handling
-//
-//    private void HandleLeftClicks()
+//    private void HandleKeyboardInput()
 //    {
-//        if (LeftClicked is null)
+//        if (Focused && Raylib.IsKeyPressed(KeyboardKey.Enter))
 //        {
-//            return;
+//            LeftClicked?.Invoke(this, EventArgs.Empty);
+//            RightClicked?.Invoke(this, EventArgs.Empty);
+//        }
+//    }
+//
+//    private void HandleClicks()
+//    {
+//        if (Disabled) return;
+//
+//        bool mouseOver = IsMouseOver();
+//        bool anyPressed = false;
+//
+//        if (Behavior == ClickBehavior.Left || Behavior == ClickBehavior.Both)
+//        {
+//            HandleClick(
+//                ref PressedLeft,
+//                MouseButton.Left,
+//                LeftClickActionMode,
+//                LeftClicked);
+//
+//            if (PressedLeft) anyPressed = true;
 //        }
 //
-//        if (_LeftClickMode == ClickMode.Limitless)
+//        if (Behavior == ClickBehavior.Right || Behavior == ClickBehavior.Both)
 //        {
-//            HandleLeftClickLimitless();
+//            HandleClick(
+//                ref PressedRight,
+//                MouseButton.Right,
+//                RightClickActionMode,
+//                RightClicked);
+//
+//            if (PressedRight) anyPressed = true;
+//        }
+//
+//        if (StayPressed && (PressedLeft || PressedRight))
+//        {
+//            Styles.Current = Styles.Pressed;
+//        }
+//        else if (Focused)
+//        {
+//            if (mouseOver)
+//            {
+//                Styles.Current = anyPressed ? Styles.Pressed : Styles.Focused;
+//            }
+//            else
+//            {
+//                Styles.Current = Focused ? Styles.Focused : Styles.Normal;
+//            }
+//        }
+//        else if (mouseOver)
+//        {
+//            Styles.Current = anyPressed ? Styles.Pressed : Styles.Hover;
 //        }
 //        else
 //        {
-//            HandleLeftClickLimited();
+//            Styles.Current = Styles.Normal;
 //        }
+//
+//        //UpdateStyle();
 //    }
 //
-//    private void HandleLeftClickLimitless()
+//    private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
 //    {
-//        if (IsMouseOver())
+//        if (Disabled) return;
+//
+//        bool mouseOver = IsMouseOver();
+//
+//        if (mouseOver)
 //        {
-//            if (Raylib.IsMouseButtonReleased(MouseButton.Left))
+//            if (Raylib.IsMouseButtonPressed(button))
 //            {
-//                if (PressedLeft)
+//                pressed = true;
+//                HandleClickFocus();
+//
+//                if (actionMode == ActionMode.Press)
 //                {
-//                    PressedLeft = false;
-//                    LeftClicked.Invoke(this, EventArgs.Empty);
+//                    clickHandler?.Invoke(this, EventArgs.Empty);
 //                }
 //            }
 //        }
 //
-//        if (Raylib.IsMouseButtonDown(MouseButton.Left))
+//        if (Raylib.IsMouseButtonReleased(button))
 //        {
-//            if (!IsMouseOver())
+//            if (mouseOver && pressed && actionMode == ActionMode.Release) // (mouseOver || StayPressed)
 //            {
-//                alreadyClicked = true;
-//            }
-//        }
-//
-//        if (IsMouseOver())
-//        {
-//            BackgroundStyles.Current = BackgroundStyles.Hover;
-//            
-//            if (Raylib.IsMouseButtonDown(MouseButton.Left))
-//            {
-//                if (!alreadyClicked && OnTopLeft)
-//                {
-//                    OnTopLeft = false;
-//                    PressedLeft = true;
-//                    alreadyClicked = true;
-//                }
-//
-//                if (PressedLeft)
-//                {
-//                    BackgroundStyles.Current = BackgroundStyles.Pressed;
-//                }
-//            }
-//        }
-//        else
-//        {
-//            BackgroundStyles.Current = BackgroundStyles.Normal;
-//        }
-//
-//        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
-//        {
-//            if (IsMouseOver() && PressedLeft)
-//            {
-//                LeftClicked?.Invoke(this, EventArgs.Empty);
+//                clickHandler?.Invoke(this, EventArgs.Empty);
 //            }
 //
-//            PressedLeft = false;
-//            alreadyClicked = false;
-//            BackgroundStyles.Current = BackgroundStyles.Normal;
+//            pressed = false;
 //        }
 //    }
 //
-//    private void HandleLeftClickLimited()
+//    private void UpdateStyle()
 //    {
-//        if (IsMouseOver())
+//        if (Disabled)
 //        {
-//            BackgroundStyles.Current = BackgroundStyles.Hover;
-//
-//            if (Raylib.IsMouseButtonPressed(MouseButton.Left) && OnTopLeft)
-//            {
-//                PressedLeft = true;
-//                OnTopLeft = false;
-//            }
-//
-//            if (PressedLeft)
-//            {
-//                BackgroundStyles.Current = BackgroundStyles.Pressed;
-//            }
+//            Styles.Current = Styles.Disabled;
 //        }
 //        else
 //        {
-//            PressedLeft = false;
-//            BackgroundStyles.Current = BackgroundStyles.Normal;
-//        }
-//
-//        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
-//        {
-//            if (IsMouseOver() && PressedLeft)
+//            Styles.Current = State switch
 //            {
-//                LeftClicked?.Invoke(this, EventArgs.Empty);
-//            }
-//
-//            PressedLeft = false;
-//            BackgroundStyles.Current = BackgroundStyles.Normal;
+//                ButtonState.Pressed => Styles.Pressed,
+//                ButtonState.Hover => Styles.Hover,
+//                ButtonState.Focused => Styles.Focused,
+//                _ => Styles.Normal
+//            };
 //        }
 //    }
 //
-//    // Right click handling
-//
-//    private void HandleRightClicks()
+//    protected override void Draw()
 //    {
-//        if (RightClicked is null)
-//        {
-//            return;
-//        }
-//
-//        if (_RightClickMode == ClickMode.Limitless)
-//        {
-//            HandleRightClickLimitless();
-//        }
-//        else
-//        {
-//            HandleRightClickLimited();
-//        }
-//    }
-//
-//    private void HandleRightClickLimitless()
-//    {
-//        if (Raylib.IsMouseButtonDown(MouseButton.Right))
-//        {
-//            if (!IsMouseOver())
-//            {
-//                alreadyClicked = true;
-//            }
-//        }
-//
-//        if (IsMouseOver())
-//        {
-//            if (!PressedLeft)
-//            {
-//                BackgroundStyles.Current = BackgroundStyles.Hover;
-//            }
-//
-//            if (Raylib.IsMouseButtonDown(MouseButton.Right))
-//            {
-//                if (!alreadyClicked && OnTopRight)
-//                {
-//                    OnTopRight = false;
-//                    PressedRight = true;
-//                    alreadyClicked = true;
-//                }
-//
-//                if (PressedRight)
-//                {
-//                    BackgroundStyles.Current = BackgroundStyles.Pressed;
-//                }
-//            }
-//        }
-//        else
-//        {
-//            BackgroundStyles.Current = BackgroundStyles.Normal;
-//        }
-//
-//        if (Raylib.IsMouseButtonReleased(MouseButton.Right))
-//        {
-//            if (IsMouseOver() && PressedRight)
-//            {
-//                RightClicked?.Invoke(this, EventArgs.Empty);
-//            }
-//
-//            PressedRight = false;
-//            alreadyClicked = false;
-//            BackgroundStyles.Current = BackgroundStyles.Normal;
-//        }
-//    }
-//
-//    private void HandleRightClickLimited()
-//    {
-//        if (IsMouseOver())
-//        {
-//            BackgroundStyles.Current = BackgroundStyles.Hover;
-//
-//            if (Raylib.IsMouseButtonPressed(MouseButton.Right) && OnTopRight)
-//            {
-//                PressedRight = true;
-//                OnTopRight = false;
-//            }
-//
-//            if (PressedRight)
-//            {
-//                BackgroundStyles.Current = BackgroundStyles.Pressed;
-//            }
-//        }
-//        else
-//        {
-//            PressedRight = false;
-//            BackgroundStyles.Current = BackgroundStyles.Normal;
-//        }
-//
-//        if (Raylib.IsMouseButtonReleased(MouseButton.Right))
-//        {
-//            if (IsMouseOver() && PressedRight)
-//            {
-//                RightClicked?.Invoke(this, EventArgs.Empty);
-//            }
-//
-//            PressedRight = false;
-//            BackgroundStyles.Current = BackgroundStyles.Normal;
-//        }
-//    }
-//
-//    // Drawing
-//
-//    private void Draw()
-//    {
-//        if (!(Visible && ReadyForVisibility))
-//        {
-//            return;
-//        }
-//
-//        DrawShape();
+//        DrawBox();
+//        DrawIcon();
 //        DrawText();
 //    }
 //
-//    private void DrawShape()
+//    private void DrawBox()
 //    {
-//        DrawShapeOutline();
-//        DrawShapeInside();
+//        DrawBorderedRectangle(
+//            GlobalPosition - Origin,
+//            Size,
+//            Styles.Current);
 //    }
 //
-//    private void DrawShapeInside()
+//    private void DrawIcon()
 //    {
-//        Rectangle rectangle = new()
-//        {
-//            Position = GlobalPosition - Origin * Scale,
-//            Size = Size * Scale
-//        };
+//        var iconOrigin = new Vector2(Icon.Width, Icon.Height) / 2f;
 //
-//        Raylib.DrawRectangleRounded(
-//            rectangle,
-//            BackgroundStyles.Current.Roundness,
-//            (int)Size.Y,
-//            BackgroundStyles.Current.FillColor);
-//    }
-//
-//    private void DrawShapeOutline()
-//    {
-//        if (BackgroundStyles.Current.BorderLength <= 0)
-//        {
-//            return;
-//        }
-//
-//        Rectangle rectangle = new()
-//        {
-//            Position = GlobalPosition - Origin * Scale,
-//            Size = Size * Scale
-//        };
-//
-//        for (int i = 0; i <= BackgroundStyles.Current.BorderLength; i++)
-//        {
-//            Rectangle outlineRectangle = new()
-//            {
-//                Position = rectangle.Position - new Vector2(i, i),
-//                Size = new(rectangle.Size.X + i + 1, rectangle.Size.Y + i + 1)
-//            };
-//
-//            Raylib.DrawRectangleRounded(
-//                outlineRectangle,
-//                BackgroundStyles.Current.Roundness,
-//                (int)rectangle.Size.X,
-//                BackgroundStyles.Current.BorderColor);
-//        }
+//        Raylib.DrawTextureV(
+//            Icon,
+//            GlobalPosition - new Vector2(Origin.X - IconMargin, 0) - iconOrigin,
+//            Color.White);
 //    }
 //
 //    private void DrawText()
 //    {
 //        Raylib.DrawTextEx(
-//            BackgroundStyles.Current.Font,
+//            Styles.Current.Font,
 //            displayedText,
 //            GetTextPosition(),
-//            BackgroundStyles.Current.FontSize,
+//            Styles.Current.FontSize,
 //            1,
-//            BackgroundStyles.Current.FontColor);
+//            Styles.Current.FontColor);
 //    }
-//
-//    // Text positioning
 //
 //    private Vector2 GetTextPosition()
 //    {
-//        // Measure the dimensions of the TextDisplayer
 //        Vector2 fontDimensions = Raylib.MeasureTextEx(
-//            BackgroundStyles.Current.Font,
+//            Styles.Current.Font,
 //            Text,
-//            BackgroundStyles.Current.FontSize,
-//            1
-//        );
+//            Styles.Current.FontSize,
+//            1);
 //
-//        // Evaluate the center of the Button
 //        Vector2 center = Size / 2;
 //
-//        // Determine the alignment adjustment based on the TextOrigin
 //        Vector2 alignmentAdjustment = new(
 //            TextOrigin.X < center.X ? 0 : TextOrigin.X > center.X ? -fontDimensions.X : -fontDimensions.X / 2,
 //            TextOrigin.Y < center.Y ? 0 : TextOrigin.Y > center.Y ? -fontDimensions.Y : -fontDimensions.Y / 2
 //        );
 //
-//        // Evaluate the TextDisplayer position based on the alignment and origin
 //        return GlobalPosition + TextOrigin + alignmentAdjustment - Origin + TextPadding;
 //    }
 //
@@ -404,14 +294,25 @@
 //        };
 //    }
 //
-//    // Displayed text truncating
-//
-//    private void ClipDisplayedText()
+//    private void ResizeToFitText()
 //    {
-//        if (!ClipText)
+//        if (!AutoWidth)
 //        {
 //            return;
 //        }
+//
+//        int textWidth = (int)Raylib.MeasureTextEx(
+//            Styles.Current.Font,
+//            Text,
+//            Styles.Current.FontSize,
+//            1).X;
+//
+//        Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
+//    }
+//
+//    private void ClipDisplayedText()
+//    {
+//        if (!ClipText) return;
 //
 //        float characterWidth = GetCharacterWidth();
 //        int numFittingCharacters = (int)(AvailableWidth / characterWidth);
@@ -433,25 +334,17 @@
 //
 //    private float GetCharacterWidth()
 //    {
-//        float width = Raylib.MeasureTextEx(
-//            BackgroundStyles.Current.Font,
+//        return Raylib.MeasureTextEx(
+//            Styles.Current.Font,
 //            " ",
-//            BackgroundStyles.Current.FontSize,
+//            Styles.Current.FontSize,
 //            1).X;
-//
-//        return width;
 //    }
 //
-//    private static string ClipTextWithEllipsis(string input)
+//    private string ClipTextWithEllipsis(string input)
 //    {
-//        if (input.Length > 3)
-//        {
-//            string trimmedText = input[..^3];
-//            return trimmedText + "...";
-//        }
-//        else
-//        {
-//            return input;
-//        }
+//        return input.Length > 3 ?
+//               input[..^Ellipsis.Length] + Ellipsis :
+//               input;
 //    }
 //}

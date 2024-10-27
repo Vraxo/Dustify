@@ -13,3 +13,19 @@ public enum OriginPreset
     BottomLeft,
     BottomRight,
 }
+
+public enum HorizontalAlignment
+{
+    Left,
+    Center,
+    Right,
+    None // Optional
+}
+
+public enum VerticalAlignment
+{
+    Top,
+    Center,
+    Bottom,
+    None // Optional
+}

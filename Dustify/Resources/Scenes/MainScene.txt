@@ -4,22 +4,28 @@
 Size = Vector2(500, 500)
 Styles/Roundness = 0
 
-[AspectRatioContainer "ARC" "ImageSelectionButton"]
+[AspectRatioContainer "AspectRatioContainer" "ImageSelectionButton"]
 Size = Vector2(500, 500)
 
-[ImageDisplayer "TextureRectangle" "ARC"]
+[ImageDisplayer "ImageDisplayer" "AspectRatioContainer"]
 
 [Button "RenderButton" "Root"]
 Position = Vector2(500, 500)
 Styles/Roundness = 0
 Text = "Render"
 ThemeFile = "Resources/ButtonTheme.txt"
-RightControlPath = "/root/FocusTestButton"
+RightControlPath = "/root/OptionButton"
 Icon = Texture("Resources/ReturnIcon.png")
+FocusOnClick = true
 
 [CheckBox "FocusTestButton" "Root"]
 Position = Vector2(600, 500)
 LeftControlPath = "/root/RenderButton"
+FocusOnClick = true
+
+[OptionButton "OptionButton" "Root"]
+Position = Vector2(500, 600)
+Text = "..."
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)

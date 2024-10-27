@@ -5,7 +5,7 @@ using Button = Nodica.Button;
 
 namespace Dustify;
 
-public class MainScene : Node
+public partial class MainScene : Node
 {
     private Button imageSelectionButton;
     private ImageDisplayer imageDisplayer;
@@ -14,10 +14,19 @@ public class MainScene : Node
 
     public override void Start()
     {
+        Name = "Root";
+
         imageSelectionButton = GetNode<Button>("ImageSelectionButton");
         imageSelectionButton.LeftClicked += OnImageSelectionButtonLeftClicked;
 
-        imageDisplayer = GetNode<ImageDisplayer>("ImageSelectionButton/ARC/TextureRectangle");
+        Console.WriteLine("\n\n");
+
+        imageDisplayer = GetNode<ImageDisplayer>("ImageSelectionButton/AspectRatioContainer/ImageDisplayer");
+
+        if (imageDisplayer is null)
+        {
+            Console.WriteLine("wait here");
+        }
 
         renderButton = GetNode<Button>("RenderButton");
         renderButton.LeftClicked += OnRenderButtonLeftClicked;
@@ -66,7 +75,10 @@ public class MainScene : Node
 
     private void OnRenderButtonLeftClicked(object? sender, EventArgs e)
     {
-        StartRendering(Renderer.VideoQuality.Low, Renderer.VideoQuality.Medium, Renderer.VideoQuality.High);
+        StartRendering(
+            Renderer.VideoQuality.Low,
+            Renderer.VideoQuality.Medium,
+            Renderer.VideoQuality.High);
     }
 
     private void StartRendering(params Renderer.VideoQuality[] qualities)
