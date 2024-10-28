@@ -28,7 +28,7 @@ public partial class LineEdit
             DrawBorderedRectangle(
                 parent.GlobalPosition - parent.Origin,
                 parent.Size,
-                parent.Style.Current);
+                parent.Theme.Current);
 
             //DrawOutline();
             //DrawInside();

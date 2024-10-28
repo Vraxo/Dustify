@@ -23,7 +23,7 @@ public partial class LineEdit : ClickableRectangle
     public bool Secret { get; set; } = false;
     public char SecretCharacter { get; set; } = '*';
 
-    public ButtonThemePack Style { get; set; } = new()
+    public ButtonThemePack Theme { get; set; } = new()
     {
         Pressed = new()
         {
@@ -107,10 +107,10 @@ public partial class LineEdit : ClickableRectangle
         }
 
         int textWidth = (int)Raylib.MeasureTextEx(
-            Style.Current.Font,
+            Theme.Current.Font,
             Text,
-            Style.Current.FontSize,
-            Style.Current.FontSpacing).X;
+            Theme.Current.FontSize,
+            Theme.Current.FontSpacing).X;
 
         Size = new(textWidth + TextOrigin.X * 2, Size.Y);
     }
@@ -151,7 +151,7 @@ public partial class LineEdit : ClickableRectangle
             if (!IsMouseOver())
             {
                 Selected = false;
-                Style.Current = Style.Normal;
+                Theme.Current = Theme.Normal;
             }
         }
 
@@ -162,7 +162,7 @@ public partial class LineEdit : ClickableRectangle
                 if (OnTopLeft)
                 {
                     Selected = true;
-                    Style.Current = Style.Pressed;
+                    Theme.Current = Theme.Pressed;
                 }
             }
         }
@@ -171,7 +171,7 @@ public partial class LineEdit : ClickableRectangle
             if (Raylib.IsMouseButtonDown(MouseButton.Left))
             {
                 Selected = false;
-                Style.Current = Style.Normal;
+                Theme.Current = Theme.Normal;
             }
         }
     }
@@ -390,7 +390,7 @@ public partial class LineEdit : ClickableRectangle
         if (Raylib.IsKeyDown(KeyboardKey.Enter))
         {
             Selected = false;
-            Style.Current = Style.Normal;
+            Theme.Current = Theme.Normal;
             Confirmed?.Invoke(this, Text);
         }
     }
@@ -408,10 +408,10 @@ public partial class LineEdit : ClickableRectangle
         float availableWidth = Size.X - TextOrigin.X * 2;
 
         float oneCharacterWidth = Raylib.MeasureTextEx(
-            Style.Current.Font,
+            Theme.Current.Font,
             ".",
-            Style.Current.FontSize,
-            Style.Current.FontSpacing).X;
+            Theme.Current.FontSize,
+            Theme.Current.FontSpacing).X;
 
         int displayableCharactersCount = (int)(availableWidth / oneCharacterWidth);
 

@@ -1,4 +1,5 @@
 ﻿using Raylib_cs;
+using System.Xml.Schema;
 
 namespace Nodica;
 
@@ -55,11 +56,11 @@ public partial class LineEdit : ClickableRectangle
         private void Draw()
         {
             Raylib.DrawTextEx(
-                parent.Style.Current.Font,
+                parent.Theme.Current.Font,
                 "|",
                 GetPosition(),
-                parent.Style.Current.FontSize,
-                1,
+                parent.Theme.Current.FontSize,
+                parent.Theme.Current.FontSpacing,
                 GetColor());
         }
 
@@ -119,7 +120,7 @@ public partial class LineEdit : ClickableRectangle
         {
             Vector2 size = GetSize();
 
-            float x = GlobalPosition.X - parent.Origin.X + parent.TextOrigin.X + X * size.X - size.X / 2 + X;
+            float x = GlobalPosition.X - parent.Origin.X + parent.TextOrigin.X + X * size.X - size.X / 2 + X - X;
             float y = GlobalPosition.Y + parent.Size.Y / 2 - size.Y / 2 - parent.Origin.Y;
 
             return new(x, y);
@@ -127,18 +128,18 @@ public partial class LineEdit : ClickableRectangle
 
         private Vector2 GetSize()
         {
-            Font font = parent.Style.Current.Font;
-            float fontSize = parent.Style.Current.FontSize;
+            Font font = parent.Theme.Current.Font;
+            float fontSize = parent.Theme.Current.FontSize;
 
-            int width = (int)Raylib.MeasureTextEx(font, "|", fontSize, 1).X;
-            int height = (int)Raylib.MeasureTextEx(font, parent.Text, fontSize, 1).Y;
+            int width = (int)Raylib.MeasureTextEx(font, "|", fontSize, parent.Theme.Current.FontSpacing).X;
+            int height = (int)Raylib.MeasureTextEx(font, parent.Text, fontSize, parent.Theme.Current.FontSpacing).Y;
 
             return new(width, height);
         }
 
         private Color GetColor()
         {
-            Color color = parent.Style.Current.FontColor;
+            Color color = parent.Theme.Current.FontColor;
             color.A = alpha;
 
             return color;

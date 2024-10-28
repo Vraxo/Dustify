@@ -30,12 +30,12 @@ public partial class LineEdit
             }
 
             Raylib.DrawTextEx(
-                parent.Style.Current.Font,
+                parent.Theme.Current.Font,
                 GetText(),
                 GetPosition(),
-                parent.Style.Current.FontSize,
-                parent.Style.Current.FontSpacing,
-                parent.Style.Current.FontColor);
+                parent.Theme.Current.FontSize,
+                parent.Theme.Current.FontSpacing,
+                parent.Theme.Current.FontColor);
         }
 
         protected Vector2 GetPosition()
@@ -59,9 +59,9 @@ public partial class LineEdit
 
         private int GetHalfFontHeight()
         {
-            Font font = parent.Style.Current.Font;
+            Font font = parent.Theme.Current.Font;
             string text = GetText();
-            uint fontSize = (uint)parent.Style.Current.FontSize;
+            uint fontSize = (uint)parent.Theme.Current.FontSize;
 
             int halfFontHeight = (int)(Raylib.MeasureTextEx(font, text, fontSize, 1).Y / 2);
             return halfFontHeight;

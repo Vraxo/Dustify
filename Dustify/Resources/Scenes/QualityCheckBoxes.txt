@@ -26,3 +26,6 @@ Position = Vector2(200, 500)
 [Label "LowQualityLabel" "LowQualityCheckBox"]
 Position = Vector2(25, 0)
 Text = "Low"
+
+[LineEdit "LineEditor" "QualityCheckBoxes"]
+Position = Vector2(200, 500)
