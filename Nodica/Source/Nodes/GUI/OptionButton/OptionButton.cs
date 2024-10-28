@@ -5,17 +5,10 @@ namespace Nodica;
 
 public partial class OptionButton : Button
 {
-    public class OptionButtonOption
-    {
-        public string Text { get; set; } = "";
-        public int Id { get; set; } = 0;
-    }
-
     public bool Open { get; set; } = false;
     public int Choice { get; set; } = -1;
 
     public List<string> Options { get; set; } = [];
-    public List<OptionButtonOption> Fuckers { get; set; } = [];
     public int OptionsCount => Options.Count;
 
     private readonly List<OptionButtonButton> optionChildren = new();
@@ -23,7 +16,6 @@ public partial class OptionButton : Button
     public OptionButton()
     {
         LeftClicked += OnLeftClicked;
-
     }
 
     public void Add(string option)
@@ -65,7 +57,7 @@ public partial class OptionButton : Button
 
     private void DropDown()
     {
-        for (int i = 0; i < Fuckers.Count; i++)
+        for (int i = 0; i < Options.Count; i++)
         {
             var option = new OptionButtonButton
             {
@@ -74,7 +66,7 @@ public partial class OptionButton : Button
                 {
                     Roundness = 0
                 },
-                Text = Fuckers[i].Text + Fuckers[i].Text,
+                Text = Options[i],
                 Checked = i == Choice,
                 Index = i
             };

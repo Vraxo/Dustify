@@ -121,7 +121,7 @@ public class PackedScene
         }
 
         // Start the root node
-        if (isRootNode)
+        if (!isRootNode)
         {
             (instance as Node).Start();
         }
@@ -137,7 +137,6 @@ public class PackedScene
         }
 
         StartChildNodes(instance as Node);
-
 
         return instance;
     }

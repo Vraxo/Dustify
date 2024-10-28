@@ -18,6 +18,10 @@ public partial class MainScene : Node
         renderButton = GetNode<RenderButton>("RenderButton");
         progressBar = GetNode<ProgressBar>("ProgressBar");
 
+        var optionButton = GetNode<OptionButton>("OptionButton");
+        optionButton.Add("Row by row");
+        optionButton.Add("All at once");
+
         string[] args = Environment.GetCommandLineArgs();
 
         if (args.Length > 1)

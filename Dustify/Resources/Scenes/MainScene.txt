@@ -17,9 +17,9 @@ Icon = Texture("Resources/ReturnIcon.png")
 FocusOnClick = true
 ThemeFile = "Resources/ButtonTheme.txt"
 
-#[OptionButton "OptionButton" "Root"]
-#Position = Vector2(500, 600)
-#Text = "..."
+[OptionButton "OptionButton" "Root"]
+Position = Vector2(550, 600)
+Text = "..."
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
