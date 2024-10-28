@@ -1,17 +1,23 @@
 ﻿using Nodica;
 
 namespace Dustify;
-// test
+
 public class ImageDisplayer : CustomTexturedRectangle
 {
     public Bitmap BitmapData;
     public float Speed = 5;
+    public DisintegrationMode Mode = DisintegrationMode.AllAtOnce;
 
     private bool disintegrating = false;
     private int step = 4;
     private int currentRow = 0;
 
-    private Timer timer;
+    public override void Start()
+    {
+        Console.WriteLine("stared -> image displayer");
+
+        base.Start();
+    }
 
     public override void Update()
     {
@@ -23,8 +29,9 @@ public class ImageDisplayer : CustomTexturedRectangle
         base.Update();
     }
 
-    public void StartDisintegration()
+    public void StartDisintegration(DisintegrationMode mode)
     {
+        Mode = mode;
         disintegrating = true;
         currentRow = 0;
     }
@@ -35,6 +42,18 @@ public class ImageDisplayer : CustomTexturedRectangle
     }
 
     private void Disintegrate()
+    {
+        if (Mode == DisintegrationMode.RowByRow)
+        {
+            DisintegrateRowByRow();
+        }
+        else if (Mode == DisintegrationMode.AllAtOnce)
+        {
+            DisintegrateAllAtOnce();
+        }
+    }
+
+    private void DisintegrateRowByRow()
     {
         if (currentRow * step < Size.Y)
         {
@@ -63,5 +82,33 @@ public class ImageDisplayer : CustomTexturedRectangle
         {
             disintegrating = false;
         }
+    }
+
+    private void DisintegrateAllAtOnce()
+    {
+        for (int y = 0; y < Size.Y; y += step)
+        {
+            for (int x = 0; x < Size.X; x += step)
+            {
+                System.Drawing.Color color = BitmapData.GetPixel(x, y);
+                Vector2 position = Position - Origin + new Vector2(x, y);
+
+                Particle particle = new()
+                {
+                    Position = position,
+                    Style = new()
+                    {
+                        FillColor = new(color.R, color.G, color.B, color.A)
+                    },
+                    Speed = Speed
+                };
+
+                AddChild(particle);
+
+            }
+        }
+
+        Visible = false;
+        disintegrating = false;
     }
 }

@@ -36,12 +36,12 @@ public partial class LineEdit
 
         //private void DrawOutline()
         //{
-        //    if (parent.Style.Current.BorderLength <= 0)
+        //    if (parent.Theme.Current.BorderLength <= 0)
         //    {
         //        return;
         //    }
         //
-        //    for (int i = 1; i <= parent.Style.Current.BorderLength; i++)
+        //    for (int i = 1; i <= parent.Theme.Current.BorderLength; i++)
         //    {
         //        Vector2 offset = new(i / 2f, i / 2f);
         //
@@ -53,9 +53,9 @@ public partial class LineEdit
         //
         //        Raylib.DrawRectangleRounded(
         //            rectangle,
-        //            parent.Style.Current.Roundness,
+        //            parent.Theme.Current.Roundness,
         //            (int)parent.Size.Y,
-        //            parent.Style.Current.BorderColor);
+        //            parent.Theme.Current.BorderColor);
         //    }
         //}
         //
@@ -69,9 +69,9 @@ public partial class LineEdit
         //
         //    Raylib.DrawRectangleRounded(
         //        rectangle,
-        //        parent.Style.Current.Roundness,
+        //        parent.Theme.Current.Roundness,
         //        (int)parent.Size.Y,
-        //        parent.Style.Current.FillColor);
+        //        parent.Theme.Current.FillColor);
         //}
     }
 }

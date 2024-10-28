@@ -4,7 +4,7 @@ namespace Nodica;
 
 public class Label : VisualItem
 {
-    public class LabelStyle
+    public class LabelTheme
     {
         public Font Font { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
         public Color FontColor { get; set; } = DefaultTheme.Text;
@@ -22,8 +22,8 @@ public class Label : VisualItem
         Both
     }
 
-    public LabelStyle Style { get; set; } = new();
-    public bool Clip { get; set; } = true;
+    public LabelTheme Theme { get; set; } = new();
+    public bool Clip { get; set; } = false;
     public string Ellipsis { get; set; } = "...";
     public TextCase Case { get; set; } = TextCase.Both;
 
@@ -72,10 +72,12 @@ public class Label : VisualItem
 
     public override void Update()
     {
-        LimitDisplayedText();
+        ClipDisplayedText();
         ApplyCase();
         base.Update();
     }
+
+    // Drawing
 
     protected override void Draw()
     {
@@ -85,32 +87,34 @@ public class Label : VisualItem
 
     private void DrawShadow()
     {
-        if (!Style.EnableShadow)
+        if (!Theme.EnableShadow)
         {
             return;
         }
 
         Raylib.DrawTextEx(
-            Style.Font,
+            Theme.Font,
             displayedText,
-            GlobalPosition - Origin + Style.ShadowOffset,
-            Style.FontSize,
-            Style.FontSpacing,
-            Style.ShadowColor);
+            GlobalPosition - Origin + Theme.ShadowOffset,
+            Theme.FontSize,
+            Theme.FontSpacing,
+            Theme.ShadowColor);
     }
 
     private void DrawText()
     {
         Raylib.DrawTextEx(
-            Style.Font,
+            Theme.Font,
             displayedText,
-            GlobalPosition - Origin,
-            Style.FontSize,
-            Style.FontSpacing,
-            Style.FontColor);
+            GlobalPosition - Origin - new Vector2(0, Theme.FontSize / 2),
+            Theme.FontSize,
+            Theme.FontSpacing,
+            Theme.FontColor);
     }
 
-    private void LimitDisplayedText()
+    // Text modification
+
+    private void ClipDisplayedText()
     {
         string textToConsider = VisibleCharacters == -1 ? 
                                 _text : 
@@ -122,7 +126,7 @@ public class Label : VisualItem
             return;
         }
 
-        int numFittingCharacters = (int)(Size.X / (GetCharacterWidth() + Style.FontSpacing));
+        int numFittingCharacters = (int)(Size.X / (GetCharacterWidth() + Theme.FontSpacing));
 
         if (VisibleCharacters != -1)
         {
@@ -147,10 +151,10 @@ public class Label : VisualItem
     private float GetCharacterWidth()
     {
         float width = Raylib.MeasureTextEx(
-            Style.Font,
+            Theme.Font,
             " ",
-            Style.FontSize,
-            Style.FontSpacing).X;
+            Theme.FontSize,
+            Theme.FontSpacing).X;
 
         return width;
     }
@@ -177,6 +181,8 @@ public class Label : VisualItem
             _ => displayedText
         };
     }
+
+    // Visibility control
 
     private void UpdateVisibleCharacters()
     {

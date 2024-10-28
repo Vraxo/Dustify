@@ -55,8 +55,8 @@ public class CheckBox : Control
         FocusChanged += OnFocusChanged;
         CheckSize = Size / 2;
 
-        BackgroundStyles.Roundness = 1;
-        CheckStyles.Roundness = 1;
+        BackgroundStyles.Roundness = 0.5f;
+        CheckStyles.Roundness = 0.5f;
         CheckStyles.FillColor = DefaultTheme.Accent;
     }
 

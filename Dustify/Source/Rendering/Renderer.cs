@@ -6,13 +6,6 @@ namespace Dustify;
 
 public class Renderer : Node
 {
-    public enum VideoQuality
-    {
-        Low,
-        Medium,
-        High
-    }
-
     private ImageDisplayer imageDisplayer;
     private int currentFrame;
     private int totalFrames;
@@ -27,7 +20,7 @@ public class Renderer : Node
 
     private bool rendering;
 
-    public void Render(Texture2D texture, params VideoQuality[] qualities)
+    public void Render(Texture2D texture, List<VideoQuality> qualities, DisintegrationMode disintegrationMode)
     {
         if (rendering || texture.Width == 0)
         {
@@ -35,8 +28,8 @@ public class Renderer : Node
         }
 
         rendering = true;
-        InitializeImageDisplayer(texture);
-        totalFrames = CalculateTotalFrames(texture.Height);
+        InitializeImageDisplayer(texture, disintegrationMode);
+        totalFrames = CalculateTotalFrames(texture.Height, disintegrationMode);
         qualitiesToGenerate = new(qualities);
         progressBar = GetNode<ProgressBar>("/root/ProgressBar");
         progressBar.Percentage = 0;
@@ -66,10 +59,10 @@ public class Renderer : Node
         base.Update();
     }
 
-    private void InitializeImageDisplayer(Texture2D texture)
+    private void InitializeImageDisplayer(Texture2D texture, DisintegrationMode disintegrationMode)
     {
         imageDisplayer = new();
-        var textureRectangle = App.Instance.RootNode.GetNode<ImageDisplayer>("ImageSelectionButton/ARC/TextureRectangle");
+        var textureRectangle = App.Instance.RootNode.GetNode<ImageDisplayer>("ImageSelectionButton/AspectRatioContainer/ImageDisplayer");
 
         imageDisplayer.InheritPosition = false;
         imageDisplayer.GlobalPosition = new(500);
@@ -77,13 +70,14 @@ public class Renderer : Node
         imageDisplayer.Texture = texture;
         imageDisplayer.BitmapData = textureRectangle.BitmapData;
         imageDisplayer.Size = new(texture.Width, texture.Height);
-        imageDisplayer.StartDisintegration();
+        imageDisplayer.StartDisintegration(disintegrationMode);
         imageDisplayer.Speed = imageDisplayer.Speed * processFrequency;
     }
 
-    private int CalculateTotalFrames(int textureHeight)
+    private int CalculateTotalFrames(int textureHeight, DisintegrationMode disintegrationMode)
     {
-        return textureHeight / 4 * 2;
+        int baseFrames = textureHeight / 4 * 2;
+        return disintegrationMode == DisintegrationMode.AllAtOnce ? baseFrames / 2 : baseFrames;
     }
 
     private void ProcessFrame()
@@ -144,7 +138,6 @@ public class Renderer : Node
         string filePath = $"Resources/Output/output_frame_{saveCounter:D4}.png";
         Raylib.ImageFlipVertical(ref frame);
         Raylib.ExportImage(frame, filePath);
-        //Raylib.UnloadImage(frame);
         saveCounter++;
     }
 

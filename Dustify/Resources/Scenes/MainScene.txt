@@ -1,6 +1,6 @@
 ﻿[MainScene "Root"]
 
-[Button "ImageSelectionButton" "Root"]
+[ImageSelectionButton "ImageSelectionButton" "Root"]
 Size = Vector2(500, 500)
 Styles/Roundness = 0
 
@@ -9,28 +9,20 @@ Size = Vector2(500, 500)
 
 [ImageDisplayer "ImageDisplayer" "AspectRatioContainer"]
 
-[Button "RenderButton" "Root"]
-Position = Vector2(500, 500)
+[RenderButton "RenderButton" "Root"]
+Position = Vector2(500, 600)
 Text = "Render"
 RightControlPath = "/root/OptionButton"
 Icon = Texture("Resources/ReturnIcon.png")
 FocusOnClick = true
 ThemeFile = "Resources/ButtonTheme.txt"
 
-[CheckBox "FocusTestButton" "Root"]
-Position = Vector2(600, 500)
-LeftControlPath = "/root/RenderButton"
-FocusOnClick = true
-
-[OptionButton "OptionButton" "Root"]
-Position = Vector2(500, 600)
-Text = "..."
+#[OptionButton "OptionButton" "Root"]
+#Position = Vector2(500, 600)
+#Text = "..."
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
 
-[Label "Label" "Root"]
-Position = Vector2(10, 10)
-Size = Vector2(100, 16)
-Text = "Go fuck yourself you fucking retarded piece of shit"
+[Node2D "QualityCheckBoxes" "Root" "QualityCheckBoxes.txt"]

@@ -34,6 +34,7 @@ public class PackedScene
             App.Instance.RootNode = instance as Node;
         }
 
+        // First pass: Instantiate nodes and establish hierarchy
         foreach (string line in fileLines)
         {
             string trimmedLine = line.Trim();
@@ -51,7 +52,6 @@ public class PackedScene
                 if (parts.Length == 4)
                 {
                     string scenePath = ExtractQuotedString(parts[3]);
-
                     if (!scenePath.StartsWith("Resources/Scenes/"))
                     {
                         scenePath = $"Resources/Scenes/{scenePath}";
@@ -60,7 +60,6 @@ public class PackedScene
                     PackedScene referencedScene = new(scenePath);
                     Type rootNodeType = ResolveType(typeName);
                     var referencedRootNode = referencedScene.Instantiate(rootNodeType) as Node;
-
                     referencedRootNode.Name = nodeName;
 
                     if (parentName == null && firstNode)
@@ -71,7 +70,7 @@ public class PackedScene
                     }
                     else if (namedNodes.TryGetValue(parentName, out Node parentNode))
                     {
-                        parentNode.AddChild(referencedRootNode, nodeName, true);
+                        parentNode.AddChild(referencedRootNode, nodeName, false); // Don't call Start yet
                         namedNodes[nodeName] = referencedRootNode;
                     }
                     else
@@ -96,7 +95,7 @@ public class PackedScene
                         if (parentName == null) throw new Exception($"Node '{nodeName}' must specify a parent.");
                         if (namedNodes.TryGetValue(parentName, out Node parentNode))
                         {
-                            parentNode.AddChild(obj as Node, nodeName, true);
+                            parentNode.AddChild(obj as Node, nodeName, false); // Don't call Start yet
                         }
                         else
                         {
@@ -115,18 +114,30 @@ public class PackedScene
             }
         }
 
+        // Second pass: Start the nodes
         if (isRootNode)
         {
             App.Instance.SetRootNode(instance as Node, true);
         }
-        else
+
+        // Start the root node
+        if (isRootNode)
         {
-            (instance as Node).Build();
             (instance as Node).Start();
+        }
+
+        // Start all child nodes (skip if the node is not of type Node)
+        foreach (var namedNode in namedNodes.Values)
+        {
+            if (namedNode is Node childNode && childNode != instance as Node)
+            {
+                childNode.Start();
+            }
         }
 
         return instance;
     }
+
 
     private object Instantiate(Type type, bool isRootNode = false)
     {

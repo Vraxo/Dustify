@@ -16,7 +16,7 @@ public class EntryPoint
         // Approach 1 - instantiate from a PackedScene file
 
         var rootNode = new PackedScene("MainScene.txt").Instantiate<MainScene>(true);
-        App.Instance.SetRootNode(rootNode, true);
+        //App.Instance.SetRootNode(rootNode, true);
 
 
 

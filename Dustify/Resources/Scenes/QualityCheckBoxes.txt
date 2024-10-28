@@ -1,0 +1,29 @@
+﻿[QualityCheckBoxes "QualityCheckBoxes"]
+#Position = Vector2(100, 100)
+
+
+
+[CheckBox "HighQualityCheckBox" "QualityCheckBoxes"]
+Position = Vector2(0, 500)
+
+[Label "HighQualityLabel" "HighQualityCheckBox"]
+Position = Vector2(25, 0)
+Text = "High"
+
+
+
+[CheckBox "MediumQualityCheckBox" "QualityCheckBoxes"]
+Position = Vector2(100, 500)
+
+[Label "MediumQualityLabel" "MediumQualityCheckBox"]
+Position = Vector2(25, 0)
+Text = "Medium"
+
+
+
+[CheckBox "LowQualityCheckBox" "QualityCheckBoxes"]
+Position = Vector2(200, 500)
+
+[Label "LowQualityLabel" "LowQualityCheckBox"]
+Position = Vector2(25, 0)
+Text = "Low"

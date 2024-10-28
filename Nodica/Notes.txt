@@ -19,3 +19,9 @@
 > StayPressed in button does not work
 
 > add everything to style omni setters
+
+> perhaps use checks in setters to prevent stack overflow
+
+> Remove .txt from scene path
+
+> Using nodes through global usings directly is bad

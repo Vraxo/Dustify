@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace Dustify;
 
-public class CustomTexturedRectangle : Node2D
+public class CustomTexturedRectangle : VisualItem
 {
     public Texture2D Texture { get; set; } = Raylib.LoadTexture("");
     public bool HasTexture = false;
@@ -14,12 +14,6 @@ public class CustomTexturedRectangle : Node2D
         Size = new(32, 32);
     }
 
-    public override void Update()
-    {
-        Draw();
-        base.Update();
-    }
-
     public void LoadTexture(string name, bool resize = false)
     {
         Texture = TextureLoader.Instance.Get(name);
@@ -28,7 +22,7 @@ public class CustomTexturedRectangle : Node2D
         Size = new(Texture.Width, Texture.Height);
     }
 
-    public void Draw()
+    protected override void Draw()
     {
         Rectangle source = new(
             0,
