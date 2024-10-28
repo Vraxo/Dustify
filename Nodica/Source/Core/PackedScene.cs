@@ -37,7 +37,7 @@ public class PackedScene
         foreach (string line in fileLines)
         {
             string trimmedLine = line.Trim();
-            if (string.IsNullOrEmpty(trimmedLine)) continue;
+            if (string.IsNullOrEmpty(trimmedLine) || trimmedLine.StartsWith("#")) continue; // Ignore empty lines and comment lines
 
             if (trimmedLine.StartsWith("[") && trimmedLine.EndsWith("]"))
             {
@@ -131,7 +131,7 @@ public class PackedScene
     private object Instantiate(Type type, bool isRootNode = false)
     {
         MethodInfo method = typeof(PackedScene).GetMethod(nameof(Instantiate)).MakeGenericMethod(type);
-        return method.Invoke(this, new object[] { isRootNode });
+        return method.Invoke(this, [isRootNode]);
     }
 
     private static string ExtractQuotedString(string str)
@@ -156,8 +156,8 @@ public class PackedScene
                 return type;
             }
 
-            var defaultNamespace = assembly.GetName().Name;
-            var namespacedTypeName = defaultNamespace + "." + typeName;
+            string defaultNamespace = assembly.GetName().Name;
+            string namespacedTypeName = defaultNamespace + "." + typeName;
             type = assembly.GetType(namespacedTypeName, false, true);
             if (type != null)
             {
@@ -178,12 +178,10 @@ public class PackedScene
         {
             string segment = pathSegments[i];
             propertyInfo = type.GetProperty(segment, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
             if (propertyInfo == null)
             {
                 throw new Exception($"Property '{segment}' not found on type '{type.Name}'.");
             }
-
             if (i < pathSegments.Length - 1)
             {
                 obj = propertyInfo.GetValue(obj);
@@ -194,24 +192,35 @@ public class PackedScene
         if (propertyInfo != null && propertyInfo.CanWrite)
         {
             string stringValue = value.ToString();
-
-            object convertedValue = propertyInfo.PropertyType switch
-            {
-                Type t when t == typeof(Vector2) => ParseVector2(stringValue),
-                Type t when t == typeof(Color) => ParseColor(stringValue),
-                Type t when t == typeof(Texture2D) => ParseTexture(stringValue),
-                Type t when t.IsEnum => Enum.Parse(propertyInfo.PropertyType, stringValue),
-                Type t when t == typeof(int) => int.Parse(stringValue),
-                Type t when t == typeof(uint) => uint.Parse(stringValue),
-                Type t when t == typeof(float) => float.Parse(stringValue),
-                Type t when t == typeof(double) => double.Parse(stringValue),
-                Type t when t == typeof(bool) => bool.Parse(stringValue),
-                Type t when t == typeof(string) => ExtractQuotedString(stringValue),
-                _ => value
-            };
-
+            object convertedValue = ConvertValue(propertyInfo.PropertyType, stringValue);
             propertyInfo.SetValue(obj, convertedValue);
         }
+    }
+
+    private object ConvertValue(Type targetType, object value)
+    {
+        string stringValue = value.ToString();
+
+        return targetType switch
+        {
+            Type t when t == typeof(Vector2) => ParseVector2(stringValue),
+            Type t when t == typeof(Color) => ParseColor(stringValue),
+            Type t when t == typeof(Texture2D) => ParseTexture(stringValue),
+            Type t when t.IsEnum => Enum.Parse(targetType, stringValue),
+            Type t when t == typeof(int) => int.Parse(stringValue),
+            Type t when t == typeof(uint) => uint.Parse(stringValue),
+            Type t when t == typeof(float) => float.Parse(stringValue),
+            Type t when t == typeof(double) => double.Parse(stringValue),
+            Type t when t == typeof(bool) => bool.Parse(stringValue),
+            Type t when t == typeof(string) => ExtractQuotedString(stringValue),
+            Type t when t == typeof(ButtonThemePack) => LoadButtonThemeFile(stringValue),
+            _ => value
+        };
+    }
+
+    private static ButtonThemePack LoadButtonThemeFile(string value)
+    {
+        return StyleLoader.LoadStyle<ButtonThemePack>(ExtractQuotedString(value));
     }
 
     private static Vector2 ParseVector2(string value)
@@ -281,7 +290,7 @@ public class PackedScene
         }
         else
         {
-            throw new Exception($"Invalid Texture format, expected format: Texture(\"path\")");
+            throw new Exception($"Invalid Texture format, expected format: Texture(path)");
         }
     }
 }

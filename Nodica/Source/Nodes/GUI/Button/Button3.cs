@@ -1,4 +1,5 @@
 ﻿using Raylib_cs;
+using System.Security.AccessControl;
 
 namespace Nodica;
 
@@ -70,7 +71,7 @@ public class Button : Control
     }
 
     private string _themeFile = "";
-    public string ThemeFile
+    public string ThemeFile3
     {
         get => _themeFile;
 
@@ -78,6 +79,14 @@ public class Button : Control
         {
             _themeFile = value;
             Styles = StyleLoader.LoadStyle<ButtonThemePack>(value);
+        }
+    }
+
+    public ButtonThemePack ThemeFile
+    {
+        set
+        {
+            Styles = value;
         }
     }
 
@@ -98,7 +107,6 @@ public class Button : Control
             HandleKeyboardInput();
         }
 
-        UpdateTextOrigin();
         base.Update();
     }
 
@@ -239,15 +247,6 @@ public class Button : Control
             Text,
             Styles.Current.FontSize,
             1);
-        
-        //Vector2 center = Size / 2;
-        //
-        //Vector2 alignmentAdjustment = new(
-        //    TextOrigin.X < center.X ? 0 : TextOrigin.X > center.X ? -textSize.X : -textSize.X / 2,
-        //    TextOrigin.Y < center.Y ? 0 : TextOrigin.Y > center.Y ? -textSize.Y : -textSize.Y / 2
-        //);
-        //
-        //return GlobalPosition + TextOrigin + alignmentAdjustment - Origin + TextPadding;
 
         float x = HorizontalAlignment switch
         {
@@ -263,29 +262,6 @@ public class Button : Control
         Vector2 origin = new(x, y);
 
         return GlobalPosition - Origin + origin - textSize / 2 + TextOrigin;
-    }
-
-    private void UpdateTextOrigin()
-    {
-        if (TextOriginPreset == OriginPreset.None)
-        {
-            return;
-        }
-
-        //TextOrigin = TextOriginPreset switch
-        //{
-        //    OriginPreset.Center => Size / 2,
-        //    OriginPreset.CenterLeft => new(0, Size.Y / 2),
-        //    OriginPreset.CenterRight => new(Size.X, Size.Y / 2),
-        //    OriginPreset.TopLeft => new(0, 0),
-        //    OriginPreset.TopRight => new(Size.X, 0),
-        //    OriginPreset.TopCenter => new(Size.X / 2, 0),
-        //    OriginPreset.BottomLeft => new(0, Size.Y),
-        //    OriginPreset.BottomRight => Size,
-        //    OriginPreset.BottomCenter => new(Size.X / 2, Size.Y),
-        //    OriginPreset.None => Origin,
-        //    _ => Origin,
-        //};
     }
 
     private void ResizeToFitText()

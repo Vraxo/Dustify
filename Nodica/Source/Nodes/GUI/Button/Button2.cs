@@ -2,7 +2,7 @@
 //
 //namespace Nodica;
 //
-//public class Option : Control
+//public class OptionButtonButton : Control
 //{
 //    public enum ClickMode { Limited, Limitless }
 //    public enum ActionMode { Release, Press }
@@ -31,7 +31,7 @@
 //    public bool PressedLeft = false;
 //    public bool PressedRight = false;
 //
-//    public Action<Option> OnUpdate = (button) => { };
+//    public Action<OptionButtonButton> OnUpdate = (button) => { };
 //
 //    public event EventHandler? LeftClicked;
 //    public event EventHandler? RightClicked;
@@ -66,7 +66,7 @@
 //    }
 //
 //    private string _themeFile = "";
-//    public string ThemeFile
+//    public string ThemeFile3
 //    {
 //        get => _themeFile;
 //
@@ -79,7 +79,7 @@
 //
 //    #endregion
 //
-//    public Option()
+//    public OptionButtonButton()
 //    {
 //        Size = new(100, 26);
 //    }

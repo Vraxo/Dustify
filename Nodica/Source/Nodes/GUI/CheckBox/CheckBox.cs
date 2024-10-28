@@ -17,6 +17,7 @@ public class CheckBox : Control
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
     public bool StayPressed { get; set; } = false;
     public ClickBehavior Behavior { get; set; } = ClickBehavior.Both;
+    public bool Checked { get; private set; } = false;
 
     public bool PressedLeft = false;
     public bool PressedRight = false;
@@ -44,7 +45,7 @@ public class CheckBox : Control
         }
     }
 
-    public bool Toggled { get; set; } = false;
+    public event EventHandler<bool>? Toggled;
 
     #endregion
 
@@ -53,6 +54,7 @@ public class CheckBox : Control
         Size = new(26, 26);
         FocusChanged += OnFocusChanged;
         CheckSize = Size / 2;
+
         BackgroundStyles.Roundness = 1;
         CheckStyles.Roundness = 1;
         CheckStyles.FillColor = DefaultTheme.Accent;
@@ -72,14 +74,14 @@ public class CheckBox : Control
 
     public void Toggle()
     {
-        Toggled = !Toggled;
-        Console.WriteLine("Toggled: " + Toggled);
+        Checked = !Checked;
+        Toggled?.Invoke(this, Checked);
     }
 
     private void OnFocusChanged(bool focused)
     {
-        BackgroundStyles.Current = focused ? 
-                                   BackgroundStyles.Focused : 
+        BackgroundStyles.Current = focused ?
+                                   BackgroundStyles.Focused :
                                    BackgroundStyles.Normal;
     }
 
@@ -181,7 +183,7 @@ public class CheckBox : Control
             Size,
             BackgroundStyles.Current);
 
-        if (Toggled)
+        if (Checked)
         {
             DrawBorderedRectangle(
                 GlobalPosition - Origin / 2,

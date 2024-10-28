@@ -5,15 +5,35 @@ namespace Nodica;
 
 public partial class OptionButton : Button
 {
+    public class OptionButtonOption
+    {
+        public string Text { get; set; } = "";
+        public int Id { get; set; } = 0;
+    }
+
     public bool Open { get; set; } = false;
     public int Choice { get; set; } = -1;
 
-    // List to keep track of Option children
-    private readonly List<Option> optionChildren = new();
+    public List<string> Options { get; set; } = [];
+    public List<OptionButtonOption> Fuckers { get; set; } = [];
+    public int OptionsCount => Options.Count;
+
+    private readonly List<OptionButtonButton> optionChildren = new();
 
     public OptionButton()
     {
         LeftClicked += OnLeftClicked;
+
+    }
+
+    public void Add(string option)
+    {
+        Options.Add(option);
+    }
+
+    public void Clear()
+    {
+        Options.Clear();
     }
 
     private void OnLeftClicked(object? sender, EventArgs e)
@@ -45,22 +65,22 @@ public partial class OptionButton : Button
 
     private void DropDown()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < Fuckers.Count; i++)
         {
-            var option = new Option
+            var option = new OptionButtonButton
             {
                 Position = new(0, 25 * (i + 1)),
                 Styles = new()
                 {
                     Roundness = 0
                 },
-                Text = $"Option {i}",
+                Text = Fuckers[i].Text + Fuckers[i].Text,
                 Checked = i == Choice,
                 Index = i
             };
 
             AddChild(option);
-            optionChildren.Add(option); // Add to our tracked list
+            optionChildren.Add(option);
         }
 
         Open = true;
@@ -73,7 +93,7 @@ public partial class OptionButton : Button
             option.Destroy();
         }
 
-        optionChildren.Clear(); // Clear the list once options are removed
+        optionChildren.Clear();
         Open = false;
     }
 }

@@ -19,14 +19,7 @@ public partial class MainScene : Node
         imageSelectionButton = GetNode<Button>("ImageSelectionButton");
         imageSelectionButton.LeftClicked += OnImageSelectionButtonLeftClicked;
 
-        Console.WriteLine("\n\n");
-
         imageDisplayer = GetNode<ImageDisplayer>("ImageSelectionButton/AspectRatioContainer/ImageDisplayer");
-
-        if (imageDisplayer is null)
-        {
-            Console.WriteLine("wait here");
-        }
 
         renderButton = GetNode<Button>("RenderButton");
         renderButton.LeftClicked += OnRenderButtonLeftClicked;

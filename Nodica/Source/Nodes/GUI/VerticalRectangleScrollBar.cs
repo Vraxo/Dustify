@@ -5,9 +5,9 @@
 //class VerticalRectangleScrollBar : Node2D
 //{
 //    public Action<VerticalRectangleScrollBar> OnUpdate = (slider) => { };
-//    public Option Grabber;
-//    public Option TopButton;
-//    public Option BottomButton;
+//    public OptionButtonButton Grabber;
+//    public OptionButtonButton TopButton;
+//    public OptionButtonButton BottomButton;
 //
 //    private float _value = 0;
 //
@@ -98,23 +98,23 @@
 //            Size = new(Size.X, Size.X),
 //            Origin = new(Size.X / 2, 0),
 //            OriginPreset = OriginPreset.TopCenter,
-//            OnUpdate = (Option) =>
+//            OnUpdate = (OptionButtonButton) =>
 //            {
-//                if (Option.PressedLeft)
+//                if (OptionButtonButton.PressedLeft)
 //                {
-//                    Option.position.Y = Raylib.GetMousePosition().Y - Option.Size.Y;
+//                    OptionButtonButton.position.Y = Raylib.GetMousePosition().Y - OptionButtonButton.Size.Y;
 //                }
 //
-//                float maxY = Size.Y - Option.Size.Y;
+//                float maxY = Size.Y - OptionButtonButton.Size.Y;
 //
-//                if (Option.position.Y > maxY)
+//                if (OptionButtonButton.position.Y > maxY)
 //                {
-//                    Option.position.Y = maxY;
+//                    OptionButtonButton.position.Y = maxY;
 //                }
 //
-//                if (Option.position.Y < 0)
+//                if (OptionButtonButton.position.Y < 0)
 //                {
-//                    Option.position.Y = 0;
+//                    OptionButtonButton.position.Y = 0;
 //                }
 //            }
 //        };

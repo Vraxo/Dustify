@@ -2,7 +2,7 @@
 
 public partial class OptionButton : Button
 {
-    public class Option : Button
+    public class OptionButtonButton : Button
     {
         public int Index = 0;
         public bool Checked = false;
@@ -35,9 +35,9 @@ public partial class OptionButton : Button
 
         private void OnLeftClicked(object? sender, EventArgs e)
         {
-            (Parent as OptionButton).Text = Text;
-            (Parent as OptionButton).Choice = Index;
-            (Parent as OptionButton).Close();
+            (Parent as Nodica.OptionButton).Text = Text;
+            (Parent as Nodica.OptionButton).Choice = Index;
+            (Parent as Nodica.OptionButton).Close();
         }
     }
 }

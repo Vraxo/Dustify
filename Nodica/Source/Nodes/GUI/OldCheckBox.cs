@@ -9,7 +9,7 @@
 //    public ButtonThemePack CheckStyle = new();
 //    public bool Checked = false;
 //    public Action<CheckBox> OnUpdate = (checkBox) => { };
-//    public event EventHandler? Toggled;
+//    public event EventHandler? Checked;
 //
 //    public CheckBox()
 //    {
@@ -92,7 +92,7 @@
 //            if (IsMouseOver() && OnTopLeft)
 //            {
 //                Checked = !Checked;
-//                Toggled?.Invoke(this, EventArgs.Empty);
+//                Checked?.Invoke(this, EventArgs.Empty);
 //            }
 //        }
 //    }

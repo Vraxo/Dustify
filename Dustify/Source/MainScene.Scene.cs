@@ -34,7 +34,6 @@ public partial class MainScene : Node
                 Roundness = 0
             },
             Text = "Render",
-            ThemeFile = "Resources/ButtonTheme.txt",
             RightControlPath = "/root/OptionButton",
             Icon = TextureLoader.Instance.Get("Resources/ReturnIcon.png"),
             FocusOnClick = true
