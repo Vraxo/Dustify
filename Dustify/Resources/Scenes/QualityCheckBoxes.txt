@@ -1,5 +1,4 @@
 ﻿[QualityCheckBoxes "QualityCheckBoxes"]
-#Position = Vector2(100, 100)
 
 
 

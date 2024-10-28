@@ -12,13 +12,6 @@ public class ImageDisplayer : CustomTexturedRectangle
     private int step = 4;
     private int currentRow = 0;
 
-    public override void Start()
-    {
-        Console.WriteLine("stared -> image displayer");
-
-        base.Start();
-    }
-
     public override void Update()
     {
         if (disintegrating)

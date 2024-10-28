@@ -127,18 +127,13 @@ public class Node
     {
         if (string.IsNullOrEmpty(path))
         {
-            Console.WriteLine("GetNode called with an empty path.");
             return null;
         }
-
-        Console.WriteLine($"GetNode called with path: {path}");
 
         if (path.StartsWith("/root"))
         {
             path = path.Substring("/root".Length);
             Node currentNode = App.Instance.RootNode;
-
-            Console.WriteLine($"Starting from root node. Adjusted path: '{path}'");
 
             if (path.StartsWith("/"))
             {
@@ -150,18 +145,15 @@ public class Node
                 string[] nodeNames = path.Split('/');
                 foreach (var name in nodeNames)
                 {
-                    Console.WriteLine($"Looking for child node: '{name}'");
                     currentNode = currentNode.GetChild(name);
 
                     if (currentNode == null)
                     {
-                        Console.WriteLine($"Node '{name}' not found in path '{path}'. Returning null.");
                         return null;
                     }
                 }
             }
 
-            Console.WriteLine($"Node found. Returning node of type {typeof(T).Name}.");
             return currentNode as T;
         }
         else
@@ -172,20 +164,16 @@ public class Node
             {
                 if (name == "")
                 {
-                    Console.WriteLine($"Reached end of path early. Returning node of type {typeof(T).Name}.");
                     return currentNode as T;
                 }
 
-                Console.WriteLine($"Looking for child node: '{name}' from current node.");
                 currentNode = currentNode.GetChild(name);
                 if (currentNode == null)
                 {
-                    Console.WriteLine($"Node '{name}' not found in path '{path}'. Returning null.");
                     return null;
                 }
             }
 
-            Console.WriteLine($"Node found. Returning node of type {typeof(T).Name}.");
             return currentNode as T;
         }
     }

@@ -121,26 +121,23 @@ public class PackedScene
         }
 
         // Start the root node
-        if (!isRootNode)
+        if (isRootNode)
         {
             (instance as Node).Start();
         }
 
-        // Recursively start child nodes in hierarchical order
-        void StartChildNodes(Node parentNode)
+        // Start all child nodes (skip if the node is not of type Node)
+        foreach (var namedNode in namedNodes.Values)
         {
-            foreach (var child in parentNode.Children)
+            if (namedNode is Node childNode && childNode != instance as Node)
             {
-                child.Start(); // Start the child node
-                StartChildNodes(child); // Recursively start the child's children
+                Console.WriteLine(childNode.Name);
+                childNode.Start();
             }
         }
 
-        StartChildNodes(instance as Node);
-
         return instance;
     }
-
 
     private object Instantiate(Type type, bool isRootNode = false)
     {

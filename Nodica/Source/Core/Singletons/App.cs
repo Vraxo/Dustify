@@ -34,7 +34,7 @@ public class App
             RootNode.Build();
         }
 
-        RootNode.Start();
+        //RootNode.Start();
     }
 
     public void Run()
