@@ -30,10 +30,22 @@ public partial class LineEdit : ClickableRectangle
             get => _x;
             set
             {
-                _x = Math.Clamp(value, 0, Math.Min(parent.Text.Length, parent.GetDisplayableCharactersCount()));
+                int maxVisibleChars = Math.Min(parent.GetDisplayableCharactersCount(), parent.Text.Length - parent.TextStartIndex);
+                _x = Math.Clamp(value, 0, maxVisibleChars);
                 alpha = maxAlpha;
             }
         }
+
+        //private int _x = 0;
+        //public int X
+        //{
+        //    get => _x;
+        //    set
+        //    {
+        //        _x = Math.Clamp(value, 0, Math.Min(parent.Text.Length, parent.GetDisplayableCharactersCount()));
+        //        alpha = maxAlpha;
+        //    }
+        //}
 
         private Vector2 GlobalPosition => parent.GlobalPosition + position;
 
