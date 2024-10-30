@@ -183,7 +183,7 @@ public class ItemList : ClickableRectangle
 
     private void HandleScrolling()
     {
-        bool isOnTop = Layer >= LayeredClickManager.Instance.MinLayer;
+        bool isOnTop = Layer >= ClickManager.Instance.MinLayer;
 
         if (!IsMouseOver() || !isOnTop)
         {

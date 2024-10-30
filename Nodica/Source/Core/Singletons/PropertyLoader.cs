@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Nodica;
 
-public static class StyleLoader
+public static class PropertyLoader
 {
-    public static T LoadStyle<T>(string filePath) where T : new()
+    public static T Load<T>(string filePath) where T : new()
     {
         T stylePack = new();
         string[] fileLines = File.ReadAllLines(filePath);

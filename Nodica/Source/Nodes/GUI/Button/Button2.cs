@@ -73,7 +73,7 @@
 //        set
 //        {
 //            _themeFile = value;
-//            Styles = StyleLoader.LoadStyle<ButtonThemePack>(value);
+//            Styles = PropertyLoader.Load<ButtonThemePack>(value);
 //        }
 //    }
 //

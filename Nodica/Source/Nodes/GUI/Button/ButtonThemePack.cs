@@ -40,6 +40,8 @@ public class ButtonThemePack
             Normal.FontSpacing = value;
             Hover.FontSpacing = value;
             Pressed.FontSpacing = value;
+            Focused.FontSpacing = value;
+            Current.FontSpacing = value;
         }
     }
 
@@ -50,6 +52,8 @@ public class ButtonThemePack
             Normal.FontSize = value;
             Hover.FontSize = value;
             Pressed.FontSize = value;
+            Focused.FontSize = value;
+            Current.FontSize = value;
         }
     }
 
@@ -60,6 +64,8 @@ public class ButtonThemePack
             Normal.Font = value;
             Hover.Font = value;
             Pressed.Font = value;
+            Focused.Font = value;
+            Current.Font = value;
         }
     }
 
@@ -70,6 +76,8 @@ public class ButtonThemePack
             Normal.FontColor = value;
             Hover.FontColor = value;
             Pressed.FontColor = value;
+            Focused.FontColor = value;
+            Current.FontColor = value;
         }
     }
 
@@ -95,6 +103,7 @@ public class ButtonThemePack
             Hover.BorderLength = value;
             Pressed.BorderLength = value;
             Disabled.BorderLength = value;
+            Focused.BorderLength = value;
         }
     }
 
@@ -107,6 +116,7 @@ public class ButtonThemePack
             Hover.FillColor = value;
             Pressed.FillColor = value;
             Disabled.FillColor = value;
+            Focused.FillColor = value;
         }
     }
 
@@ -119,6 +129,7 @@ public class ButtonThemePack
             Hover.BorderColor = value;
             Pressed.BorderColor = value;
             Disabled.BorderColor = value;
+            Focused.BorderColor = value;
         }
     }
 
@@ -131,6 +142,7 @@ public class ButtonThemePack
             Hover.BorderLengthUp = value;
             Pressed.BorderLengthUp = value;
             Disabled.BorderLengthUp = value;
+            Focused.BorderLengthUp = value;
         }
     }
 }

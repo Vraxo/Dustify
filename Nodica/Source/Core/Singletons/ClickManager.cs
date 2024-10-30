@@ -2,16 +2,16 @@
 
 namespace Nodica;
 
-public class LayeredClickManager : Node
+public class ClickManager
 {
-    public static LayeredClickManager Instance => instance ??= new();
-    private static LayeredClickManager? instance;
+    public static ClickManager Instance => instance ??= new();
+    private static ClickManager? instance;
 
     public int MinLayer = -1;
 
     private List<Clickable> clickables = [];
 
-    private LayeredClickManager() { }
+    private ClickManager() { }
 
     public void Register(Clickable clickable)
     {
@@ -23,7 +23,7 @@ public class LayeredClickManager : Node
         clickables.Remove(clickable);
     }
 
-    public override void Update()
+    public void Update()
     {
         if (Raylib.IsMouseButtonPressed(MouseButton.Left))
         {
@@ -36,13 +36,28 @@ public class LayeredClickManager : Node
         }
     }
 
+    public int GetHighestLayer()
+    {
+        int highestLayer = MinLayer;
+
+        foreach (var clickable in clickables)
+        {
+            if (clickable.Layer > highestLayer)
+            {
+                highestLayer = clickable.Layer;
+            }
+        }
+
+        return highestLayer;
+    }
+
     private void SignalClick(MouseButton mouseButton)
     {
         List<Clickable> viableClickables = GetViableClickables();
 
         if (viableClickables.Count > 0)
         {
-            Clickable topClickable = GetTopClickable(viableClickables);
+            Clickable? topClickable = GetTopClickable(viableClickables);
 
             if (topClickable != null)
             {
@@ -77,7 +92,7 @@ public class LayeredClickManager : Node
         return viableClickables;
     }
 
-    private Clickable GetTopClickable(List<Clickable> viableClickables)
+    private Clickable? GetTopClickable(List<Clickable> viableClickables)
     {
         Clickable? topClickable = null;
         int highestLayer = MinLayer;

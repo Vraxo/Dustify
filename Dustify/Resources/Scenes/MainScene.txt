@@ -16,6 +16,9 @@ RightControlPath = "/root/OptionButton"
 Icon = Texture("Resources/ReturnIcon.png")
 FocusOnClick = true
 ThemeFile = "Resources/ButtonTheme.txt"
+FocusOnClick = true
+StayPressed = true
+Styles/FontSize = 32
 
 [OptionButton "OptionButton" "Root"]
 Position = Vector2(550, 600)
@@ -25,4 +28,4 @@ Text = "..."
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
 
-[Node2D "QualityCheckBoxes" "Root" "QualityCheckBoxes.txt"]
+[Node2D "QualityCheckBoxes" "Root" "QualityCheckBoxes"]

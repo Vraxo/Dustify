@@ -4,19 +4,9 @@
 
 > Remove OnUpdate() from: Buttons
 
-> Expand for buttons
-
 > Make dialog -> color rectangle (?)
 
 > Bring vertical slider to the same level as horizontal slider
-
-> Slight problem with LineEdit: deleting last character after index mispositions caret slightly
-
-> Turn params into list
-
-> Problem with label size and origin?
-
-> StayPressed in button does not work
 
 > add everything to style omni setters
 
@@ -25,3 +15,5 @@
 > Remove .txt from scene path
 
 > Using nodes through global usings directly is bad
+
+> Switch the rest of the alignments

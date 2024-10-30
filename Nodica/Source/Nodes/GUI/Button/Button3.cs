@@ -30,7 +30,7 @@ public class Button : Control
     public ClickBehavior Behavior { get; set; } = ClickBehavior.Left;
     public float IconMargin { get; set; } = 12;
 
-    public Texture2D Icon { get; set; } = Raylib.LoadTexture("");
+    public Texture2D Icon { get; set; }
     public bool HasIcon = false;
 
     public bool PressedLeft = false;
@@ -78,7 +78,7 @@ public class Button : Control
         set
         {
             _themeFile = value;
-            Styles = StyleLoader.LoadStyle<ButtonThemePack>(value);
+            Styles = PropertyLoader.Load<ButtonThemePack>(value);
         }
     }
 
@@ -130,6 +130,7 @@ public class Button : Control
         {
             HandleClick(
                 ref PressedLeft,
+                ref OnTopLeft,
                 MouseButton.Left,
                 LeftClickActionMode,
                 LeftClicked);
@@ -141,6 +142,7 @@ public class Button : Control
         {
             HandleClick(
                 ref PressedRight,
+                ref OnTopRight,
                 MouseButton.Right,
                 RightClickActionMode,
                 RightClicked);
@@ -173,7 +175,7 @@ public class Button : Control
         }
     }
 
-    private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
+    private void HandleClick(ref bool pressed, ref bool onTop, MouseButton button, ActionMode actionMode, EventHandler? clickHandler)
     {
         if (Disabled) return;
 
@@ -181,7 +183,7 @@ public class Button : Control
 
         if (mouseOver)
         {
-            if (Raylib.IsMouseButtonPressed(button))
+            if (Raylib.IsMouseButtonPressed(button) && onTop)
             {
                 pressed = true;
                 HandleClickFocus();
@@ -189,17 +191,19 @@ public class Button : Control
                 if (actionMode == ActionMode.Press)
                 {
                     clickHandler?.Invoke(this, EventArgs.Empty);
+                    onTop = false;
                 }
             }
         }
 
         if (Raylib.IsMouseButtonReleased(button))
         {
-            if (mouseOver && pressed && actionMode == ActionMode.Release) // (mouseOver || StayPressed)
+            if (mouseOver && pressed && onTop && actionMode == ActionMode.Release) // (mouseOver || StayPressed)
             {
                 clickHandler?.Invoke(this, EventArgs.Empty);
             }
 
+            onTop = false;
             pressed = false;
         }
     }

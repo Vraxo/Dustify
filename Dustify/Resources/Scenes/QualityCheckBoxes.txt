@@ -29,3 +29,4 @@ Text = "Low"
 
 [LineEdit "LineEditor" "QualityCheckBoxes"]
 Position = Vector2(200, 500)
+Layer = 1

@@ -42,7 +42,7 @@ public class CheckBox : Control
         set
         {
             _themeFile = value;
-            BackgroundStyles = StyleLoader.LoadStyle<ButtonThemePack>(value);
+            BackgroundStyles = PropertyLoader.Load<ButtonThemePack>(value);
         }
     }
 

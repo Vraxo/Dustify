@@ -5,7 +5,7 @@ namespace Dustify;
 
 public class CustomTexturedRectangle : VisualItem
 {
-    public Texture2D Texture { get; set; } = Raylib.LoadTexture("");
+    public Texture2D Texture { get; set; }
     public bool HasTexture = false;
     public int Height = 0;
 

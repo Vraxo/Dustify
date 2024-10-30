@@ -9,14 +9,7 @@ public class PackedScene
 
     public PackedScene(string path)
     {
-        if (!path.StartsWith("Resources/Scenes/"))
-        {
-            this.path = $"Resources/Scenes/{path}";
-        }
-        else
-        {
-            this.path = path;
-        }
+        this.path = EnsureTxtExtension(path.StartsWith("Resources/Scenes/") ? path : $"Resources/Scenes/{path}");
     }
 
     public T Instantiate<T>(bool isRootNode = false) where T : new()
@@ -26,7 +19,6 @@ public class PackedScene
         object obj = null;
         bool firstNode = true;
 
-        // Dictionary to hold references to nodes by their names
         Dictionary<string, Node> namedNodes = new();
 
         if (isRootNode)
@@ -34,16 +26,15 @@ public class PackedScene
             App.Instance.RootNode = instance as Node;
         }
 
-        // First pass: Instantiate nodes and establish hierarchy
         foreach (string line in fileLines)
         {
             string trimmedLine = line.Trim();
-            if (string.IsNullOrEmpty(trimmedLine) || trimmedLine.StartsWith("#")) continue; // Ignore empty lines and comment lines
+            if (string.IsNullOrEmpty(trimmedLine) || trimmedLine.StartsWith("#")) continue;
 
             if (trimmedLine.StartsWith("[") && trimmedLine.EndsWith("]"))
             {
                 string content = trimmedLine[1..^1].Trim();
-                string[] parts = content.Split(new[] { ' ' }, 4); // Handle up to 4 parts (with scene reference)
+                string[] parts = content.Split(new[] { ' ' }, 4);
 
                 string typeName = parts[0];
                 string nodeName = ExtractQuotedString(parts[1]);
@@ -51,12 +42,7 @@ public class PackedScene
 
                 if (parts.Length == 4)
                 {
-                    string scenePath = ExtractQuotedString(parts[3]);
-                    if (!scenePath.StartsWith("Resources/Scenes/"))
-                    {
-                        scenePath = $"Resources/Scenes/{scenePath}";
-                    }
-
+                    string scenePath = EnsureTxtExtension(ExtractQuotedString(parts[3]));
                     PackedScene referencedScene = new(scenePath);
                     Type rootNodeType = ResolveType(typeName);
                     var referencedRootNode = referencedScene.Instantiate(rootNodeType) as Node;
@@ -70,7 +56,7 @@ public class PackedScene
                     }
                     else if (namedNodes.TryGetValue(parentName, out Node parentNode))
                     {
-                        parentNode.AddChild(referencedRootNode, nodeName, false); // Don't call Start yet
+                        parentNode.AddChild(referencedRootNode, nodeName, false);
                         namedNodes[nodeName] = referencedRootNode;
                     }
                     else
@@ -95,7 +81,7 @@ public class PackedScene
                         if (parentName == null) throw new Exception($"Node '{nodeName}' must specify a parent.");
                         if (namedNodes.TryGetValue(parentName, out Node parentNode))
                         {
-                            parentNode.AddChild(obj as Node, nodeName, false); // Don't call Start yet
+                            parentNode.AddChild(obj as Node, nodeName, false);
                         }
                         else
                         {
@@ -114,24 +100,16 @@ public class PackedScene
             }
         }
 
-        // Second pass: Start the nodes
         if (isRootNode)
         {
             App.Instance.SetRootNode(instance as Node, true);
-        }
-
-        // Start the root node
-        if (isRootNode)
-        {
             (instance as Node).Start();
         }
 
-        // Start all child nodes (skip if the node is not of type Node)
         foreach (var namedNode in namedNodes.Values)
         {
             if (namedNode is Node childNode && childNode != instance as Node)
             {
-                Console.WriteLine(childNode.Name);
                 childNode.Start();
             }
         }
@@ -142,17 +120,17 @@ public class PackedScene
     private object Instantiate(Type type, bool isRootNode = false)
     {
         MethodInfo method = typeof(PackedScene).GetMethod(nameof(Instantiate)).MakeGenericMethod(type);
-        return method.Invoke(this, [isRootNode]);
+        return method.Invoke(this, new object[] { isRootNode });
     }
 
     private static string ExtractQuotedString(string str)
     {
-        if (str.Length >= 2 && str.StartsWith("\"") && str.EndsWith("\""))
-        {
-            return str[1..^1];
-        }
+        return str.Length >= 2 && str.StartsWith("\"") && str.EndsWith("\"") ? str[1..^1] : str;
+    }
 
-        return str;
+    private string EnsureTxtExtension(string path)
+    {
+        return path.EndsWith(".txt") ? path : path + ".txt";
     }
 
     private Type ResolveType(string typeName)
@@ -162,18 +140,12 @@ public class PackedScene
         foreach (Assembly assembly in assemblies)
         {
             var type = assembly.GetType(typeName, false, true);
-            if (type != null)
-            {
-                return type;
-            }
+            if (type != null) return type;
 
             string defaultNamespace = assembly.GetName().Name;
             string namespacedTypeName = defaultNamespace + "." + typeName;
             type = assembly.GetType(namespacedTypeName, false, true);
-            if (type != null)
-            {
-                return type;
-            }
+            if (type != null) return type;
         }
 
         throw new Exception($"Type '{typeName}' not found.");
@@ -231,7 +203,8 @@ public class PackedScene
 
     private static ButtonThemePack LoadButtonThemeFile(string value)
     {
-        return StyleLoader.LoadStyle<ButtonThemePack>(ExtractQuotedString(value));
+        string path = ExtractQuotedString(value);
+        return PropertyLoader.Load<ButtonThemePack>(path);
     }
 
     private static Vector2 ParseVector2(string value)

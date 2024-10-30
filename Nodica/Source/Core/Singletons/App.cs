@@ -77,7 +77,7 @@ public class App
 
     private void UpdateSingletons()
     {
-        LayeredClickManager.Instance.Update();
+        ClickManager.Instance.Update();
     }
 
     private void PrintTree()
