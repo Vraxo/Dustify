@@ -101,14 +101,14 @@ public partial class BaseSlider
             //
             //Raylib.DrawRectangleRounded(
             //    rectangle,
-            //    Theme.Current.Roundness,
+            //    Themes.Current.Roundness,
             //    (int)Size.Y,
-            //    Theme.Current.FillColor);
+            //    Themes.Current.FillColor);
         }
 
         private void DrawOutline()
         {
-            //if (Theme.Current.BorderLength <= 0)
+            //if (Themes.Current.BorderLength <= 0)
             //{
             //    return;
             //}
@@ -121,7 +121,7 @@ public partial class BaseSlider
             //    Size = Size
             //};
             //
-            //for (int i = 0; i <= Theme.Current.BorderLength; i++)
+            //for (int i = 0; i <= Themes.Current.BorderLength; i++)
             //{
             //    Rectangle outlineRectangle = new()
             //    {
@@ -131,9 +131,9 @@ public partial class BaseSlider
             //
             //    Raylib.DrawRectangleRounded(
             //        outlineRectangle,
-            //        Theme.Current.Roundness,
+            //        Themes.Current.Roundness,
             //        (int)rectangle.Size.X,
-            //        Theme.Current.BorderColor);
+            //        Themes.Current.BorderColor);
             //}
         }
 

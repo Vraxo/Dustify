@@ -9,7 +9,7 @@ public partial class MainScene : Node
         var imageSelectionButton = AddChild(new Button
         {
             Size = new(500, 500),
-            Styles = new()
+            Themes = new()
             {
                 Roundness = 0
             }
@@ -25,7 +25,7 @@ public partial class MainScene : Node
         var renderButton = AddChild(new Button
         {
             Position = new(500, 500),
-            Styles = new()
+            Themes = new()
             {
                 Roundness = 0
             },

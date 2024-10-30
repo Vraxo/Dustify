@@ -3,7 +3,7 @@ using System.Xml.Schema;
 
 namespace Nodica;
 
-public partial class LineEdit : Control
+public partial class LineEdit : Button
 {
     protected class Caret
     {
@@ -68,11 +68,11 @@ public partial class LineEdit : Control
         private void Draw()
         {
             Raylib.DrawTextEx(
-                parent.Theme.Current.Font,
+                parent.Themes.Current.Font,
                 "|",
                 GetPosition(),
-                parent.Theme.Current.FontSize,
-                parent.Theme.Current.FontSpacing,
+                parent.Themes.Current.FontSize,
+                parent.Themes.Current.FontSpacing,
                 GetColor());
         }
 
@@ -140,18 +140,18 @@ public partial class LineEdit : Control
 
         private Vector2 GetSize()
         {
-            Font font = parent.Theme.Current.Font;
-            float fontSize = parent.Theme.Current.FontSize;
+            Font font = parent.Themes.Current.Font;
+            float fontSize = parent.Themes.Current.FontSize;
 
-            int width = (int)Raylib.MeasureTextEx(font, "|", fontSize, parent.Theme.Current.FontSpacing).X;
-            int height = (int)Raylib.MeasureTextEx(font, parent.Text, fontSize, parent.Theme.Current.FontSpacing).Y;
+            int width = (int)Raylib.MeasureTextEx(font, "|", fontSize, parent.Themes.Current.FontSpacing).X;
+            int height = (int)Raylib.MeasureTextEx(font, parent.Text, fontSize, parent.Themes.Current.FontSpacing).Y;
 
             return new(width, height);
         }
 
         private Color GetColor()
         {
-            Color color = parent.Theme.Current.FontColor;
+            Color color = parent.Themes.Current.FontColor;
             color.A = alpha;
 
             return color;

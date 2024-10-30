@@ -2,7 +2,7 @@
 
 namespace Nodica;
 
-public partial class LineEdit : Control
+public partial class LineEdit : Button
 {
     private abstract class BaseText
     {
@@ -30,12 +30,12 @@ public partial class LineEdit : Control
             }
 
             Raylib.DrawTextEx(
-                parent.Theme.Current.Font,
+                parent.Themes.Current.Font,
                 GetText(),
                 GetPosition(),
-                parent.Theme.Current.FontSize,
-                parent.Theme.Current.FontSpacing,
-                parent.Theme.Current.FontColor);
+                parent.Themes.Current.FontSize,
+                parent.Themes.Current.FontSpacing,
+                parent.Themes.Current.FontColor);
         }
 
         protected Vector2 GetPosition()
@@ -59,9 +59,9 @@ public partial class LineEdit : Control
 
         private int GetHalfFontHeight()
         {
-            Font font = parent.Theme.Current.Font;
+            Font font = parent.Themes.Current.Font;
             string text = GetText();
-            uint fontSize = (uint)parent.Theme.Current.FontSize;
+            uint fontSize = (uint)parent.Themes.Current.FontSize;
 
             int halfFontHeight = (int)(Raylib.MeasureTextEx(font, text, fontSize, 1).Y / 2);
             return halfFontHeight;

@@ -31,8 +31,3 @@ public class EntryPoint
         App.Instance.Run();
     }
 }
-
-public class RandomScene : Node
-{
-
-}

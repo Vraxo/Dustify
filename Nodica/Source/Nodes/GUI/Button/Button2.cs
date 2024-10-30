@@ -13,7 +13,7 @@
 //    public Vector2 TextPadding { get; set; } = Vector2.Zero;
 //    public Vector2 TextOrigin { get; set; } = Vector2.Zero;
 //    public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
-//    public ButtonThemePack Styles { get; set; } = new();
+//    public ButtonThemePack Themes { get; set; } = new();
 //    public float AvailableWidth { get; set; } = 0;
 //    public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
 //    public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
@@ -43,7 +43,7 @@
 //        set
 //        {
 //            _disabled = value;
-//            Styles.Current = Styles.Disabled;
+//            Themes.Current = Themes.Disabled;
 //        }
 //    }
 //
@@ -73,7 +73,7 @@
 //        set
 //        {
 //            _themeFile = value;
-//            Styles = PropertyLoader.Load<ButtonThemePack>(value);
+//            Themes = PropertyLoader.Load<ButtonThemePack>(value);
 //        }
 //    }
 //
@@ -139,26 +139,26 @@
 //
 //        if (StayPressed && (PressedLeft || PressedRight))
 //        {
-//            Styles.Current = Styles.Pressed;
+//            Themes.Current = Themes.Pressed;
 //        }
 //        else if (Focused)
 //        {
 //            if (mouseOver)
 //            {
-//                Styles.Current = anyPressed ? Styles.Pressed : Styles.Focused;
+//                Themes.Current = anyPressed ? Themes.Pressed : Themes.Focused;
 //            }
 //            else
 //            {
-//                Styles.Current = Focused ? Styles.Focused : Styles.Normal;
+//                Themes.Current = Focused ? Themes.Focused : Themes.Normal;
 //            }
 //        }
 //        else if (mouseOver)
 //        {
-//            Styles.Current = anyPressed ? Styles.Pressed : Styles.Hover;
+//            Themes.Current = anyPressed ? Themes.Pressed : Themes.Hover;
 //        }
 //        else
 //        {
-//            Styles.Current = Styles.Normal;
+//            Themes.Current = Themes.Normal;
 //        }
 //    }
 //
@@ -205,7 +205,7 @@
 //        DrawBorderedRectangle(
 //            GlobalPosition - Origin,
 //            Size,
-//            Styles.Current);
+//            Themes.Current);
 //    }
 //
 //    private void DrawIcon()
@@ -221,20 +221,20 @@
 //    private void DrawText()
 //    {
 //        Raylib.DrawTextEx(
-//            Styles.Current.Font,
+//            Themes.Current.Font,
 //            displayedText,
 //            GetTextPosition(),
-//            Styles.Current.FontSize,
+//            Themes.Current.FontSize,
 //            1,
-//            Styles.Current.FontColor);
+//            Themes.Current.FontColor);
 //    }
 //
 //    private Vector2 GetTextPosition()
 //    {
 //        Vector2 fontDimensions = Raylib.MeasureTextEx(
-//            Styles.Current.Font,
+//            Themes.Current.Font,
 //            Text,
-//            Styles.Current.FontSize,
+//            Themes.Current.FontSize,
 //            1);
 //
 //        Vector2 center = Size / 2;
@@ -278,9 +278,9 @@
 //        }
 //
 //        int textWidth = (int)Raylib.MeasureTextEx(
-//            Styles.Current.Font,
+//            Themes.Current.Font,
 //            Text,
-//            Styles.Current.FontSize,
+//            Themes.Current.FontSize,
 //            1).X;
 //
 //        Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
@@ -311,9 +311,9 @@
 //    private float GetCharacterWidth()
 //    {
 //        return Raylib.MeasureTextEx(
-//            Styles.Current.Font,
+//            Themes.Current.Font,
 //            " ",
-//            Styles.Current.FontSize,
+//            Themes.Current.FontSize,
 //            1).X;
 //    }
 //

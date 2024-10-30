@@ -12,6 +12,7 @@ public class Control : ClickableRectangle
     public string? RightControlPath { get; set; }
 
     public event Action<bool>? FocusChanged;
+    public event EventHandler? ClickedOutisde;
 
     private bool _focused = false;
     public bool Focused
@@ -73,6 +74,7 @@ public class Control : ClickableRectangle
         if (!IsMouseOver() && Raylib.IsMouseButtonPressed(MouseButton.Left))
         {
             Focused = false;
+            ClickedOutisde?.Invoke(this, EventArgs.Empty);
         }
     }
 

@@ -2,7 +2,7 @@
 
 [ImageSelectionButton "ImageSelectionButton" "Root"]
 Size = Vector2(500, 500)
-Styles/Roundness = 0
+Themes/Roundness = 0
 
 [AspectRatioContainer "AspectRatioContainer" "ImageSelectionButton"]
 Size = Vector2(500, 500)
@@ -18,7 +18,7 @@ FocusOnClick = true
 ThemeFile = "Resources/ButtonTheme.txt"
 FocusOnClick = true
 StayPressed = true
-Styles/FontSize = 32
+Themes/FontSize = 32
 
 [OptionButton "OptionButton" "Root"]
 Position = Vector2(550, 600)

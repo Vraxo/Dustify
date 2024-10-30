@@ -1,6 +1,6 @@
 ﻿namespace Nodica;
 
-public partial class LineEdit : Control
+public partial class LineEdit : Button
 {
     private class TextDisplayer : BaseText
     {

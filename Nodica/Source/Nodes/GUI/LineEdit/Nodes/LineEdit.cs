@@ -2,7 +2,7 @@
 
 namespace Nodica;
 
-public partial class LineEdit : Control
+public partial class LineEdit : Button
 {
     #region [ - - - Properties & Fields - - - ]
 
@@ -23,15 +23,15 @@ public partial class LineEdit : Control
     public bool Secret { get; set; } = false;
     public char SecretCharacter { get; set; } = '*';
 
-    public ButtonThemePack Theme { get; set; } = new()
-    {
-        Pressed = new()
-        {
-            BorderLength = 1,
-            FillColor = DefaultTheme.TextBoxPressedFill,
-            BorderColor = DefaultTheme.Accent
-        },
-    };
+    //public ButtonThemePack Themes { get; set; } = new()
+    //{
+    //    Pressed = new()
+    //    {
+    //        BorderLength = 1,
+    //        FillColor = DefaultTheme.TextBoxPressedFill,
+    //        BorderColor = DefaultTheme.Accent
+    //    },
+    //};
 
     public int TextStartIndex = 0;
 
@@ -62,6 +62,27 @@ public partial class LineEdit : Control
     public LineEdit()
     {
         Size = DefaultSize;
+        FocusOnClick = true;
+
+        FocusChanged += LineEdit_FocusChanged;
+
+        LeftClicked += LineEdit_LeftClicked;
+        ClickedOutisde += LineEdit_ClickedOutisde;
+    }
+
+    private void LineEdit_ClickedOutisde(object? sender, EventArgs e)
+    {
+        Selected = false;
+    }
+
+    private void LineEdit_LeftClicked(object? sender, EventArgs e)
+    {
+        Selected = true;
+    }
+
+    private void LineEdit_FocusChanged(bool obj)
+    {
+        Selected = obj;
     }
 
     public override void Start()
@@ -82,12 +103,22 @@ public partial class LineEdit : Control
         PasteText();
         UpdateSizeToFitText();
 
+        base.Update();
+        Console.WriteLine(nameof(Themes.Current));
+
         shape.Update();
         caret.Update();
         textDisplayer.Update();
         placeholderTextDisplayer.Update();
+    }
 
-        base.Update();
+    protected override void OnEnterPressed()
+    {
+        Selected = false;
+        Focused = false;
+        base.Themes.Current = base.Themes.Normal;
+
+        base.OnEnterPressed();
     }
 
     private void OnSizeChanged(object? sender, Vector2 e)
@@ -107,10 +138,10 @@ public partial class LineEdit : Control
         }
 
         int textWidth = (int)Raylib.MeasureTextEx(
-            Theme.Current.Font,
+            Themes.Current.Font,
             Text,
-            Theme.Current.FontSize,
-            Theme.Current.FontSpacing).X;
+            Themes.Current.FontSize,
+            Themes.Current.FontSpacing).X;
 
         Size = new(textWidth + TextOrigin.X * 2, Size.Y);
     }
@@ -146,34 +177,34 @@ public partial class LineEdit : Control
 
     private void HandleClicks()
     {
-        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
-        {
-            if (!IsMouseOver())
-            {
-                Selected = false;
-                Theme.Current = Theme.Normal;
-            }
-        }
-
-        if (IsMouseOver())
-        {
-            if (Raylib.IsMouseButtonDown(MouseButton.Left))
-            {
-                if (OnTopLeft)
-                {
-                    Selected = true;
-                    Theme.Current = Theme.Pressed;
-                }
-            }
-        }
-        else
-        {
-            if (Raylib.IsMouseButtonDown(MouseButton.Left))
-            {
-                Selected = false;
-                Theme.Current = Theme.Normal;
-            }
-        }
+        //if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+        //{
+        //    if (!IsMouseOver())
+        //    {
+        //        Selected = false;
+        //        Themes.Current = Themes.Normal;
+        //    }
+        //}
+        //
+        //if (IsMouseOver())
+        //{
+        //    if (Raylib.IsMouseButtonDown(MouseButton.Left))
+        //    {
+        //        if (OnTopLeft)
+        //        {
+        //            Selected = true;
+        //            Themes.Current = Themes.Pressed;
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    if (Raylib.IsMouseButtonDown(MouseButton.Left))
+        //    {
+        //        Selected = false;
+        //        Themes.Current = Themes.Normal;
+        //    }
+        //}
     }
 
     private void GetTypedCharacters()
@@ -390,7 +421,7 @@ public partial class LineEdit : Control
         if (Raylib.IsKeyDown(KeyboardKey.Enter))
         {
             Selected = false;
-            Theme.Current = Theme.Normal;
+            Themes.Current = Themes.Normal;
             Confirmed?.Invoke(this, Text);
         }
     }
@@ -408,10 +439,10 @@ public partial class LineEdit : Control
         float availableWidth = Size.X - TextOrigin.X * 2;
 
         float oneCharacterWidth = Raylib.MeasureTextEx(
-            Theme.Current.Font,
+            Themes.Current.Font,
             ".",
-            Theme.Current.FontSize,
-            Theme.Current.FontSpacing).X;
+            Themes.Current.FontSize,
+            Themes.Current.FontSpacing).X;
 
         int displayableCharactersCount = (int)(availableWidth / oneCharacterWidth);
 

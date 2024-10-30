@@ -16,7 +16,7 @@ public partial class Dialog : Node2D
             Size = new(25, 25),
             InheritOrigin = true,
             Layer = ClickableLayer.DialogButtons,
-            Styles = new()
+            Themes = new()
             {
                 FontColor = Color.Red
             },

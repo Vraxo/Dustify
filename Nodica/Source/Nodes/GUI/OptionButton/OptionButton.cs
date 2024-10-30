@@ -62,7 +62,7 @@ public partial class OptionButton : Button
             var option = new OptionButtonButton
             {
                 Position = new(0, 25 * (i + 1)),
-                Styles = new()
+                Themes = new()
                 {
                     Roundness = 0
                 },

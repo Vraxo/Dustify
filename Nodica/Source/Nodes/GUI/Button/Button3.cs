@@ -1,4 +1,5 @@
 ﻿using Raylib_cs;
+using System.Runtime.InteropServices.Marshalling;
 using System.Security.AccessControl;
 
 namespace Nodica;
@@ -18,7 +19,7 @@ public class Button : Control
     public VerticalAlignment VerticalAlignment { get; set; } = VerticalAlignment.Center;
 
     public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
-    public ButtonThemePack Styles { get; set; } = new();
+    public ButtonThemePack Themes { get; set; } = new();
     public float AvailableWidth { get; set; } = 0;
     public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
@@ -48,7 +49,7 @@ public class Button : Control
         set
         {
             _disabled = value;
-            Styles.Current = Styles.Disabled;
+            Themes.Current = Themes.Disabled;
         }
     }
 
@@ -78,7 +79,7 @@ public class Button : Control
         set
         {
             _themeFile = value;
-            Styles = PropertyLoader.Load<ButtonThemePack>(value);
+            Themes = PropertyLoader.Load<ButtonThemePack>(value);
         }
     }
 
@@ -86,7 +87,7 @@ public class Button : Control
     {
         set
         {
-            Styles = value;
+            Themes = value;
         }
     }
 
@@ -114,10 +115,21 @@ public class Button : Control
     {
         if (Focused && Raylib.IsKeyPressed(KeyboardKey.Enter))
         {
-            LeftClicked?.Invoke(this, EventArgs.Empty);
-            RightClicked?.Invoke(this, EventArgs.Empty);
+            if (Behavior == ClickBehavior.Left || Behavior == ClickBehavior.Both)
+            {
+                LeftClicked?.Invoke(this, EventArgs.Empty);
+                OnEnterPressed();
+            }
+
+            if (Behavior == ClickBehavior.Right || Behavior == ClickBehavior.Both)
+            {
+                RightClicked?.Invoke(this, EventArgs.Empty);
+                OnEnterPressed();
+            }
         }
     }
+
+    protected virtual void OnEnterPressed() { }
 
     private void HandleClicks()
     {
@@ -152,26 +164,26 @@ public class Button : Control
 
         if (StayPressed && (PressedLeft || PressedRight))
         {
-            Styles.Current = Styles.Pressed;
+            Themes.Current = Themes.Pressed;
         }
         else if (Focused)
         {
             if (mouseOver)
             {
-                Styles.Current = anyPressed ? Styles.Pressed : Styles.Focused;
+                Themes.Current = anyPressed ? Themes.Pressed : Themes.Focused;
             }
             else
             {
-                Styles.Current = Focused ? Styles.Focused : Styles.Normal;
+                Themes.Current = Focused ? Themes.Focused : Themes.Normal;
             }
         }
         else if (mouseOver)
         {
-            Styles.Current = anyPressed ? Styles.Pressed : Styles.Hover;
+            Themes.Current = anyPressed ? Themes.Pressed : Themes.Hover;
         }
         else
         {
-            Styles.Current = Styles.Normal;
+            Themes.Current = Themes.Normal;
         }
     }
 
@@ -220,7 +232,7 @@ public class Button : Control
         DrawBorderedRectangle(
             GlobalPosition - Origin,
             Size,
-            Styles.Current);
+            Themes.Current);
     }
 
     private void DrawIcon()
@@ -236,20 +248,20 @@ public class Button : Control
     private void DrawText()
     {
         Raylib.DrawTextEx(
-            Styles.Current.Font,
+            Themes.Current.Font,
             displayedText,
             GetTextPosition(),
-            Styles.Current.FontSize,
+            Themes.Current.FontSize,
             1,
-            Styles.Current.FontColor);
+            Themes.Current.FontColor);
     }
 
     private Vector2 GetTextPosition()
     {
         Vector2 textSize = Raylib.MeasureTextEx(
-            Styles.Current.Font,
+            Themes.Current.Font,
             Text,
-            Styles.Current.FontSize,
+            Themes.Current.FontSize,
             1);
 
         float x = HorizontalAlignment switch
@@ -276,9 +288,9 @@ public class Button : Control
         }
 
         int textWidth = (int)Raylib.MeasureTextEx(
-            Styles.Current.Font,
+            Themes.Current.Font,
             Text,
-            Styles.Current.FontSize,
+            Themes.Current.FontSize,
             1).X;
 
         Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
@@ -309,9 +321,9 @@ public class Button : Control
     private float GetCharacterWidth()
     {
         return Raylib.MeasureTextEx(
-            Styles.Current.Font,
+            Themes.Current.Font,
             " ",
-            Styles.Current.FontSize,
+            Themes.Current.FontSize,
             1).X;
     }
 

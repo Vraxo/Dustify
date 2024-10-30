@@ -30,14 +30,9 @@ public abstract class BaseButton : Control
         }
     }
 
-    protected abstract void OnDisable();
+    protected virtual void OnDisable() { }
 
     #endregion
-
-    public BaseButton()
-    {
-        // Base button initialization if needed
-    }
 
     public override void Update()
     {
@@ -58,7 +53,7 @@ public abstract class BaseButton : Control
         }
     }
 
-    protected abstract void OnEnterKeyPressed();
+    protected virtual void OnEnterKeyPressed() { }
 
     private void HandleClicks()
     {
@@ -78,11 +73,7 @@ public abstract class BaseButton : Control
             HandleClick(ref PressedRight, MouseButton.Right, RightClickActionMode);
             if (PressedRight) anyPressed = true;
         }
-
-        UpdateStyles(mouseOver, anyPressed);
     }
-
-    protected abstract void UpdateStyles(bool mouseOver, bool anyPressed);
 
     private void HandleClick(ref bool pressed, MouseButton button, ActionMode actionMode)
     {
@@ -115,5 +106,5 @@ public abstract class BaseButton : Control
         }
     }
 
-    protected abstract void OnClick();
+    protected virtual void OnClick() { }
 }

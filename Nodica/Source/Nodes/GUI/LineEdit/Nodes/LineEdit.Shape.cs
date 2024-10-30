@@ -2,7 +2,7 @@
 
 namespace Nodica;
 
-public partial class LineEdit : Control
+public partial class LineEdit : Button
 {
     private class Shape : VisualItem
     {
@@ -28,7 +28,7 @@ public partial class LineEdit : Control
             DrawBorderedRectangle(
                 parent.GlobalPosition - parent.Origin,
                 parent.Size,
-                parent.Theme.Current);
+                parent.Themes.Current);
 
             //DrawOutline();
             //DrawInside();
@@ -36,12 +36,12 @@ public partial class LineEdit : Control
 
         //private void DrawOutline()
         //{
-        //    if (parent.Theme.Current.BorderLength <= 0)
+        //    if (parent.Themes.Current.BorderLength <= 0)
         //    {
         //        return;
         //    }
         //
-        //    for (int i = 1; i <= parent.Theme.Current.BorderLength; i++)
+        //    for (int i = 1; i <= parent.Themes.Current.BorderLength; i++)
         //    {
         //        Vector2 offset = new(i / 2f, i / 2f);
         //
@@ -53,9 +53,9 @@ public partial class LineEdit : Control
         //
         //        Raylib.DrawRectangleRounded(
         //            rectangle,
-        //            parent.Theme.Current.Roundness,
+        //            parent.Themes.Current.Roundness,
         //            (int)parent.Size.Y,
-        //            parent.Theme.Current.BorderColor);
+        //            parent.Themes.Current.BorderColor);
         //    }
         //}
         //
@@ -69,9 +69,9 @@ public partial class LineEdit : Control
         //
         //    Raylib.DrawRectangleRounded(
         //        rectangle,
-        //        parent.Theme.Current.Roundness,
+        //        parent.Themes.Current.Roundness,
         //        (int)parent.Size.Y,
-        //        parent.Theme.Current.FillColor);
+        //        parent.Themes.Current.FillColor);
         //}
     }
 }
