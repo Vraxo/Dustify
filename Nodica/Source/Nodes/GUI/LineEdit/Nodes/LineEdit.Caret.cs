@@ -3,7 +3,7 @@ using System.Xml.Schema;
 
 namespace Nodica;
 
-public partial class LineEdit : ClickableRectangle
+public partial class LineEdit : Control
 {
     protected class Caret
     {

@@ -2,7 +2,7 @@
 
 namespace Nodica;
 
-public partial class LineEdit : ClickableRectangle
+public partial class LineEdit : Control
 {
     #region [ - - - Properties & Fields - - - ]
 

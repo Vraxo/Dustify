@@ -2,7 +2,7 @@
 
 namespace Nodica;
 
-public partial class LineEdit
+public partial class LineEdit : Control
 {
     private class Shape : VisualItem
     {
