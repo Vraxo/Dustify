@@ -2,7 +2,7 @@
 
 public class Particle : ColorRectangle
 {
-    public float Speed = 20;
+    public float Speed = 50;
 
     private float trueSpeed;
     private float driftX;

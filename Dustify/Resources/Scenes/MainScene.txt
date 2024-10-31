@@ -18,11 +18,10 @@ FocusOnClick = true
 ThemeFile = "Resources/ButtonTheme.txt"
 FocusOnClick = true
 StayPressed = true
-Themes/FontSize = 32
 
 [OptionButton "OptionButton" "Root"]
 Position = Vector2(550, 600)
-Text = "..."
+Text = "Row by row"
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)

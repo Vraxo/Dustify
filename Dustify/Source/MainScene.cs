@@ -1,6 +1,5 @@
 ﻿using Nodica;
 using Raylib_cs;
-using SixLabors.ImageSharp;
 
 namespace Dustify;
 
@@ -14,6 +13,9 @@ public partial class MainScene : Node
 
     public override void Start()
     {
+        // Clear the contents of the Resources/Temporary directory
+        //ClearTemporaryDirectory();
+
         imageSelectionButton = GetNode<ImageSelectionButton>("ImageSelectionButton");
         renderButton = GetNode<RenderButton>("RenderButton");
         progressBar = GetNode<ProgressBar>("ProgressBar");
@@ -42,6 +44,7 @@ public partial class MainScene : Node
 
     public override void Update()
     {
+        Raylib.DrawFPS(10, 10);
         UpdateProgressBar();
         base.Update();
     }
@@ -49,5 +52,25 @@ public partial class MainScene : Node
     private void UpdateProgressBar()
     {
         progressBar.Position = new(Window.Size.X / 2, Window.Size.Y * 0.8f);
+    }
+
+    private void ClearTemporaryDirectory()
+    {
+        string tempDir = Path.Combine("Resources", "Temporary");
+
+        if (Directory.Exists(tempDir))
+        {
+            // Delete all files in the directory
+            foreach (var file in Directory.GetFiles(tempDir))
+            {
+                File.Delete(file);
+            }
+
+            // Optionally, delete subdirectories and their contents
+            foreach (var dir in Directory.GetDirectories(tempDir))
+            {
+                Directory.Delete(dir, true); // true to delete recursively
+            }
+        }
     }
 }

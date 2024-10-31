@@ -35,9 +35,9 @@ public partial class OptionButton : Button
 
         private void OnLeftClicked(object? sender, EventArgs e)
         {
-            (Parent as Nodica.OptionButton).Text = Text;
-            (Parent as Nodica.OptionButton).Choice = Index;
-            (Parent as Nodica.OptionButton).Close();
+            (Parent as OptionButton).Text = Text;
+            (Parent as OptionButton).Choice = Index;
+            (Parent as OptionButton).Close();
         }
     }
 }

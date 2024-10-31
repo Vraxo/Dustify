@@ -103,8 +103,6 @@ public partial class LineEdit : Button
         UpdateSizeToFitText();
 
         base.Update();
-        Console.WriteLine(nameof(Themes.Current));
-
         //shape.Update();
         caret.Update();
         textDisplayer.Update();

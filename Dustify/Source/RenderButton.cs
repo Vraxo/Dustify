@@ -41,9 +41,8 @@ public class RenderButton : Button
 
     private void OnLeftClicked(object? sender, EventArgs e)
     {
-        if (!imageDisplayer.HasTexture)
+        if (!imageDisplayer.HasTexture || GetNode<Renderer>("Renderer") is not null)
         {
-            Console.WriteLine("can't render");
             return;
         }
 
@@ -56,7 +55,14 @@ public class RenderButton : Button
         AddChild(new Renderer());
 
         Texture2D texture = imageDisplayer.Texture;
-        GetNode<Renderer>("Renderer").Render(texture, qualities, DisintegrationMode.AllAtOnce);
+
+        var optionButton = GetNode<OptionButton>("/root/OptionButton");
+
+        var disintegrationMode = optionButton.Text == "Row by row" ? 
+                                                      DisintegrationMode.RowByRow : 
+                                                      DisintegrationMode.AllAtOnce;
+
+        GetNode<Renderer>("Renderer").Render(texture, qualities, disintegrationMode);
     }
 
     private List<VideoQuality> ParseQualitiesFromArgs(string[] args)

@@ -18,16 +18,16 @@ public class Renderer : Node
     private List<VideoQuality> qualitiesToGenerate;
     private ProgressBar progressBar;
 
-    private bool rendering;
+    public bool Rendering = false;
 
     public void Render(Texture2D texture, List<VideoQuality> qualities, DisintegrationMode disintegrationMode)
     {
-        if (rendering || texture.Width == 0)
+        if (Rendering || texture.Width == 0)
         {
             return;
         }
 
-        rendering = true;
+        Rendering = true;
         InitializeImageDisplayer(texture, disintegrationMode);
         totalFrames = CalculateTotalFrames(texture.Height, disintegrationMode);
         qualitiesToGenerate = new(qualities);
@@ -76,13 +76,13 @@ public class Renderer : Node
 
     private int CalculateTotalFrames(int textureHeight, DisintegrationMode disintegrationMode)
     {
-        int baseFrames = textureHeight / 4 * 2;
+        int baseFrames = (int)(textureHeight / 4 * 2 / 1.1f);
         return disintegrationMode == DisintegrationMode.AllAtOnce ? baseFrames / 2 : baseFrames;
     }
 
     private void ProcessFrame()
     {
-        RenderTexture2D renderTexture = Raylib.LoadRenderTexture(imageDisplayer.Texture.Width, imageDisplayer.Texture.Height);
+        RenderTexture2D renderTexture = Raylib.LoadRenderTexture(imageDisplayer.BitmapData.Width, imageDisplayer.BitmapData.Height);
 
         Raylib.BeginTextureMode(renderTexture);
         Raylib.ClearBackground(Color.Black);
@@ -183,7 +183,7 @@ public class Renderer : Node
         UpdateProgressBar(true);
 
         progressBar.Percentage = 0;
-        rendering = false;
+        Rendering = false;
 
         if (Environment.GetCommandLineArgs().Length > 1)
         {

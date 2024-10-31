@@ -48,9 +48,9 @@ public class ImageDisplayer : CustomTexturedRectangle
 
     private void DisintegrateRowByRow()
     {
-        if (currentRow * step < Size.Y)
+        if (currentRow * step < BitmapData.Height)
         {
-            for (int x = 0; x < Size.X; x += step)
+            for (int x = 0; x < BitmapData.Width; x += step)
             {
                 System.Drawing.Color color = BitmapData.GetPixel(x, currentRow * step);
                 Vector2 position = Position - Origin + new Vector2(x, currentRow * step);
@@ -79,9 +79,9 @@ public class ImageDisplayer : CustomTexturedRectangle
 
     private void DisintegrateAllAtOnce()
     {
-        for (int y = 0; y < Size.Y; y += step)
+        for (int y = 0; y < BitmapData.Height; y += step)
         {
-            for (int x = 0; x < Size.X; x += step)
+            for (int x = 0; x < BitmapData.Width; x += step)
             {
                 System.Drawing.Color color = BitmapData.GetPixel(x, y);
                 Vector2 position = Position - Origin + new Vector2(x, y);

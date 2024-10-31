@@ -10,8 +10,6 @@ public class QualityCheckBoxes : Node2D
 
     public override void Start()
     {
-        Console.WriteLine("QualityCheckBoxes started.");
-
         highQualityCheckBox = GetNode<CheckBox>("HighQualityCheckBox");
         mediumQualityCheckBox = GetNode<CheckBox>("MediumQualityCheckBox");
         lowQualityCheckBox = GetNode<CheckBox>("LowQualityCheckBox");

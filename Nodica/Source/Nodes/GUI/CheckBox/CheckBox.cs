@@ -52,12 +52,12 @@ public class CheckBox : Control
 
     public CheckBox()
     {
-        Size = new(26, 26);
+        Size = new(20, 20);
         FocusChanged += OnFocusChanged;
         CheckSize = Size / 2;
 
-        BackgroundStyles.Roundness = 0.5f;
-        CheckStyles.Roundness = 0.5f;
+        BackgroundStyles.Roundness = 1f;
+        CheckStyles.Roundness = 1f;
         CheckStyles.FillColor = DefaultTheme.Accent;
     }
 
