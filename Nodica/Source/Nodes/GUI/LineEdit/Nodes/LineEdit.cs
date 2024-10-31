@@ -63,7 +63,6 @@ public partial class LineEdit : Button
     {
         Size = DefaultSize;
         FocusOnClick = true;
-
         FocusChanged += LineEdit_FocusChanged;
 
         LeftClicked += LineEdit_LeftClicked;
@@ -80,9 +79,9 @@ public partial class LineEdit : Button
         Selected = true;
     }
 
-    private void LineEdit_FocusChanged(bool obj)
+    private void LineEdit_FocusChanged(object sender, bool e)
     {
-        Selected = obj;
+        Selected = e;
     }
 
     public override void Start()
@@ -106,7 +105,7 @@ public partial class LineEdit : Button
         base.Update();
         Console.WriteLine(nameof(Themes.Current));
 
-        shape.Update();
+        //shape.Update();
         caret.Update();
         textDisplayer.Update();
         placeholderTextDisplayer.Update();
@@ -116,7 +115,7 @@ public partial class LineEdit : Button
     {
         Selected = false;
         Focused = false;
-        base.Themes.Current = base.Themes.Normal;
+        Themes.Current = base.Themes.Normal;
 
         base.OnEnterPressed();
     }
@@ -297,11 +296,22 @@ public partial class LineEdit : Button
 
     private void HandleBackspace()
     {
-        if (Raylib.IsKeyPressed(KeyboardKey.Backspace))
+        bool ctrlHeld = Raylib.IsKeyDown(KeyboardKey.LeftControl) || Raylib.IsKeyDown(KeyboardKey.RightControl);
+        bool backspacePressed = Raylib.IsKeyPressed(KeyboardKey.Backspace);
+
+        if (backspacePressed)
         {
             backspaceHeld = true;
             backspaceTimer = 0f;
-            DeleteLastCharacter();
+
+            if (ctrlHeld)
+            {
+                DeletePreviousWord();
+            }
+            else
+            {
+                DeleteLastCharacter();
+            }
         }
         else if (Raylib.IsKeyDown(KeyboardKey.Backspace) && backspaceHeld)
         {
@@ -311,7 +321,14 @@ public partial class LineEdit : Button
             {
                 if (backspaceTimer % backspaceSpeed < Raylib.GetFrameTime())
                 {
-                    DeleteLastCharacter();
+                    if (ctrlHeld)
+                    {
+                        DeletePreviousWord();
+                    }
+                    else
+                    {
+                        DeleteLastCharacter();
+                    }
                 }
             }
         }
@@ -322,22 +339,60 @@ public partial class LineEdit : Button
         }
     }
 
+    private void DeletePreviousWord()
+    {
+        if (Text.Length == 0 || caret.X <= 0) return;
+
+        // Determine start of the previous word by moving back until a space is found
+        int removeIndex = caret.X + TextStartIndex - 1;
+        int wordStartIndex = removeIndex;
+
+        // Move back to the start of the word
+        while (wordStartIndex > 0 && Text[wordStartIndex - 1] != ' ')
+        {
+            wordStartIndex--;
+        }
+
+        // Calculate the range and delete the text
+        int lengthToDelete = removeIndex - wordStartIndex + 1;
+        Text = Text.Remove(wordStartIndex, lengthToDelete);
+
+        // Adjust the caret position and TextStartIndex
+        if (wordStartIndex < TextStartIndex)
+        {
+            // If the start of the deleted word is before TextStartIndex,
+            // we need to adjust the TextStartIndex accordingly.
+            TextStartIndex -= (removeIndex - wordStartIndex);
+        }
+
+        // Update caret position after deletion
+        caret.X = Math.Clamp(wordStartIndex - TextStartIndex, 0, Math.Min(Text.Length, GetDisplayableCharactersCount()));
+
+        RevertTextToDefaultIfEmpty();
+        TextChanged?.Invoke(this, Text);
+
+        // Invoke Cleared if the text is empty after deletion
+        if (Text.Length == 0)
+        {
+            Cleared?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+
+
     private void DeleteLastCharacter()
     {
         int textLengthBeforeDeletion = Text.Length;
 
-        // Check if there are characters to delete
         if (Text.Length > 0)
         {
-            // If caret is at 0 but TextStartIndex is greater than 0, move the start index left to delete hidden characters
             if (caret.X == 0 && TextStartIndex > 0)
             {
-                TextStartIndex--; // Move start index to the left
-                Text = Text.Remove(TextStartIndex, 1); // Remove the character at the new start index
+                TextStartIndex--;
+                Text = Text.Remove(TextStartIndex, 1);
             }
             else if (caret.X > 0)
             {
-                // Regular deletion when caret is not at the very start
                 int removeIndex = caret.X - 1 + TextStartIndex;
                 if (removeIndex >= TextStartIndex && removeIndex < Text.Length)
                 {
@@ -348,15 +403,14 @@ public partial class LineEdit : Button
         }
 
         RevertTextToDefaultIfEmpty();
-
         TextChanged?.Invoke(this, Text);
 
-        // Check if text was cleared
         if (Text.Length == 0 && textLengthBeforeDeletion != 0)
         {
             Cleared?.Invoke(this, EventArgs.Empty);
         }
     }
+
 
     //private void DeleteLastCharacter()
     //{

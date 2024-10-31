@@ -30,11 +30,12 @@ public partial class LineEdit : Button
             get => _x;
             set
             {
-                int maxVisibleChars = Math.Min(parent.GetDisplayableCharactersCount(), parent.Text.Length - parent.TextStartIndex);
+                int maxVisibleChars = Math.Max(0, Math.Min(parent.GetDisplayableCharactersCount(), parent.Text.Length - parent.TextStartIndex));
                 _x = Math.Clamp(value, 0, maxVisibleChars);
                 alpha = maxAlpha;
             }
         }
+
 
         //private int _x = 0;
         //public int X

@@ -11,7 +11,7 @@ public class Control : ClickableRectangle
     public string? LeftControlPath { get; set; }
     public string? RightControlPath { get; set; }
 
-    public event Action<bool>? FocusChanged;
+    public event EventHandler<bool>? FocusChanged;
     public event EventHandler? ClickedOutisde;
 
     private bool _focused = false;
@@ -23,7 +23,7 @@ public class Control : ClickableRectangle
             if (_focused != value)
             {
                 _focused = value;
-                FocusChanged?.Invoke(_focused);
+                FocusChanged?.Invoke(this, _focused);
             }
         }
     }

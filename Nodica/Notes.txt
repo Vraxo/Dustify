@@ -8,12 +8,10 @@
 
 > Bring vertical slider to the same level as horizontal slider
 
-> add everything to style omni setters
-
-> perhaps use checks in setters to prevent stack overflow
-
-> Remove .txt from scene path
+> perhaps use checks in setters to prevent stack overflow (label)
 
 > Using nodes through global usings directly is bad
 
 > Switch the rest of the alignments
+
+> word deletion for lineedit

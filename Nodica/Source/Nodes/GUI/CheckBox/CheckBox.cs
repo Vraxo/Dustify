@@ -79,9 +79,9 @@ public class CheckBox : Control
         Toggled?.Invoke(this, Checked);
     }
 
-    private void OnFocusChanged(bool focused)
+    private void OnFocusChanged(object? sender, bool e)
     {
-        BackgroundStyles.Current = focused ?
+        BackgroundStyles.Current = e ?
                                    BackgroundStyles.Focused :
                                    BackgroundStyles.Normal;
     }
