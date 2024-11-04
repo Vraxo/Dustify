@@ -3,6 +3,7 @@
 [ImageSelectionButton "ImageSelectionButton" "Root"]
 Size = Vector2(500, 500)
 Themes/Roundness = 0
+DownControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
 
 [AspectRatioContainer "AspectRatioContainer" "ImageSelectionButton"]
 Size = Vector2(500, 500)
@@ -27,6 +28,7 @@ Text = "Row by row"
 FocusOnClick = true
 LeftControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
 DownControlPath = "/root/RenderButton"
+UpControlPath = "/root/ImageSelectionButton"
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)

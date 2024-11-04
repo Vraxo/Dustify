@@ -22,10 +22,18 @@ public class Node
         {
             string path = Name;
             Node? current = Parent;
+            bool isRootNode = true;
 
             while (current != null)
             {
-                path = $"{current.Name}/{path}";
+                if (!isRootNode)
+                {
+                    path = $"{current.Name}/{path}";
+                }
+                else
+                {
+                    isRootNode = false;
+                }
                 current = current.Parent;
             }
 

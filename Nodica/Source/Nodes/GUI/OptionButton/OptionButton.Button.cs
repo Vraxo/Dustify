@@ -46,6 +46,11 @@ public partial class OptionButton : Button
         private void OnLeftClicked(object? sender, EventArgs e)
         {
             parent.Select(Index);
+
+            if (Focused)
+            {
+                parent.Focused = true;
+            }
         }
     }
 }

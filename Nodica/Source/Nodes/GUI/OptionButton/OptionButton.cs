@@ -11,6 +11,8 @@ public partial class OptionButton : Button
 
     private readonly List<OptionButtonButton> optionChildren = new();
 
+    private string originalDownControlPath;
+
     public OptionButton()
     {
         LeftClicked += OnLeftClicked;
@@ -43,7 +45,7 @@ public partial class OptionButton : Button
         if (Open)
         {
             bool isMouseOverAnyOption = IsMouseOver() || optionChildren.Any(option => option.IsMouseOver());
-        
+
             if (Raylib.IsMouseButtonPressed(MouseButton.Left) && !isMouseOverAnyOption)
             {
                 Close();
@@ -75,9 +77,26 @@ public partial class OptionButton : Button
                 Index = i
             };
 
-            AddChild(option);
+            AddChild(option, $"Option{i}");
             optionChildren.Add(option);
+
+            if (i != Options.Count - 1)
+            {
+                option.DownControlPath = $"{AbsolutePath}/Option{i + 1}";
+            }
+
+            if (i != 0)
+            {
+                option.UpControlPath = $"{AbsolutePath}/Option{i - 1}";
+            }
+            else
+            {
+                option.UpControlPath = AbsolutePath;
+            }
         }
+
+        originalDownControlPath = DownControlPath;
+        DownControlPath = $"{AbsolutePath}/Option0";
 
         Open = true;
     }
@@ -96,6 +115,8 @@ public partial class OptionButton : Button
 
         optionChildren.Clear();
         Open = false;
+
+        DownControlPath = originalDownControlPath;
     }
 
     private void Select(int index)
