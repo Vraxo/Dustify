@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Raylib-cs" Version="6.1.1" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,10 @@
     <None Update="Resources\Themes\Theme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Temporary\" />
   </ItemGroup>
 
 </Project>

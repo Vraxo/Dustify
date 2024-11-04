@@ -52,7 +52,7 @@
 //    {
 //        Rectangle rectangle = new()
 //        {
-//            position = GlobalPosition - Origin,
+//            position = GlobalPosition - Offset,
 //            Size = Size
 //        };
 //        
@@ -96,7 +96,7 @@
 //        Grabber = new()
 //        {
 //            Size = new(Size.X, Size.X),
-//            Origin = new(Size.X / 2, 0),
+//            Offset = new(Size.X / 2, 0),
 //            OriginPreset = OriginPreset.TopCenter,
 //            OnUpdate = (OptionButtonButton) =>
 //            {
@@ -136,11 +136,11 @@
 //    {
 //        Vector2 mousePosition = Raylib.GetMousePosition();
 //
-//        bool matchX1 = mousePosition.X > GlobalPosition.X - Origin.X;
-//        bool matchX2 = mousePosition.X < GlobalPosition.X + Size.X - Origin.X;
+//        bool matchX1 = mousePosition.X > GlobalPosition.X - Offset.X;
+//        bool matchX2 = mousePosition.X < GlobalPosition.X + Size.X - Offset.X;
 //
-//        bool matchY1 = mousePosition.Y > GlobalPosition.Y - Origin.Y;
-//        bool matchY2 = mousePosition.Y < GlobalPosition.Y + Size.Y - Origin.Y;
+//        bool matchY1 = mousePosition.Y > GlobalPosition.Y - Offset.Y;
+//        bool matchY2 = mousePosition.Y < GlobalPosition.Y + Size.Y - Offset.Y;
 //
 //        return matchX1 && matchX2 && matchY1 && matchY2;
 //    }

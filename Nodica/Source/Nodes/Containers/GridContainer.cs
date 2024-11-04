@@ -40,8 +40,8 @@ public class GridContainer : VisualItem
     {
         for (int i = 0; i <= Cells.X; i++)
         {
-            Vector2 startPosition = GlobalPosition + new Vector2(i * ItemSize.X * Scale.X, 0) - Origin;
-            Vector2 endPosition = GlobalPosition + new Vector2(i * ItemSize.X * Scale.X, Cells.Y * ItemSize.Y * Scale.Y) - Origin;
+            Vector2 startPosition = GlobalPosition + new Vector2(i * ItemSize.X * Scale.X, 0) - Offset;
+            Vector2 endPosition = GlobalPosition + new Vector2(i * ItemSize.X * Scale.X, Cells.Y * ItemSize.Y * Scale.Y) - Offset;
 
             Raylib.DrawLineV(
                 startPosition,
@@ -55,8 +55,8 @@ public class GridContainer : VisualItem
         for (int j = 0; j <= Cells.Y; j++)
         {
             // Apply scaling to the grid line positions
-            Vector2 startPosition = GlobalPosition + new Vector2(0, j * ItemSize.Y * Scale.Y) - Origin;
-            Vector2 endPosition = GlobalPosition + new Vector2(Cells.X * ItemSize.X * Scale.X, j * ItemSize.Y * Scale.Y) - Origin;
+            Vector2 startPosition = GlobalPosition + new Vector2(0, j * ItemSize.Y * Scale.Y) - Offset;
+            Vector2 endPosition = GlobalPosition + new Vector2(Cells.X * ItemSize.X * Scale.X, j * ItemSize.Y * Scale.Y) - Offset;
 
             Raylib.DrawLineV(
                 startPosition,
@@ -78,7 +78,7 @@ public class GridContainer : VisualItem
             int col = index % (int)Cells.X;
 
             // Evaluate the position for each child in the grid, applying scaling inversely
-            Vector2 childPosition = GlobalPosition - Origin + new Vector2(col * ItemSize.X * Scale.X, row * ItemSize.Y * Scale.Y) + CellOrigin;
+            Vector2 childPosition = GlobalPosition - Offset + new Vector2(col * ItemSize.X * Scale.X, row * ItemSize.Y * Scale.Y) + CellOrigin;
 
             // Set the child's global position
             child.GlobalPosition = childPosition;
@@ -105,8 +105,8 @@ public class GridContainer : VisualItem
             OriginPreset.BottomLeft => new Vector2(0, ItemSize.Y) * Scale,
             OriginPreset.BottomRight => ItemSize * Scale,
             OriginPreset.BottomCenter => new Vector2(ItemSize.X / 2, ItemSize.Y) * Scale,
-            OriginPreset.None => Origin * Scale,
-            _ => Origin * Scale,
+            OriginPreset.None => Offset * Scale,
+            _ => Offset * Scale,
         };
     }
 }

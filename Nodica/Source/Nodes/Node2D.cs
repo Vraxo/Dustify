@@ -7,7 +7,7 @@ public class Node2D : Node
     public OriginPreset OriginPreset { get; set; } = OriginPreset.Center;
     public bool InheritPosition { get; set; } = true;
     public bool InheritOrigin { get; set; } = false;
-
+    public Alignment Alignment = new();
     public event EventHandler<Vector2>? SizeChanged;
 
     private Vector2 _size = Vector2.Zero;
@@ -82,8 +82,8 @@ public class Node2D : Node
         }
     }
 
-    private Vector2 _origin = Vector2.Zero;
-    public Vector2 Origin
+    private Vector2 _offset = Vector2.Zero;
+    public Vector2 Offset
     {
         get
         {
@@ -91,18 +91,40 @@ public class Node2D : Node
             {
                 if (Parent is Node2D parentNode)
                 {
-                    return parentNode.Origin;
+                    return parentNode.Offset;
                 }
             }
 
-            return _origin;
+            return _offset;
         }
 
         set
         {
-            _origin = value;
+            _offset = value;
         }
     }
+
+    public Vector2 Origin
+    {
+        get
+        {
+            float x = Alignment.Horizontal switch
+            {
+                HorizontalAlignment.Center => Size.X / 2,
+                _ => 0
+            };
+
+            float y = Alignment.Vertical switch
+            {
+                VerticalAlignment.Center => Size.Y / 2,
+                _ => 0
+            };
+
+            Vector2 alignmentOffset = new(x, y);
+            return alignmentOffset + Offset;
+        }
+    }
+
 
     public override void Update()
     {
@@ -111,19 +133,19 @@ public class Node2D : Node
 
     private void UpdateOrigin()
     {
-        Origin = OriginPreset switch
-        {
-            OriginPreset.Center => Size / 2,
-            OriginPreset.CenterLeft => new(0, Size.Y / 2),
-            OriginPreset.CenterRight => new(Size.X, Size.Y / 2),
-            OriginPreset.TopLeft => new(0, 0),
-            OriginPreset.TopRight => new(Size.X, 0),
-            OriginPreset.TopCenter => new(Size.X / 2, 0),
-            OriginPreset.BottomLeft => new(0, Size.Y),
-            OriginPreset.BottomRight => Size,
-            OriginPreset.BottomCenter => new(Size.X / 2, Size.Y),
-            OriginPreset.None => Origin,
-            _ => Origin,
-        };
+        //Offset = OriginPreset switch
+        //{
+        //    OriginPreset.Center => Size / 2,
+        //    OriginPreset.CenterLeft => new(0, Size.Y / 2),
+        //    OriginPreset.CenterRight => new(Size.X, Size.Y / 2),
+        //    OriginPreset.TopLeft => new(0, 0),
+        //    OriginPreset.TopRight => new(Size.X, 0),
+        //    OriginPreset.TopCenter => new(Size.X / 2, 0),
+        //    OriginPreset.BottomLeft => new(0, Size.Y),
+        //    OriginPreset.BottomRight => Size,
+        //    OriginPreset.BottomCenter => new(Size.X / 2, Size.Y),
+        //    OriginPreset.None => Offset,
+        //    _ => Offset,
+        //};
     }
 }

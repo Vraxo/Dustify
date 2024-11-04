@@ -1,6 +1,4 @@
 ﻿using Raylib_cs;
-using System.Runtime.InteropServices.Marshalling;
-using System.Security.AccessControl;
 
 namespace Nodica;
 
@@ -12,13 +10,8 @@ public class Button : Control
 
     #region [ - - - Properties & Fields - - - ]
 
-    public Vector2 TextPadding { get; set; } = Vector2.Zero;
-    public Vector2 TextOrigin { get; set; } = Vector2.Zero;
-
-    public HorizontalAlignment HorizontalAlignment { get; set; } = HorizontalAlignment.Center;
-    public VerticalAlignment VerticalAlignment { get; set; } = VerticalAlignment.Center;
-
-    public OriginPreset TextOriginPreset { get; set; } = OriginPreset.Center;
+    public Vector2 TextOffset { get; set; } = Vector2.Zero;
+    public Alignment TextAlignment { get; set; } = new();
     public ButtonThemePack Themes { get; set; } = new();
     public float AvailableWidth { get; set; } = 0;
     public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
@@ -96,6 +89,8 @@ public class Button : Control
     public Button()
     {
         Size = new(100, 26);
+        Offset = new(0, 0);
+        OriginPreset = OriginPreset.None;
     }
 
     public override void Update()
@@ -264,20 +259,22 @@ public class Button : Control
             Themes.Current.FontSize,
             1);
 
-        float x = HorizontalAlignment switch
+        float x = TextAlignment.Horizontal switch
         {
             HorizontalAlignment.Center => Size.X / 2,
             HorizontalAlignment.Right => Size.X - textSize.X / 2
         };
 
-        float y = VerticalAlignment switch
+        float y = TextAlignment.Vertical switch
         {
             VerticalAlignment.Center => Size.Y / 2
         };
 
         Vector2 origin = new(x, y);
 
-        return GlobalPosition - Origin + origin - textSize / 2 + TextOrigin;
+        Vector2 floatPosition = GlobalPosition - Origin + origin - textSize / 2 + TextOffset;
+
+        return new Vector2((int)floatPosition.X, (int)floatPosition.Y);
     }
 
     private void ResizeToFitText()
@@ -293,7 +290,8 @@ public class Button : Control
             Themes.Current.FontSize,
             1).X;
 
-        Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
+        //Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
+        Size = new(textWidth + TextMargin.X, Size.Y + TextMargin.Y);
     }
 
     private void ClipDisplayedText()

@@ -95,7 +95,7 @@ public partial class BaseSlider
         {
             //Rectangle rectangle = new()
             //{
-            //    Position = GlobalPosition - Origin,
+            //    Position = GlobalPosition - Offset,
             //    Size = Size
             //};
             //
@@ -113,7 +113,7 @@ public partial class BaseSlider
             //    return;
             //}
             //
-            //Vector2 position = GlobalPosition - Origin;
+            //Vector2 position = GlobalPosition - Offset;
             //
             //Rectangle rectangle = new()
             //{
@@ -157,37 +157,37 @@ public partial class BaseSlider
         //{
         //    Rectangle rectangle = new()
         //    {
-        //        position = position - Origin,
+        //        position = position - Offset,
         //        Size = Size
         //    };
         //
         //    Raylib.DrawRectangleRounded(
         //        rectangle,
-        //        EmptyStyle.Current.Roundness,
+        //        EmptyTheme.Current.Roundness,
         //        (int)Size.Y,
-        //        EmptyStyle.Current.FillColor);
+        //        EmptyTheme.Current.FillColor);
         //}
         //
         //private void DrawShapeOutline(Vector2 position)
         //{
-        //    if (EmptyStyle.Current.BorderLength < 0)
+        //    if (EmptyTheme.Current.BorderLength < 0)
         //    {
         //        return;
         //    }
         //
-        //    for (int i = 0; i <= EmptyStyle.Current.BorderLength; i++)
+        //    for (int i = 0; i <= EmptyTheme.Current.BorderLength; i++)
         //    {
         //        Rectangle rectangle = new()
         //        {
-        //            position = position - Origin - new Vector2(i, i),
+        //            position = position - Offset - new Vector2(i, i),
         //            Size = new(Size.X + i + 1, Size.Y + i + 1)
         //        };
         //
         //        Raylib.DrawRectangleRounded(
         //            rectangle,
-        //            EmptyStyle.Current.Roundness,
+        //            EmptyTheme.Current.Roundness,
         //            (int)Size.Y,
-        //            EmptyStyle.Current.BorderColor);
+        //            EmptyTheme.Current.BorderColor);
         //    }
         //}
     }

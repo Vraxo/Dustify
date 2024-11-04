@@ -66,9 +66,12 @@ public partial class LineEdit : Button
         FocusChanged += LineEdit_FocusChanged;
 
         LeftClicked += LineEdit_LeftClicked;
-        ClickedOutisde += LineEdit_ClickedOutisde;
+        ClickedOutside += LineEdit_ClickedOutisde;
+        
+        Themes.Focused.BorderLength = 0;
+        Themes.Focused.BorderLengthDown = 1;
     }
-
+    
     private void LineEdit_ClickedOutisde(object? sender, EventArgs e)
     {
         Selected = false;
@@ -339,44 +342,49 @@ public partial class LineEdit : Button
 
     private void DeletePreviousWord()
     {
-        if (Text.Length == 0 || caret.X <= 0) return;
+        if (Text.Length == 0 || (caret.X == 0 && TextStartIndex == 0)) return;
 
-        // Determine start of the previous word by moving back until a space is found
+        // Calculate the actual index within the full text based on caret position and TextStartIndex
         int removeIndex = caret.X + TextStartIndex - 1;
-        int wordStartIndex = removeIndex;
 
-        // Move back to the start of the word
+        // If we're at the very start of the text that's displayed but there is more hidden to the left
+        if (caret.X == 0 && TextStartIndex > 0)
+        {
+            // Shift TextStartIndex left, and move removeIndex accordingly
+            TextStartIndex--;
+            removeIndex = TextStartIndex;
+        }
+
+        // Find the start of the previous word by moving back from removeIndex
+        int wordStartIndex = removeIndex;
         while (wordStartIndex > 0 && Text[wordStartIndex - 1] != ' ')
         {
             wordStartIndex--;
         }
 
-        // Calculate the range and delete the text
+        // Calculate the number of characters to delete
         int lengthToDelete = removeIndex - wordStartIndex + 1;
         Text = Text.Remove(wordStartIndex, lengthToDelete);
 
-        // Adjust the caret position and TextStartIndex
+        // Adjust TextStartIndex if characters were deleted from the hidden portion
         if (wordStartIndex < TextStartIndex)
         {
-            // If the start of the deleted word is before TextStartIndex,
-            // we need to adjust the TextStartIndex accordingly.
-            TextStartIndex -= (removeIndex - wordStartIndex);
+            int charactersRemoved = removeIndex - wordStartIndex + 1;
+            TextStartIndex = Math.Max(0, TextStartIndex - charactersRemoved);
         }
 
-        // Update caret position after deletion
-        caret.X = Math.Clamp(wordStartIndex - TextStartIndex, 0, Math.Min(Text.Length, GetDisplayableCharactersCount()));
+        // Reposition the caret
+        caret.X = Math.Clamp(wordStartIndex - TextStartIndex, 0, GetDisplayableCharactersCount());
 
         RevertTextToDefaultIfEmpty();
         TextChanged?.Invoke(this, Text);
 
-        // Invoke Cleared if the text is empty after deletion
+        // Trigger Cleared event if the text is now empty
         if (Text.Length == 0)
         {
             Cleared?.Invoke(this, EventArgs.Empty);
         }
     }
-
-
 
     private void DeleteLastCharacter()
     {
@@ -408,7 +416,6 @@ public partial class LineEdit : Button
             Cleared?.Invoke(this, EventArgs.Empty);
         }
     }
-
 
     //private void DeleteLastCharacter()
     //{

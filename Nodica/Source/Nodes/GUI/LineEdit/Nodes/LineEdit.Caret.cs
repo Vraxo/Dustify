@@ -123,7 +123,7 @@ public partial class LineEdit : Button
             }
             else
             {
-                float x = mouseX - (parent.GlobalPosition.X - parent.Origin.X) - parent.TextOrigin.X;
+                float x = mouseX - (parent.GlobalPosition.X - parent.Offset.X) - parent.TextOrigin.X;
                 float characterWidth = GetSize().X;
                 X = Math.Clamp((int)MathF.Floor(x / characterWidth), 0, Math.Min(parent.GetDisplayableCharactersCount(), parent.Text.Length));
             }
@@ -133,8 +133,8 @@ public partial class LineEdit : Button
         {
             Vector2 size = GetSize();
 
-            float x = GlobalPosition.X - parent.Origin.X + parent.TextOrigin.X + X * size.X - size.X / 2 + X - X;
-            float y = GlobalPosition.Y + parent.Size.Y / 2 - size.Y / 2 - parent.Origin.Y;
+            float x = GlobalPosition.X - parent.Offset.X + parent.TextOrigin.X + X * size.X - size.X / 2 + X - X;
+            float y = GlobalPosition.Y + parent.Size.Y / 2 - size.Y / 2 - parent.Offset.Y;
 
             return new(x, y);
         }

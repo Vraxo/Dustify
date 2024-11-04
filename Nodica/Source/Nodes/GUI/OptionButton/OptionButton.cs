@@ -1,5 +1,4 @@
 ﻿using Raylib_cs;
-using System.Collections.Generic;
 
 namespace Nodica;
 
@@ -7,7 +6,6 @@ public partial class OptionButton : Button
 {
     public bool Open { get; set; } = false;
     public int Choice { get; set; } = -1;
-
     public List<string> Options { get; set; } = [];
     public int OptionsCount => Options.Count;
 
@@ -45,7 +43,7 @@ public partial class OptionButton : Button
         if (Open)
         {
             bool isMouseOverAnyOption = IsMouseOver() || optionChildren.Any(option => option.IsMouseOver());
-
+        
             if (Raylib.IsMouseButtonPressed(MouseButton.Left) && !isMouseOverAnyOption)
             {
                 Close();
@@ -57,17 +55,23 @@ public partial class OptionButton : Button
 
     private void DropDown()
     {
+        if (Open)
+        {
+            return;
+        }
+
         for (int i = 0; i < Options.Count; i++)
         {
             var option = new OptionButtonButton
             {
                 Position = new(0, 25 * (i + 1)),
+                Size = Size,
                 Themes = new()
                 {
                     Roundness = 0
                 },
                 Text = Options[i],
-                Checked = i == Choice,
+                Selected = i == Choice,
                 Index = i
             };
 
@@ -80,6 +84,11 @@ public partial class OptionButton : Button
 
     private void Close()
     {
+        if (!Open)
+        {
+            return;
+        }
+
         foreach (var option in optionChildren)
         {
             option.Destroy();
@@ -87,5 +96,12 @@ public partial class OptionButton : Button
 
         optionChildren.Clear();
         Open = false;
+    }
+
+    private void Select(int index)
+    {
+        Text = Options[index];
+        Choice = index;
+        Close();
     }
 }

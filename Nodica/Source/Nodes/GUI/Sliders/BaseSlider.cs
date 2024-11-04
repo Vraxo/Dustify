@@ -48,7 +48,7 @@ public abstract partial class BaseSlider : ClickableRectangle
             {
                 _externalValue = value;
 
-                //float minPos = GlobalPosition.Y - Origin.Y;
+                //float minPos = GlobalPosition.Y - Offset.Y;
                 //float maxPos = minPos + Size.Y;
 
                 //float x = Grabber.GlobalPosition.X;

@@ -2,7 +2,7 @@
 
 public class BoxStyle
 {
-    public float Roundness { get; set; } = 0.5f;
+    public float Roundness { get; set; } = 0.2f;
     public Color FillColor { get; set; } = DefaultTheme.NormalFill;
     public Color BorderColor { get; set; } = DefaultTheme.NormalBorder;
 

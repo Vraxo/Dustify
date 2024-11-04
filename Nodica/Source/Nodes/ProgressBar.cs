@@ -2,7 +2,7 @@
 
 public class ProgressBar : VisualItem
 {
-    public BoxStyle EmptyStyle = new();
+    public BoxStyle EmptyTheme = new();
 
     public BoxStyle FilledStyle = new()
     { 
@@ -27,14 +27,29 @@ public class ProgressBar : VisualItem
 
     protected override void Draw()
     {
-        DrawBorderedRectangle(GlobalPosition - Origin, Size, EmptyStyle);
+        DrawEmpty();
+        DrawFilled();
+    }
 
+    private void DrawEmpty()
+    {
+        DrawBorderedRectangle(
+            GlobalPosition - Origin,
+            Size,
+            EmptyTheme);
+    }
+
+    private void DrawFilled()
+    {
         if (Percentage == 0)
         {
             return;
         }
 
         Vector2 filledSize = new(Size.X * Percentage, Size.Y);
-        DrawBorderedRectangle(GlobalPosition - Origin, filledSize, FilledStyle);
+        DrawBorderedRectangle(
+            GlobalPosition - Origin,
+            filledSize,
+            FilledStyle);
     }
 }

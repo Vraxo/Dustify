@@ -92,14 +92,14 @@ public partial class HorizontalSlider : BaseSlider
     protected override void Draw()
     {
         DrawBorderedRectangle(
-            GlobalPosition - Origin,
+            GlobalPosition - Offset,
             Size,
             EmptyStyle);
 
         Vector2 filledSize = new(Size.X * Percentage, Size.Y);
 
         DrawBorderedRectangle(
-            GlobalPosition - Origin,
+            GlobalPosition - Offset,
             filledSize,
             FilledStyle);
     }

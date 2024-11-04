@@ -5,39 +5,47 @@ public partial class OptionButton : Button
     public class OptionButtonButton : Button
     {
         public int Index = 0;
-        public bool Checked = false;
+        public bool Selected = false;
+        public BoxStyle CheckTheme = new();
 
-        public override void Build()
+        private OptionButton parent;
+
+        public OptionButtonButton()
         {
-            var parent = Parent as Node2D;
-    
-            AddChild(new CheckBox()
-            {
-                Position = new Vector2(-parent.Origin.X / 9 * 6, 0),
-            });
+            CheckTheme.Roundness = 1;
+            CheckTheme.FillColor = DefaultTheme.Accent;
         }
-    
+
         public override void Start()
         {
-            HorizontalAlignment = HorizontalAlignment.Right;
-            TextOriginPreset = OriginPreset.None;
-            TextOrigin = new(-4, 0);
+            TextAlignment.Horizontal = HorizontalAlignment.Right;
+            TextOffset = new(-4, 0);
+
+            parent = GetParent<OptionButton>();
 
             LeftClicked += OnLeftClicked;
-
-            if (Checked)
-            {
-                GetNode<CheckBox>("CheckBox").Toggle();
-            }
 
             base.Start();
         }
 
+        protected override void Draw()
+        {
+            base.Draw();
+
+            if (!Selected)
+            {
+                return;
+            }
+
+            DrawBorderedRectangle(
+                GlobalPosition - Origin + new Vector2(10, 7.5f),
+                new(10, 10),
+                CheckTheme);
+        }
+
         private void OnLeftClicked(object? sender, EventArgs e)
         {
-            (Parent as OptionButton).Text = Text;
-            (Parent as OptionButton).Choice = Index;
-            (Parent as OptionButton).Close();
+            parent.Select(Index);
         }
     }
 }

@@ -13,18 +13,23 @@ Size = Vector2(500, 500)
 Position = Vector2(500, 600)
 Text = "Render"
 RightControlPath = "/root/OptionButton"
-Icon = Texture("Resources/ReturnIcon.png")
+Icon = Texture("Resources/RenderIcon.png")
 FocusOnClick = true
 ThemeFile = "Resources/ButtonTheme.txt"
 FocusOnClick = true
 StayPressed = true
+UpControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
 
 [OptionButton "OptionButton" "Root"]
 Position = Vector2(550, 600)
+Size = Vector2(150, 26)
 Text = "Row by row"
+FocusOnClick = true
+LeftControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
+DownControlPath = "/root/RenderButton"
 
 [ProgressBar "ProgressBar" "Root"]
 Position = Vector2(500, 500)
 Size = Vector2(500, 10)
 
-[Node2D "QualityCheckBoxes" "Root" "QualityCheckBoxes"]
+[QualityCheckBoxes "QualityCheckBoxes" "Root" "QualityCheckBoxes"]

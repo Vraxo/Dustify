@@ -26,7 +26,7 @@ public partial class VerticalSlider
                 return;
             }
 
-            float minY = parent.GlobalPosition.Y - parent.Origin.Y;
+            float minY = parent.GlobalPosition.Y - parent.Offset.Y;
             float maxY = minY + parent.Size.Y;
 
             if (initial && !initialPositionSet)

@@ -27,7 +27,6 @@ public class TextureRectangle : VisualItem
         if (resize)
         {
             Size = new(Texture.Width, Texture.Height);
-            Console.WriteLine("Size: " + Size);
         }
     }
 
@@ -40,7 +39,7 @@ public class TextureRectangle : VisualItem
             Texture,
             source,
             destination,
-            Origin,
+            Offset,
             0,
             Color.White);
     }

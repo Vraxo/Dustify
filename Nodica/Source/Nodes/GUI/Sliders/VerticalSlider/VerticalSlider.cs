@@ -13,7 +13,7 @@ public partial class VerticalSlider : BaseSlider
     protected override void UpdatePercentage()
     {
         float currentPosition = Grabber.GlobalPosition.Y;
-        float minPos = GlobalPosition.Y - Origin.Y;
+        float minPos = GlobalPosition.Y - Offset.Y;
         float maxPos = minPos + Size.Y;
 
         // Evaluate and clamp the percentage
@@ -60,14 +60,14 @@ public partial class VerticalSlider : BaseSlider
     protected override void Draw()
     {
         DrawBorderedRectangle(
-            GlobalPosition - Origin,
+            GlobalPosition - Offset,
             Size,
             EmptyStyle);
 
         Vector2 filledSize = new(Size.X, Size.Y * Percentage);
 
         DrawBorderedRectangle(
-            GlobalPosition - Origin,
+            GlobalPosition - Offset,
             filledSize,
             FilledStyle);
     }

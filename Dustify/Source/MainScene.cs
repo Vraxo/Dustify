@@ -1,5 +1,4 @@
 ﻿using Nodica;
-using Raylib_cs;
 
 namespace Dustify;
 
@@ -8,19 +7,15 @@ public partial class MainScene : Node
     private ImageSelectionButton imageSelectionButton;
     private RenderButton renderButton;
     private ProgressBar progressBar;
-
-    // Public
+    private OptionButton optionButton;
 
     public override void Start()
     {
-        // Clear the contents of the Resources/Temporary directory
-        //ClearTemporaryDirectory();
-
         imageSelectionButton = GetNode<ImageSelectionButton>("ImageSelectionButton");
         renderButton = GetNode<RenderButton>("RenderButton");
         progressBar = GetNode<ProgressBar>("ProgressBar");
 
-        var optionButton = GetNode<OptionButton>("OptionButton");
+        optionButton = GetNode<OptionButton>("OptionButton");
         optionButton.Add("Row by row");
         optionButton.Add("All at once");
 
@@ -44,8 +39,8 @@ public partial class MainScene : Node
 
     public override void Update()
     {
-        Raylib.DrawFPS(10, 10);
         UpdateProgressBar();
+        UpdateOptionButton();
         base.Update();
     }
 
@@ -54,22 +49,20 @@ public partial class MainScene : Node
         progressBar.Position = new(Window.Size.X / 2, Window.Size.Y * 0.8f);
     }
 
+    private void UpdateOptionButton()
+    {
+        optionButton.Position = new(Window.Size.X / 2 + 150, Window.Size.Y * 0.84f);
+    }
+
     private void ClearTemporaryDirectory()
     {
-        string tempDir = Path.Combine("Resources", "Temporary");
+        string temporaryDirectory = Path.Combine("Resources", "Temporary");
 
-        if (Directory.Exists(tempDir))
+        if (Directory.Exists(temporaryDirectory))
         {
-            // Delete all files in the directory
-            foreach (var file in Directory.GetFiles(tempDir))
+            foreach (var file in Directory.GetFiles(temporaryDirectory))
             {
                 File.Delete(file);
-            }
-
-            // Optionally, delete subdirectories and their contents
-            foreach (var dir in Directory.GetDirectories(tempDir))
-            {
-                Directory.Delete(dir, true); // true to delete recursively
             }
         }
     }

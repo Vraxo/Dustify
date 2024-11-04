@@ -26,7 +26,7 @@ public partial class LineEdit : Button
             }
 
             DrawBorderedRectangle(
-                parent.GlobalPosition - parent.Origin,
+                parent.GlobalPosition - parent.Offset,
                 parent.Size,
                 parent.Themes.Current);
 
@@ -47,7 +47,7 @@ public partial class LineEdit : Button
         //
         //        Rectangle rectangle = new()
         //        {
-        //            Position = parent.GlobalPosition - parent.Origin - offset,
+        //            Position = parent.GlobalPosition - parent.Offset - offset,
         //            Size = new(parent.Size.X + i, parent.Size.Y + i)
         //        };
         //
@@ -63,7 +63,7 @@ public partial class LineEdit : Button
         //{
         //    Rectangle rectangle = new()
         //    {
-        //        Position = parent.GlobalPosition - parent.Origin,
+        //        Position = parent.GlobalPosition - parent.Offset,
         //        Size = parent.Size
         //    };
         //

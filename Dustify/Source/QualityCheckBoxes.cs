@@ -27,7 +27,7 @@ public class QualityCheckBoxes : Node2D
 
     private void UpdateHighQualityCheckBox()
     {
-        float x = mediumQualityCheckBox.Position.X - 150;
+        float x = mediumQualityCheckBox.Position.X - 100;
         float y = Window.Size.Y * 0.84f;
 
         highQualityCheckBox.Position = new(x, y);
@@ -35,7 +35,7 @@ public class QualityCheckBoxes : Node2D
 
     private void UpdateMediumQualityCheckBox()
     {
-        float x = Window.Size.X / 2;
+        float x = Window.Size.X / 2 - 100;
         float y = Window.Size.Y * 0.84f;
 
         mediumQualityCheckBox.Position = new(x, y);
@@ -43,7 +43,7 @@ public class QualityCheckBoxes : Node2D
 
     private void UpdateLowQualityCheckBox()
     {
-        float x = mediumQualityCheckBox.Position.X + 150;
+        float x = mediumQualityCheckBox.Position.X + 100;
         float y = Window.Size.Y * 0.84f;
 
         lowQualityCheckBox.Position = new(x, y);

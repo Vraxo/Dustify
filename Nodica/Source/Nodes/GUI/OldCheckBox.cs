@@ -7,9 +7,9 @@
 //    public Vector2 CheckSize = new(10, 10);
 //    public ButtonThemePack BackgroundStyle = new();
 //    public ButtonThemePack CheckStyle = new();
-//    public bool Checked = false;
+//    public bool Selected = false;
 //    public Action<CheckBox> OnUpdate = (checkBox) => { };
-//    public event EventHandler? Checked;
+//    public event EventHandler? Selected;
 //
 //    public CheckBox()
 //    {
@@ -34,7 +34,7 @@
 //    {
 //        Rectangle rectangle = new()
 //        {
-//            Position = GlobalPosition - Origin,
+//            Position = GlobalPosition - Offset,
 //            Size = Size
 //        };
 //
@@ -67,14 +67,14 @@
 //
 //    private void DrawCheck()
 //    {
-//        if (!Checked)
+//        if (!Selected)
 //        {
 //            return;
 //        }
 //
 //        Rectangle rectangle = new()
 //        {
-//            Position = GlobalPosition - Origin / 2,
+//            Position = GlobalPosition - Offset / 2,
 //            Size = CheckSize
 //        };
 //
@@ -91,8 +91,8 @@
 //        {
 //            if (IsMouseOver() && OnTopLeft)
 //            {
-//                Checked = !Checked;
-//                Checked?.Invoke(this, EventArgs.Empty);
+//                Selected = !Selected;
+//                Selected?.Invoke(this, EventArgs.Empty);
 //            }
 //        }
 //    }

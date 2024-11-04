@@ -4,29 +4,35 @@
 
 [CheckBox "HighQualityCheckBox" "QualityCheckBoxes"]
 Position = Vector2(0, 500)
+FocusOnClick = true
+RightControlPath = "/root/QualityCheckBoxes/MediumQualityCheckBox"
+DownControlPath = "/root/RenderButton"
 
 [Label "HighQualityLabel" "HighQualityCheckBox"]
-Position = Vector2(25, 0)
+Position = Vector2(15, 0)
 Text = "High"
 
 
 
 [CheckBox "MediumQualityCheckBox" "QualityCheckBoxes"]
 Position = Vector2(100, 500)
+FocusOnClick = true
+LeftControlPath = "/root/QualityCheckBoxes/HighQualityCheckBox"
+RightControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
+DownControlPath = "/root/RenderButton"
 
 [Label "MediumQualityLabel" "MediumQualityCheckBox"]
-Position = Vector2(25, 0)
+Position = Vector2(15, 0)
 Text = "Medium"
-
 
 
 [CheckBox "LowQualityCheckBox" "QualityCheckBoxes"]
 Position = Vector2(200, 500)
+FocusOnClick = true
+LeftControlPath = "/root/QualityCheckBoxes/MediumQualityCheckBox"
+RightControlPath = "/root/OptionButton"
+DownControlPath = "/root/RenderButton"
 
 [Label "LowQualityLabel" "LowQualityCheckBox"]
-Position = Vector2(25, 0)
+Position = Vector2(15, 0)
 Text = "Low"
-
-[LineEdit "LineEditor" "QualityCheckBoxes"]
-Position = Vector2(200, 500)
-Layer = 1

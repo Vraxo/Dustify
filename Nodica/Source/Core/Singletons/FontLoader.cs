@@ -19,7 +19,7 @@ public class FontLoader
 
     private FontLoader()
     {
-        Load("Resources/Fonts/RobotoMono.ttf", "RobotoMono", 32);
+        Load("Resources/Fonts/RobotoMono.ttf", "RobotoMono", 16);
     }
 
     public void Load(string path, string name, int size)

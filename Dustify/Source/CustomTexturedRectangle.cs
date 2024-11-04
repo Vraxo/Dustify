@@ -16,6 +16,7 @@ public class CustomTexturedRectangle : VisualItem
 
     public void LoadTexture(string name, bool resize = false)
     {
+        Console.WriteLine("calling from Custom: ");
         Texture = TextureLoader.Instance.Get(name);
         HasTexture = true;
 
@@ -31,14 +32,14 @@ public class CustomTexturedRectangle : VisualItem
             Texture.Height - Height);
 
         Rectangle destination = new(
-            GlobalPosition + new Vector2(0, Height),
+            GlobalPosition + new Vector2(0, Height) - Origin,
             Size - new Vector2(0, Height));
 
         Raylib.DrawTexturePro(
             Texture,
             source,
             destination,
-            Origin,
+            Offset,
             0,
             Color.White);
     }

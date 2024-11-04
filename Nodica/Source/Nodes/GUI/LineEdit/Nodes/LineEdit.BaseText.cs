@@ -46,14 +46,14 @@ public partial class LineEdit : Button
 
         private int GetX()
         {
-            int x = (int)(GlobalPosition.X - parent.Origin.X + parent.TextOrigin.X);
+            int x = (int)(GlobalPosition.X - parent.Offset.X + parent.TextOrigin.X);
             return x;
         }
 
         private int GetY()
         {
             int halfFontHeight = GetHalfFontHeight();
-            int y = (int)(GlobalPosition.Y + (parent.Size.Y / 2) - halfFontHeight - parent.Origin.Y);
+            int y = (int)(GlobalPosition.Y + (parent.Size.Y / 2) - halfFontHeight - parent.Offset.Y);
             return y;
         }
 

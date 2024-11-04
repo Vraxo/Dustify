@@ -6,7 +6,7 @@ public class Label : VisualItem
 {
     public class LabelTheme
     {
-        public Font Font { get; set; } = FontLoader.Instance.Fonts["RobotoMono 32"];
+        public Font Font { get; set; } = FontLoader.Instance.Fonts["RobotoMono 16"];
         public Color FontColor { get; set; } = DefaultTheme.Text;
         public uint FontSize { get; set; } = 16;
         public int FontSpacing { get; set; } = 0;
@@ -95,7 +95,7 @@ public class Label : VisualItem
         Raylib.DrawTextEx(
             Theme.Font,
             displayedText,
-            GlobalPosition - Origin + Theme.ShadowOffset,
+            GlobalPosition - Offset + Theme.ShadowOffset,
             Theme.FontSize,
             Theme.FontSpacing,
             Theme.ShadowColor);
@@ -106,7 +106,7 @@ public class Label : VisualItem
         Raylib.DrawTextEx(
             Theme.Font,
             displayedText,
-            GlobalPosition - Origin - new Vector2(0, Theme.FontSize / 2),
+            GlobalPosition - Offset - new Vector2(0, Theme.FontSize / 2),
             Theme.FontSize,
             Theme.FontSpacing,
             Theme.FontColor);

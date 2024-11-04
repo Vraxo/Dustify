@@ -52,8 +52,8 @@ public class ItemList : ClickableRectangle
         {
             OnUpdate = (slider) =>
             {
-                float x = Size.X - Origin.X - slider.Size.X - slider.Origin.X;
-                float y = -Origin.Y + slider.Grabber.Size.Y * 2.5F; // *4
+                float x = Size.X - Offset.X - slider.Size.X - slider.Offset.X;
+                float y = -Offset.Y + slider.Grabber.Size.Y * 2.5F; // *4
 
                 slider.Position = new(x, y);
 

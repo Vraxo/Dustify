@@ -1,4 +1,5 @@
 ﻿using Nodica;
+using Raylib_cs;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
@@ -33,25 +34,21 @@ public class ImageSelectionButton : Button
 
     public void LoadImage(string selectedFile)
     {
-        string pngPath = Path.GetExtension(selectedFile).ToLower() != ".png"
-            ? ConvertToPng(selectedFile)
-            : selectedFile;
+        string resizedPngPath = ResizeImageIfNeeded(selectedFile, out var bitmap);
 
-        Bitmap bitmap = ResizeImageIfNeeded(pngPath, out string resizedPngPath);
-        TextureLoader.Instance.Get(resizedPngPath);
+        Texture2D texture = TextureLoader.Instance.Get(resizedPngPath);
         imageDisplayer.LoadTexture(resizedPngPath, true);
         imageDisplayer.BitmapData = bitmap;
 
         Console.WriteLine("Loaded image from: " + resizedPngPath);
 
-        if (Path.GetExtension(selectedFile).ToLower() != ".png")
+        if (resizedPngPath != selectedFile)
         {
-            File.Delete(pngPath);
+            File.Delete(resizedPngPath);
         }
-        File.Delete(resizedPngPath);
     }
 
-    private Bitmap ResizeImageIfNeeded(string imagePath, out string resizedPngPath)
+    private string ResizeImageIfNeeded(string imagePath, out Bitmap bitmap)
     {
         using var image = SixLabors.ImageSharp.Image.Load(imagePath);
         SixLabors.ImageSharp.Size newSize;
@@ -63,19 +60,25 @@ public class ImageSelectionButton : Button
             image.Mutate(x => x.Resize(newSize.Width, newSize.Height));
 
             string nameWithoutExtension = Path.GetFileNameWithoutExtension(imagePath);
-            resizedPngPath = $"Resources/Temporary/{nameWithoutExtension} - Resized.png";
+            string resizedPngPath = $"Resources/Temporary/{nameWithoutExtension} - Resized.png";
+
+            if (!Directory.Exists("Resources/Temporary"))
+            {
+                Directory.CreateDirectory("Resources/Temporary");
+            }
+
             image.SaveAsPng(resizedPngPath);
-        }
-        else
-        {
-            resizedPngPath = imagePath;
-            newSize = new SixLabors.ImageSharp.Size(image.Width, image.Height);
+
+            using var memoryStream = new MemoryStream();
+            image.SaveAsPng(memoryStream);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            bitmap = new Bitmap(System.Drawing.Image.FromStream(memoryStream));
+
+            return resizedPngPath;
         }
 
-        using var memoryStream = new MemoryStream();
-        image.SaveAsPng(memoryStream);
-        memoryStream.Seek(0, SeekOrigin.Begin);
-        return new Bitmap(System.Drawing.Image.FromStream(memoryStream));
+        bitmap = new Bitmap(imagePath);
+        return imagePath;
     }
 
     private void OnLeftClicked(object? sender, EventArgs e)
@@ -91,21 +94,5 @@ public class ImageSelectionButton : Button
             string selectedFile = openFileDialog.FileName;
             LoadImage(selectedFile);
         }
-    }
-
-    private static string ConvertToPng(string imagePath)
-    {
-        if (!Directory.Exists("Resources/Temporary"))
-        {
-            Directory.CreateDirectory("Resources/Temporary");
-        }
-
-        string nameWithoutExtension = Path.GetFileNameWithoutExtension(imagePath);
-        string pngPath = $"Resources/Temporary/{nameWithoutExtension}.png";
-
-        var image = SixLabors.ImageSharp.Image.Load(imagePath);
-        image.SaveAsPng(pngPath);
-
-        return pngPath;
     }
 }

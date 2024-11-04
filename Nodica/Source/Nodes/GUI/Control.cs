@@ -12,9 +12,10 @@ public class Control : ClickableRectangle
     public string? RightControlPath { get; set; }
 
     public event EventHandler<bool>? FocusChanged;
-    public event EventHandler? ClickedOutisde;
+    public event EventHandler? ClickedOutside;
 
     private bool _focused = false;
+    private bool _wasFocusedLastFrame = false; // Track focus state in previous frame
     public bool Focused
     {
         get => _focused;
@@ -32,10 +33,14 @@ public class Control : ClickableRectangle
     {
         if (ArrowNavigation && Focused)
         {
-            HandleArrowNavigation();
+            if (_wasFocusedLastFrame) // Only allow navigation if focused in previous frame
+            {
+                HandleArrowNavigation();
+            }
         }
 
         UpdateFocusOnMouseOut();
+        _wasFocusedLastFrame = Focused; // Update focus tracking for next frame
         base.Update();
     }
 
@@ -74,7 +79,7 @@ public class Control : ClickableRectangle
         if (!IsMouseOver() && Raylib.IsMouseButtonPressed(MouseButton.Left))
         {
             Focused = false;
-            ClickedOutisde?.Invoke(this, EventArgs.Empty);
+            ClickedOutside?.Invoke(this, EventArgs.Empty);
         }
     }
 

@@ -13,6 +13,26 @@ public class Node
     /// <summary>Gets the root node of the application scene tree.</summary>
     public Node RootNode => App.Instance.RootNode;
 
+    /// <summary>
+    /// Gets the absolute path to this node, starting with "/root/".
+    /// </summary>
+    public string AbsolutePath
+    {
+        get
+        {
+            string path = Name;
+            Node? current = Parent;
+
+            while (current != null)
+            {
+                path = $"{current.Name}/{path}";
+                current = current.Parent;
+            }
+
+            return $"/root/{path}";
+        }
+    }
+
     private bool started = false;
 
     // Public
@@ -67,11 +87,18 @@ public class Node
     /// <summary>Prints the node and all its children in a tree structure.</summary>
     public void PrintChildren(string indent = "")
     {
-        Console.WriteLine(indent + "-" + Name);
+        //Console.WriteLine(indent + "-" + Name);
+
+        //foreach (var child in Children)
+        //{
+        //    child.PrintChildren(indent + "-");
+        //}
+
+        Console.WriteLine(AbsolutePath);
 
         foreach (var child in Children)
         {
-            child.PrintChildren(indent + "-");
+            child.PrintChildren();
         }
     }
 

@@ -15,7 +15,7 @@ public partial class VerticalSlider : BaseSlider
             OnUpdate = (button) =>
             {
                 float x = button.Position.X;
-                float y = -Origin.Y - grabber.Size.Y * 1.5f;
+                float y = -Offset.Y - grabber.Size.Y * 1.5f;
 
                 button.Position = new(x, y);
             }
@@ -28,7 +28,7 @@ public partial class VerticalSlider : BaseSlider
             OnUpdate = (button) =>
             {
                 float x = button.Position.X;
-                float y = Size.Y - Origin.Y + grabber.Size.Y * 1.5f - 1;
+                float y = Size.Y - Offset.Y + grabber.Size.Y * 1.5f - 1;
 
                 button.Position = new(x, y);
 

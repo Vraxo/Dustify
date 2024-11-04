@@ -99,11 +99,19 @@ public class RenderButton : Button
         List<VideoQuality> selectedQualities = new();
 
         if (GetNode<CheckBox>("/root/QualityCheckBoxes/HighQualityCheckBox").Checked)
+        {
             selectedQualities.Add(VideoQuality.High);
+        }
+
         if (GetNode<CheckBox>("/root/QualityCheckBoxes/MediumQualityCheckBox").Checked)
+        {
             selectedQualities.Add(VideoQuality.Medium);
+        }
+
         if (GetNode<CheckBox>("/root/QualityCheckBoxes/LowQualityCheckBox").Checked)
+        {
             selectedQualities.Add(VideoQuality.Low);
+        }
 
         if (selectedQualities.Count == 0)
         {
