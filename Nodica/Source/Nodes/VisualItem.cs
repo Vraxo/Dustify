@@ -19,13 +19,13 @@ public abstract class VisualItem : Node2D
 
     protected virtual void Draw() { }
 
-    protected void DrawBorderedRectangle(Vector2 position, Vector2 size, BoxStyle style)
+    protected void DrawBorderedRectangle(Vector2 position, Vector2 size, BoxTheme theme)
     {
         // Calculate the total border length by combining the four sides
-        float top = style.BorderLengthUp;
-        float right = style.BorderLengthRight;
-        float bottom = style.BorderLengthDown;
-        float left = style.BorderLengthLeft;
+        float top = theme.BorderLengthUp;
+        float right = theme.BorderLengthRight;
+        float bottom = theme.BorderLengthDown;
+        float left = theme.BorderLengthLeft;
 
         // Adjust the outer rectangle size based on the border lengths
         Rectangle outerRectangle = new()
@@ -39,9 +39,9 @@ public abstract class VisualItem : Node2D
         {
             Raylib.DrawRectangleRounded(
                 outerRectangle,
-                style.Roundness,
+                theme.Roundness,
                 (int)size.Y,  // segments count, you can adjust it as needed
-                style.BorderColor
+                theme.BorderColor
             );
         }
 
@@ -54,9 +54,9 @@ public abstract class VisualItem : Node2D
 
         Raylib.DrawRectangleRounded(
             innerRectangle,
-            style.Roundness,
-            (int)size.Y,  // segments count
-            style.FillColor
+            theme.Roundness,
+            (int)size.Y,
+            theme.FillColor
         );
     }
 }

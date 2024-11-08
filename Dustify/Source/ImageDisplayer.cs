@@ -53,7 +53,7 @@ public class ImageDisplayer : CustomTexturedRectangle
             for (int x = 0; x < BitmapData.Width; x += step)
             {
                 System.Drawing.Color color = BitmapData.GetPixel(x, currentRow * step);
-                Vector2 position = Position - Offset + new Vector2(x, currentRow * step);
+                Vector2 position = Position - Origin + new Vector2(x - Origin.X, currentRow * step - Origin.Y);
 
                 Particle particle = new()
                 {
@@ -84,7 +84,7 @@ public class ImageDisplayer : CustomTexturedRectangle
             for (int x = 0; x < BitmapData.Width; x += step)
             {
                 System.Drawing.Color color = BitmapData.GetPixel(x, y);
-                Vector2 position = Position - Offset + new Vector2(x, y);
+                Vector2 position = Position - Origin + new Vector2(x - Origin.X, y - Origin.Y);
 
                 Particle particle = new()
                 {

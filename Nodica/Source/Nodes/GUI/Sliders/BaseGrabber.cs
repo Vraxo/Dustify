@@ -6,7 +6,7 @@ public partial class BaseSlider
 {
     public abstract class BaseGrabber : ClickableRectangle
     {
-        public ButtonThemePack Style = new();
+        public ButtonThemePack Themes = new();
         public bool Pressed = false;
         public Action<BaseGrabber> OnUpdate = (button) => { };
 
@@ -48,7 +48,7 @@ public partial class BaseSlider
 
             if (IsMouseOver())
             {
-                Style.Current = Style.Hover;
+                Themes.Current = Themes.Hover;
 
                 if (Raylib.IsMouseButtonDown(MouseButton.Left) && !alreadyClicked && OnTopLeft)
                 {
@@ -59,23 +59,23 @@ public partial class BaseSlider
 
                 if (Pressed)
                 {
-                    Style.Current = Style.Pressed;
+                    Themes.Current = Themes.Pressed;
                 }
             }
             else
             {
-                Style.Current = Style.Normal;
+                Themes.Current = Themes.Normal;
             }
 
             if (Pressed)
             {
-                Style.Current = Style.Pressed;
+                Themes.Current = Themes.Pressed;
             }
 
             if (Raylib.IsMouseButtonReleased(MouseButton.Left))
             {
                 Pressed = false;
-                Style.Current = Style.Normal;
+                Themes.Current = Themes.Normal;
                 alreadyClicked = false;
             }
         }
@@ -89,6 +89,10 @@ public partial class BaseSlider
         {
             DrawOutline();
             DrawInside();
+            DrawBorderedRectangle(
+                GlobalPosition,
+                Size,
+                Themes.Current);
         }
 
         private void DrawInside()

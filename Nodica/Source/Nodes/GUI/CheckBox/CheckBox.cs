@@ -11,7 +11,7 @@ public class CheckBox : Control
     #region [ - - - Properties & Fields - - - ]
 
     public ButtonThemePack BackgroundStyles { get; set; } = new();
-    public BoxStyle CheckStyles { get; set; } = new();
+    public BoxTheme CheckStyles { get; set; } = new();
     public Vector2 CheckSize { get; set; } = new();
     public ActionMode LeftClickActionMode { get; set; } = ActionMode.Release;
     public ActionMode RightClickActionMode { get; set; } = ActionMode.Release;
@@ -75,6 +75,7 @@ public class CheckBox : Control
     public void Toggle()
     {
         Checked = !Checked;
+        Console.WriteLine("checked = " + Checked);
         Toggled?.Invoke(this, Checked);
     }
 
@@ -183,12 +184,14 @@ public class CheckBox : Control
             Size,
             BackgroundStyles.Current);
 
-        if (Checked)
+        if (!Checked)
         {
-            DrawBorderedRectangle(
-                GlobalPosition - Origin / 2,
-                CheckSize,
-                CheckStyles);
+            return;
         }
+
+        DrawBorderedRectangle(
+            GlobalPosition - Origin / 2,
+            CheckSize,
+            CheckStyles);
     }
 }

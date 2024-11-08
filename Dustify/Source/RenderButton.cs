@@ -118,6 +118,13 @@ public class RenderButton : Button
             selectedQualities = new() { VideoQuality.Low, VideoQuality.Medium, VideoQuality.High };
         }
 
+        foreach (var q in selectedQualities)
+        {
+            Console.WriteLine(q);
+        }
+
+        Console.WriteLine("stop");
+
         return selectedQualities;
     }
 }

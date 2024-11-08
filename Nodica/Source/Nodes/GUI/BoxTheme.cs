@@ -1,6 +1,6 @@
 ﻿namespace Nodica;
 
-public class BoxStyle
+public class BoxTheme
 {
     public float Roundness { get; set; } = 0.2f;
     public Color FillColor { get; set; } = DefaultTheme.NormalFill;

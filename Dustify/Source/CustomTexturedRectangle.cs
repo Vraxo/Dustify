@@ -8,7 +8,7 @@ public class CustomTexturedRectangle : VisualItem
     public Texture2D Texture { get; set; }
     public bool HasTexture = false;
     public int Height = 0;
-
+    
     public CustomTexturedRectangle()
     {
         Size = new(32, 32);
@@ -16,7 +16,6 @@ public class CustomTexturedRectangle : VisualItem
 
     public void LoadTexture(string name, bool resize = false)
     {
-        Console.WriteLine("calling from Custom: ");
         Texture = TextureLoader.Instance.Get(name);
         HasTexture = true;
 
@@ -39,7 +38,7 @@ public class CustomTexturedRectangle : VisualItem
             Texture,
             source,
             destination,
-            Offset,
+            new(0),
             0,
             Color.White);
     }

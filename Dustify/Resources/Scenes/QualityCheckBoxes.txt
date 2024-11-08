@@ -8,6 +8,7 @@ FocusOnClick = true
 RightControlPath = "/root/QualityCheckBoxes/MediumQualityCheckBox"
 DownControlPath = "/root/RenderButton"
 UpControlPath = "/root/ImageSelectionButton"
+Checked = true
 
 [Label "HighQualityLabel" "HighQualityCheckBox"]
 Position = Vector2(15, 0)
@@ -22,6 +23,7 @@ LeftControlPath = "/root/QualityCheckBoxes/HighQualityCheckBox"
 RightControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
 DownControlPath = "/root/RenderButton"
 UpControlPath = "/root/ImageSelectionButton"
+Checked = true
 
 [Label "MediumQualityLabel" "MediumQualityCheckBox"]
 Position = Vector2(15, 0)
@@ -35,6 +37,7 @@ LeftControlPath = "/root/QualityCheckBoxes/MediumQualityCheckBox"
 RightControlPath = "/root/OptionButton"
 DownControlPath = "/root/RenderButton"
 UpControlPath = "/root/ImageSelectionButton"
+Checked = true
 
 [Label "LowQualityLabel" "LowQualityCheckBox"]
 Position = Vector2(15, 0)

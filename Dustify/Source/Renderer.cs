@@ -65,8 +65,7 @@ public class Renderer : Node
         var textureRectangle = App.Instance.RootNode.GetNode<ImageDisplayer>("ImageSelectionButton/AspectRatioContainer/ImageDisplayer");
 
         imageDisplayer.InheritPosition = false;
-        imageDisplayer.GlobalPosition = new(500);
-        imageDisplayer.OriginPreset = OriginPreset.TopLeft;
+        imageDisplayer.Position = new(texture.Width / 2, texture.Height / 2);
         imageDisplayer.Texture = texture;
         imageDisplayer.BitmapData = textureRectangle.BitmapData;
         imageDisplayer.Size = new(texture.Width, texture.Height);
@@ -146,10 +145,12 @@ public class Renderer : Node
         string ffmpegPath = "Resources/ffmpeg.exe";
         string outputFolderPath = "Resources/Output";
 
+        // Delete all existing video files before generating new ones
+        DeleteExistingVideos();
+
         if (qualitiesToGenerate.Contains(VideoQuality.Low))
         {
             string outputVideoPathLow = $"{outputFolderPath}/output_video_low.mp4";
-            DeleteExistingVideos(outputVideoPathLow);
             string lowQualityArguments = $"-r 10 -i {outputFolderPath}/output_frame_%04d.png " +
                                          "-c:v libx264 -crf 35 -b:v 300k " +
                                          "-vf fps=60 -pix_fmt yuv420p " +
@@ -160,7 +161,6 @@ public class Renderer : Node
         if (qualitiesToGenerate.Contains(VideoQuality.Medium))
         {
             string outputVideoPathMedium = $"{outputFolderPath}/output_video_medium.mp4";
-            DeleteExistingVideos(outputVideoPathMedium);
             string mediumQualityArguments = $"-r 10 -i {outputFolderPath}/output_frame_%04d.png " +
                                             "-c:v libx264 -crf 28 -b:v 500k " +
                                             "-vf fps=60 -pix_fmt yuv420p " +
@@ -171,7 +171,6 @@ public class Renderer : Node
         if (qualitiesToGenerate.Contains(VideoQuality.High))
         {
             string outputVideoPathHigh = $"{outputFolderPath}/output_video_high.mp4";
-            DeleteExistingVideos(outputVideoPathHigh);
             string highQualityArguments = $"-r 10 -i {outputFolderPath}/output_frame_%04d.png " +
                                           "-c:v libx264 -crf 14 -b:v 2000k " +
                                           "-vf fps=60 -pix_fmt yuv420p " +
@@ -212,11 +211,16 @@ public class Renderer : Node
         }
     }
 
-    private void DeleteExistingVideos(string path)
+    private void DeleteExistingVideos()
     {
-        if (File.Exists(path))
+        string outputFolderPath = "Resources/Output";
+
+        if (Directory.Exists(outputFolderPath))
         {
-            File.Delete(path);
+            foreach (string filePath in Directory.GetFiles(outputFolderPath, "output_video_*.mp4"))
+            {
+                File.Delete(filePath);
+            }
         }
     }
 

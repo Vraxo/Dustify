@@ -1,6 +1,6 @@
 ﻿namespace Nodica;
 
-public class ButtonTheme : BoxStyle
+public class ButtonTheme : BoxTheme
 {
     public float FontSpacing { get; set; } = 0;
     public float FontSize { get; set; } = 16;
