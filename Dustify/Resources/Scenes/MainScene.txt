@@ -10,16 +10,16 @@
 #
 #[ImageDisplayer "ImageDisplayer" "AspectRatioContainer"]
 #
-[RenderButton "RenderButton" "Root"]
-Position = Vector2(500, 600)
-Text = "Render"
-RightControlPath = "/root/OptionButton"
-Icon = Texture("Resources/RenderIcon.png")
-FocusOnClick = true
-ThemeFile = "Resources/ButtonTheme.txt"
-FocusOnClick = true
-StayPressed = true
-UpControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
+#[RenderButton "RenderButton" "Root"]
+#Position = Vector2(500, 600)
+#Text = "Render"
+#RightControlPath = "/root/OptionButton"
+#Icon = Texture("Resources/RenderIcon.png")
+#FocusOnClick = true
+#ThemeFile = "Resources/ButtonTheme.txt"
+#FocusOnClick = true
+#StayPressed = true
+#UpControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
 #
 #[OptionButton "OptionButton" "Root"]
 #Position = Vector2(550, 600)

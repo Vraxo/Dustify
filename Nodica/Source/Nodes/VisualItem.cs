@@ -19,7 +19,7 @@ public abstract class VisualItem : Node2D
 
     protected virtual void Draw() { }
 
-    protected void DrawThemedRectangle(Vector2 position, Vector2 size, BoxTheme theme)
+    protected void DrawBorderedRectangle(Vector2 position, Vector2 size, BoxTheme theme)
     {
         // Calculate the total border length by combining the four sides
         float top = theme.BorderLengthUp;

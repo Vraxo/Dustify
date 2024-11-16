@@ -8,30 +8,28 @@ public class App
     private static App? instance;
     public static App Instance => instance ??= new();
 
-    public GraphicsBackendBase GraphicsBackend;
+    private GraphicsBackendBase graphicsBackend;
     public Node RootNode;
 
     private App() { }
 
     public void Initialize(int width, int height, string title, GraphicsBackend backend)
     {
-        GraphicsBackend = backend switch
+        graphicsBackend = backend switch
         {
-            Nodica.GraphicsBackend.Raylib => new RaylibBackend(),
-            Nodica.GraphicsBackend.SDL2 => new SDL2Backend(),
+            GraphicsBackend.Raylib => new RaylibBackend(),
+            GraphicsBackend.SDL2 => new SDL2Backend(),
             _ => throw new NotImplementedException("Unsupported graphics backend")
         };
 
-        RenderServer.Instance.Backend = backend;
-
-        GraphicsBackend.Initialize(width, height, title);
+        graphicsBackend.Initialize(width, height, title);
         SetCurrentDirectory();
         SetWindowFlags();
     }
 
     public void Run()
     {
-        GraphicsBackend.Run();
+        graphicsBackend.Run();
     }
 
     public void SetRootNode(Node node, bool packedScene = false)

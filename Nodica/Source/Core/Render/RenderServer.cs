@@ -1,11 +1,11 @@
-﻿namespace Nodica;
+﻿using Raylib_cs;
+
+namespace Nodica;
 
 public class RenderServer
 {
     public static RenderServer Instance => instance ??= new();
     private static RenderServer? instance;
-
-    public GraphicsBackend Backend;
 
     private List<DrawCommand> drawCommands = [];
 

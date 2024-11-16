@@ -25,7 +25,7 @@ public partial class LineEdit : Button
                 return;
             }
 
-            DrawThemedRectangle(
+            DrawBorderedRectangle(
                 parent.GlobalPosition - parent.Offset,
                 parent.Size,
                 parent.Themes.Current);

@@ -12,7 +12,7 @@ public class ColorRectangle : ClickableRectangle
 
     protected override void Draw()
     {
-        DrawThemedRectangle(
+        DrawBorderedRectangle(
             GlobalPosition - Offset,
             Size,
             Style);

@@ -89,7 +89,7 @@ public partial class BaseSlider
         {
             DrawOutline();
             DrawInside();
-            DrawThemedRectangle(
+            DrawBorderedRectangle(
                 GlobalPosition,
                 Size,
                 Themes.Current);

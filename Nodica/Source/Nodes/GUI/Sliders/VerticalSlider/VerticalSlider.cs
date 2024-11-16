@@ -59,14 +59,14 @@ public partial class VerticalSlider : BaseSlider
 
     protected override void Draw()
     {
-        DrawThemedRectangle(
+        DrawBorderedRectangle(
             GlobalPosition - Offset,
             Size,
             EmptyStyle);
 
         Vector2 filledSize = new(Size.X, Size.Y * Percentage);
 
-        DrawThemedRectangle(
+        DrawBorderedRectangle(
             GlobalPosition - Offset,
             filledSize,
             FilledStyle);
