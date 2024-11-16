@@ -7,7 +7,7 @@ public class EntryPoint
     [STAThread]
     public static void Main(string[] args)
     {
-        App.Instance.Initialize(640, 720, "Dustify", GraphicsBackend.Raylib);
+        App.Instance.Initialize(640, 720, "Dustify", GraphicsBackend.SDL2);
 
 
 

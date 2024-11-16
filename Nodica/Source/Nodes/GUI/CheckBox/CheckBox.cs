@@ -179,7 +179,7 @@ public class CheckBox : Control
 
     protected override void Draw()
     {
-        DrawBorderedRectangle(
+        DrawThemedRectangle(
             GlobalPosition - Origin,
             Size,
             BackgroundStyles.Current);
@@ -189,7 +189,7 @@ public class CheckBox : Control
             return;
         }
 
-        DrawBorderedRectangle(
+        DrawThemedRectangle(
             GlobalPosition - Origin / 2,
             CheckSize,
             CheckStyles);

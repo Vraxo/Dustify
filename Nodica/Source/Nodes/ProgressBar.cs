@@ -33,7 +33,7 @@ public class ProgressBar : VisualItem
 
     private void DrawEmpty()
     {
-        DrawBorderedRectangle(
+        DrawThemedRectangle(
             GlobalPosition - Origin,
             Size,
             EmptyTheme);
@@ -47,7 +47,7 @@ public class ProgressBar : VisualItem
         }
 
         Vector2 filledSize = new(Size.X * Percentage, Size.Y);
-        DrawBorderedRectangle(
+        DrawThemedRectangle(
             GlobalPosition - Origin,
             filledSize,
             FilledStyle);
