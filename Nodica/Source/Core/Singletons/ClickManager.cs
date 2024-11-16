@@ -23,7 +23,7 @@ public class ClickManager
         clickables.Remove(clickable);
     }
 
-    public void Update()
+    public void Process()
     {
         if (Raylib.IsMouseButtonPressed(MouseButton.Left))
         {

@@ -40,7 +40,7 @@ public class Control : ClickableRectangle
         }
 
         UpdateFocusOnMouseOut();
-        _wasFocusedLastFrame = Focused; // Update focus tracking for next frame
+        _wasFocusedLastFrame = Focused; // Process focus tracking for next frame
         base.Update();
     }
 

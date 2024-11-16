@@ -1,4 +1,5 @@
-﻿using Raylib_cs;
+﻿/*
+using Raylib_cs;
 using System.Reflection;
 
 namespace Nodica;
@@ -67,7 +68,7 @@ public class App
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(DefaultTheme.Background);
-            UpdateSingletons();
+            ProcessSingletons();
             RootNode.Process();
             Raylib.EndDrawing();
 
@@ -75,9 +76,10 @@ public class App
         }
     }
 
-    private void UpdateSingletons()
+    private void ProcessSingletons()
     {
-        ClickManager.Instance.Update();
+        ClickManager.Instance.Process();
+        RenderServer.Instance.Process();
     }
 
     private void PrintTree()
@@ -93,3 +95,4 @@ public class App
         }
     }
 }
+*/
