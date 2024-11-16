@@ -22,12 +22,12 @@
 //        CheckStyle.Current = CheckStyle.Normal;
 //    }
 //
-//    public override void Process()
+//    public override void Update()
 //    {
 //        Draw();
 //        HandleClicks();
 //        OnUpdate(this);
-//        base.Process();
+//        base.Update();
 //    }
 //
 //    protected override void Draw()

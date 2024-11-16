@@ -106,7 +106,7 @@ public partial class LineEdit : Button
         UpdateSizeToFitText();
 
         base.Update();
-        //shape.Process();
+        //shape.Update();
         caret.Update();
         textDisplayer.Update();
         placeholderTextDisplayer.Update();

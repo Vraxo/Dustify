@@ -7,7 +7,7 @@
 //    public List<Clickable> Clickables = [];
 //    public int MinLayer = -1;
 //
-//    public override void Process()
+//    public override void Update()
 //    {
 //        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
 //        {

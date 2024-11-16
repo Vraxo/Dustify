@@ -29,7 +29,7 @@
 //        AddMiddleButton();
 //    }
 //
-//    public override void Process()
+//    public override void Update()
 //    {
 //        Value = Grabber.position.Y / (Size.Y - Grabber.Size.Y);
 //        BottomButton.position.Y = Size.Y + 8;
@@ -39,7 +39,7 @@
 //
 //        OnUpdate(this);
 //
-//        base.Process();
+//        base.Update();
 //    }
 //
 //    private void OnTopButtonLeftClicked(object? sender, EventArgs e)
