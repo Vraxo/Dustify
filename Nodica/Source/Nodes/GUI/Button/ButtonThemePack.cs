@@ -145,4 +145,17 @@ public class ButtonThemePack
             Focused.BorderLengthUp = value;
         }
     }
+
+    public float BorderLengthDown
+    {
+        set
+        {
+            Current.BorderLengthDown = value;
+            Normal.BorderLengthDown = value;
+            Hover.BorderLengthDown = value;
+            Pressed.BorderLengthDown = value;
+            Disabled.BorderLengthDown = value;
+            Focused.BorderLengthDown = value;
+        }
+    }
 }
