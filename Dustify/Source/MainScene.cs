@@ -11,36 +11,37 @@ public partial class MainScene : Node
 
     public override void Start()
     {
-        //imageSelectionButton = GetNode<ImageSelectionButton>("ImageSelectionButton");
-        //renderButton = GetNode<RenderButton>("RenderButton");
-        //progressBar = GetNode<ProgressBar>("ProgressBar");
-        //
-        //optionButton = GetNode<OptionButton>("OptionButton");
-        //optionButton.Add("Row by row");
-        //optionButton.Add("All at once");
-        //
-        //string[] args = Environment.GetCommandLineArgs();
-        //
-        //if (args.Length > 1)
-        //{
-        //    if (!File.Exists(args[1]))
-        //    {
-        //        Console.WriteLine("Error: The provided image file does not exist.");
-        //        Environment.Exit(1);
-        //    }
-        //    else
-        //    {
-        //        renderButton.HandleCommandLineArgs(args);
-        //    }
-        //}
+        imageSelectionButton = GetNode<ImageSelectionButton>("ImageSelectionButton");
+        renderButton = GetNode<RenderButton>("RenderButton");
+        progressBar = GetNode<ProgressBar>("ProgressBar");
+        
+        optionButton = GetNode<OptionButton>("OptionButton");
+        optionButton.Add("Row by row");
+        optionButton.Add("All at once");
+        
+        string[] args = Environment.GetCommandLineArgs();
+        
+        if (args.Length > 1)
+        {
+            if (!File.Exists(args[1]))
+            {
+                Console.WriteLine("Error: The provided image file does not exist.");
+                Environment.Exit(1);
+            }
+            else
+            {
+                ClearTemporaryDirectory();
+                renderButton.HandleCommandLineArgs(args);
+            }
+        }
 
         base.Start();
     }
 
     public override void Update()
     {
-        //UpdateProgressBar();
-        //UpdateOptionButton();
+        UpdateProgressBar();
+        UpdateOptionButton();
         base.Update();
     }
 

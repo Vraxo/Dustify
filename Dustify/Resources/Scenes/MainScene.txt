@@ -1,37 +1,37 @@
 ﻿[MainScene "Root"]
 
-#[ImageSelectionButton "ImageSelectionButton" "Root"]
-#Size = Vector2(500, 500)
-#Themes/Roundness = 0
-#DownControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
-#
-#[AspectRatioContainer "AspectRatioContainer" "ImageSelectionButton"]
-#Size = Vector2(500, 500)
-#
-#[ImageDisplayer "ImageDisplayer" "AspectRatioContainer"]
-#
-#[RenderButton "RenderButton" "Root"]
-#Position = Vector2(500, 600)
-#Text = "Render"
-#RightControlPath = "/root/OptionButton"
-#Icon = Texture("Resources/RenderIcon.png")
-#FocusOnClick = true
-#ThemeFile = "Resources/ButtonTheme.txt"
-#FocusOnClick = true
-#StayPressed = true
-#UpControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
-#
-#[OptionButton "OptionButton" "Root"]
-#Position = Vector2(550, 600)
-#Size = Vector2(150, 26)
-#Text = "Row by row"
-#FocusOnClick = true
-#LeftControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
-#DownControlPath = "/root/RenderButton"
-#UpControlPath = "/root/ImageSelectionButton"
-#
-#[ProgressBar "ProgressBar" "Root"]
-#Position = Vector2(500, 500)
-#Size = Vector2(500, 10)
-#
-#[QualityCheckBoxes "QualityCheckBoxes" "Root" "QualityCheckBoxes"]
+[ImageSelectionButton "ImageSelectionButton" "Root"]
+Size = Vector2(500, 500)
+Themes/Roundness = 0
+DownControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
+
+[AspectRatioContainer "AspectRatioContainer" "ImageSelectionButton"]
+Size = Vector2(500, 500)
+
+[ImageDisplayer "ImageDisplayer" "AspectRatioContainer"]
+
+[RenderButton "RenderButton" "Root"]
+Position = Vector2(500, 600)
+Text = "Render"
+RightControlPath = "/root/OptionButton"
+Icon = Texture("Resources/RenderIcon.png")
+FocusOnClick = true
+ThemeFile = "Resources/ButtonTheme.txt"
+FocusOnClick = true
+StayPressed = true
+UpControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
+
+[OptionButton "OptionButton" "Root"]
+Position = Vector2(550, 600)
+Size = Vector2(150, 26)
+Text = "Row by row"
+FocusOnClick = true
+LeftControlPath = "/root/QualityCheckBoxes/LowQualityCheckBox"
+DownControlPath = "/root/RenderButton"
+UpControlPath = "/root/ImageSelectionButton"
+
+[ProgressBar "ProgressBar" "Root"]
+Position = Vector2(500, 500)
+Size = Vector2(500, 10)
+
+[QualityCheckBoxes "QualityCheckBoxes" "Root" "QualityCheckBoxes"]

@@ -19,44 +19,46 @@ public abstract class VisualItem : Node2D
 
     protected virtual void Draw() { }
 
-    protected void DrawBorderedRectangle(Vector2 position, Vector2 size, BoxTheme theme)
+    protected void DrawRoundedRectangle(Vector2 position, Vector2 size, float roundness, int segments, Color color)
     {
-        // Calculate the total border length by combining the four sides
-        float top = theme.BorderLengthUp;
-        float right = theme.BorderLengthRight;
-        float bottom = theme.BorderLengthDown;
-        float left = theme.BorderLengthLeft;
-
-        // Adjust the outer rectangle size based on the border lengths
-        Rectangle outerRectangle = new()
-        {
-            Position = new Vector2(position.X - left, position.Y - top),
-            Size = new Vector2(size.X + left + right, size.Y + top + bottom)
-        };
-
-        // Draw the outer rectangle (border)
-        if (top > 0 || right > 0 || bottom > 0 || left > 0)
-        {
-            Raylib.DrawRectangleRounded(
-                outerRectangle,
-                theme.Roundness,
-                (int)size.Y,  // segments count, you can adjust it as needed
-                theme.BorderColor
-            );
-        }
-
-        // Draw the inner rectangle (fill) with no offset
-        Rectangle innerRectangle = new()
+        Rectangle rectangle = new()
         {
             Position = position,
             Size = size
         };
 
         Raylib.DrawRectangleRounded(
-            innerRectangle,
+            rectangle,
+            roundness,
+            segments,
+            color);
+    }
+
+    protected void DrawThemedRectangle(Vector2 position, Vector2 size, BoxTheme theme)
+    {
+        float top = theme.BorderLengthUp;
+        float right = theme.BorderLengthRight;
+        float bottom = theme.BorderLengthDown;
+        float left = theme.BorderLengthLeft;
+
+        Vector2 outerRectanglePosition = new Vector2(position.X - left, position.Y - top);
+        Vector2 outerRectangleSize = new Vector2(size.X + left + right, size.Y + top + bottom);
+
+        if (top > 0 || right > 0 || bottom > 0 || left > 0)
+        {
+            DrawRoundedRectangle(
+                outerRectanglePosition,
+                outerRectangleSize,
+                theme.Roundness,
+                (int)size.Y,
+                theme.BorderColor);
+        }
+
+        DrawRoundedRectangle(
+            position,
+            size,
             theme.Roundness,
             (int)size.Y,
-            theme.FillColor
-        );
+            theme.FillColor);
     }
 }
