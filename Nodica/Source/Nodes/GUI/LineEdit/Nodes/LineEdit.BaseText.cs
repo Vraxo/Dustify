@@ -59,7 +59,7 @@ public partial class LineEdit : Button
 
         private int GetHalfFontHeight()
         {
-            Font font = parent.Themes.Current.Font;
+            Raylib_cs.Font font = parent.Themes.Current.Font;
             string text = GetText();
             uint fontSize = (uint)parent.Themes.Current.FontSize;
 

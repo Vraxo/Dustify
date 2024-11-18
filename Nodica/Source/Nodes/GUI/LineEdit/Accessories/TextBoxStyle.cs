@@ -52,7 +52,7 @@ public class TextBoxStyle
         }
     }
 
-    public Font Font
+    public Raylib_cs.Font Font
     {
         set
         {

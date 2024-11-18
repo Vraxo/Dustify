@@ -1,12 +1,10 @@
-﻿using Raylib_cs;
-
-namespace Nodica;
+﻿namespace Nodica;
 
 public class Label : VisualItem
 {
     public class LabelTheme
     {
-        public Font Font { get; set; } = FontLoader.Instance.Fonts["RobotoMono 16"];
+        public Font Font { get; set; } = FontLoader.Instance.Get("RobotoMono 16");
         public Color FontColor { get; set; } = DefaultTheme.Text;
         public uint FontSize { get; set; } = 16;
         public int FontSpacing { get; set; } = 0;
@@ -126,7 +124,7 @@ public class Label : VisualItem
             return;
         }
 
-        int numFittingCharacters = (int)(Size.X / (GetCharacterWidth() + Theme.FontSpacing));
+        int numFittingCharacters = (int)(Size.X / Theme.Font.Dimensions.X + Theme.FontSpacing);
 
         if (VisibleCharacters != -1)
         {
@@ -146,17 +144,6 @@ public class Label : VisualItem
         {
             displayedText = textToConsider;
         }
-    }
-
-    private float GetCharacterWidth()
-    {
-        float width = Raylib.MeasureTextEx(
-            Theme.Font,
-            " ",
-            Theme.FontSize,
-            Theme.FontSpacing).X;
-
-        return width;
     }
 
     private string ClipTextWithEllipsis(string input)

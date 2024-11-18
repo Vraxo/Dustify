@@ -1,56 +1,43 @@
-﻿using Raylib_cs;
-
-namespace Nodica;
+﻿namespace Nodica;
 
 public class FontLoader
 {
-    public Dictionary<string, Font> Fonts = [];
-
+    public static FontLoader Instance => instance ??= new();
     private static FontLoader? instance;
 
-    public static FontLoader Instance
+    private Dictionary<string, Font> fonts = new();
+
+    private FontLoader() { }
+
+    public Font Get(string fullName)
     {
-        get
-        {
-            instance ??= new();
-            return instance;
-        }
+        if (fonts.ContainsKey(fullName))
+            return fonts[fullName];
+
+        (string fontName, int fontSize) = ParseFontName(fullName);
+
+        string fontPath = $"Resources/Fonts/{fontName}.ttf";
+
+        Font textFont = new(fontPath, fontSize);
+
+        fonts.Add(fullName, textFont);
+
+        return textFont;
     }
 
-    private FontLoader()
+    private (string fontName, int fontSize) ParseFontName(string fullName)
     {
-        Load("Resources/Fonts/RobotoMono.ttf", "RobotoMono", 16);
+        int lastSpaceIndex = fullName.LastIndexOf(' ');
+
+        if (lastSpaceIndex == -1)
+            throw new ArgumentException($"Invalid font name format: {fullName}. Expected format: 'FontName Size'.");
+
+        string fontName = fullName[..lastSpaceIndex];
+        string sizeString = fullName[(lastSpaceIndex + 1)..];
+
+        if (!int.TryParse(sizeString, out int fontSize))
+            throw new ArgumentException($"Invalid font size in: {fullName}. Size must be a number.");
+
+        return (fontName, fontSize);
     }
-
-    public void Load(string path, string name, int size)
-    {
-        // Define a range of Unicode characters to load (e.g., 32 to 255, which includes ASCII and common symbols)
-        int[] codepoints = new int[255 - 32 + 1];
-
-        // Fill the array with codepoints from space (32) to 255 (includes most symbols)
-        for (int i = 0; i < codepoints.Length; i++)
-        {
-            codepoints[i] = 32 + i;
-        }
-
-        Font font = Raylib.LoadFontEx(path, size, codepoints, codepoints.Length);
-
-        string fullName = $"{name} {size}";
-
-        Fonts.Add(fullName, font);
-
-        Texture2D texture = Fonts[fullName].Texture;
-        var filter = TextureFilter.Bilinear;
-        Raylib.SetTextureFilter(texture, filter);
-    }
-
-    //public void LoadTexture(string path, string name, int size)
-    //{
-    //    Font font = Raylib.LoadFontEx(path, size, null, 0);
-    //    Fonts.Add(name, font);
-    //
-    //    Texture2D texture = Fonts[name].Texture;
-    //    var filter = TextureFilter.Bilinear;
-    //    Raylib.SetTextureFilter(texture, filter);
-    //}
 }

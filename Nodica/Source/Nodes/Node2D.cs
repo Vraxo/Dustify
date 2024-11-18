@@ -135,15 +135,15 @@ public class Node2D : Node
     {
         //Offset = OriginPreset switch
         //{
-        //    OriginPreset.Center => Size / 2,
-        //    OriginPreset.CenterLeft => new(0, Size.Y / 2),
-        //    OriginPreset.CenterRight => new(Size.X, Size.Y / 2),
+        //    OriginPreset.Center => Dimensions / 2,
+        //    OriginPreset.CenterLeft => new(0, Dimensions.Y / 2),
+        //    OriginPreset.CenterRight => new(Dimensions.X, Dimensions.Y / 2),
         //    OriginPreset.TopLeft => new(0, 0),
-        //    OriginPreset.TopRight => new(Size.X, 0),
-        //    OriginPreset.TopCenter => new(Size.X / 2, 0),
-        //    OriginPreset.BottomLeft => new(0, Size.Y),
-        //    OriginPreset.BottomRight => Size,
-        //    OriginPreset.BottomCenter => new(Size.X / 2, Size.Y),
+        //    OriginPreset.TopRight => new(Dimensions.X, 0),
+        //    OriginPreset.TopCenter => new(Dimensions.X / 2, 0),
+        //    OriginPreset.BottomLeft => new(0, Dimensions.Y),
+        //    OriginPreset.BottomRight => Dimensions,
+        //    OriginPreset.BottomCenter => new(Dimensions.X / 2, Dimensions.Y),
         //    OriginPreset.None => Offset,
         //    _ => Offset,
         //};

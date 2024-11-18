@@ -70,7 +70,7 @@ public abstract class VisualItem : Node2D
             tint);
     }
 
-    protected void DrawText(string text, Vector2 position, Font font, float fontSize, float spacing, Color color)
+    protected void DrawText(string text, Vector2 position, Raylib_cs.Font font, float fontSize, float spacing, Color color)
     {
         Raylib.DrawTextEx(
             font,

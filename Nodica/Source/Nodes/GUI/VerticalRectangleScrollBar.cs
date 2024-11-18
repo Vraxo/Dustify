@@ -31,8 +31,8 @@
 //
 //    public override void Update()
 //    {
-//        Value = Grabber.position.Y / (Size.Y - Grabber.Size.Y);
-//        BottomButton.position.Y = Size.Y + 8;
+//        Value = Grabber.position.Y / (Dimensions.Y - Grabber.Dimensions.Y);
+//        BottomButton.position.Y = Dimensions.Y + 8;
 //
 //        DrawRectangle();
 //        SnapMiddleButtonToClickedPosition();
@@ -44,8 +44,8 @@
 //
 //    private void OnTopButtonLeftClicked(object? sender, EventArgs e)
 //    {
-//        Grabber.position.Y -= Grabber.Size.Y;
-//        Value -= BottomButton.Size.Y / Size.Y;
+//        Grabber.position.Y -= Grabber.Dimensions.Y;
+//        Value -= BottomButton.Dimensions.Y / Dimensions.Y;
 //    }
 //
 //    private void DrawRectangle()
@@ -53,10 +53,10 @@
 //        Rectangle rectangle = new()
 //        {
 //            position = GlobalPosition - Offset,
-//            Size = Size
+//            Dimensions = Dimensions
 //        };
 //        
-//        Raylib.DrawRectangleRounded(rectangle, 0.0F, (int)Size.X, FillColor.DarkGray);
+//        Raylib.DrawRectangleRounded(rectangle, 0.0F, (int)Dimensions.X, FillColor.DarkGray);
 //    }
 //
 //    private void AddTopButton()
@@ -64,7 +64,7 @@
 //        TopButton = new()
 //        {
 //            position = new(0, -8),
-//            Size = new(Size.X, 10),
+//            Dimensions = new(Dimensions.X, 10),
 //        };
 //
 //        TopButton.OnLeftClick += OnTopButtonLeftClicked;
@@ -76,8 +76,8 @@
 //    {
 //        BottomButton = new()
 //        {
-//            position = new(0, Size.Y),
-//            Size = new(Size.X, 10),
+//            position = new(0, Dimensions.Y),
+//            Dimensions = new(Dimensions.X, 10),
 //        };
 //
 //        BottomButton.OnLeftClick += OnBottomButtonLeftClicked;
@@ -87,25 +87,25 @@
 //
 //    private void OnBottomButtonLeftClicked(object? sender, EventArgs e)
 //    {
-//        Grabber.position.Y += Grabber.Size.Y;
-//        Value += BottomButton.Size.Y / Size.Y;
+//        Grabber.position.Y += Grabber.Dimensions.Y;
+//        Value += BottomButton.Dimensions.Y / Dimensions.Y;
 //    }
 //
 //    private void AddMiddleButton()
 //    {
 //        Grabber = new()
 //        {
-//            Size = new(Size.X, Size.X),
-//            Offset = new(Size.X / 2, 0),
+//            Dimensions = new(Dimensions.X, Dimensions.X),
+//            Offset = new(Dimensions.X / 2, 0),
 //            OriginPreset = OriginPreset.TopCenter,
 //            OnUpdate = (OptionButtonButton) =>
 //            {
 //                if (OptionButtonButton.PressedLeft)
 //                {
-//                    OptionButtonButton.position.Y = Raylib.GetMousePosition().Y - OptionButtonButton.Size.Y;
+//                    OptionButtonButton.position.Y = Raylib.GetMousePosition().Y - OptionButtonButton.Dimensions.Y;
 //                }
 //
-//                float maxY = Size.Y - OptionButtonButton.Size.Y;
+//                float maxY = Dimensions.Y - OptionButtonButton.Dimensions.Y;
 //
 //                if (OptionButtonButton.position.Y > maxY)
 //                {
@@ -128,7 +128,7 @@
 //    {
 //        if (IsMouseOver() && Raylib.IsMouseButtonPressed(MouseButton.Left))
 //        {
-//            Grabber.position.Y = Raylib.GetMousePosition().Y - Grabber.Size.Y;
+//            Grabber.position.Y = Raylib.GetMousePosition().Y - Grabber.Dimensions.Y;
 //        }
 //    }
 //
@@ -137,10 +137,10 @@
 //        Vector2 mousePosition = Raylib.GetMousePosition();
 //
 //        bool matchX1 = mousePosition.X > GlobalPosition.X - Offset.X;
-//        bool matchX2 = mousePosition.X < GlobalPosition.X + Size.X - Offset.X;
+//        bool matchX2 = mousePosition.X < GlobalPosition.X + Dimensions.X - Offset.X;
 //
 //        bool matchY1 = mousePosition.Y > GlobalPosition.Y - Offset.Y;
-//        bool matchY2 = mousePosition.Y < GlobalPosition.Y + Size.Y - Offset.Y;
+//        bool matchY2 = mousePosition.Y < GlobalPosition.Y + Dimensions.Y - Offset.Y;
 //
 //        return matchX1 && matchX2 && matchY1 && matchY2;
 //    }

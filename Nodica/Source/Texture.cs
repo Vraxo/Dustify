@@ -16,6 +16,6 @@ public class Texture
 
     public static implicit operator Texture2D(Texture texture)
     {
-        return texture;
+        return texture.texture;
     }
 }

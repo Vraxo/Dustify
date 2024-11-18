@@ -13,7 +13,7 @@
 //
 //    public CheckBox()
 //    {
-//        Size = new(20, 20);
+//        Dimensions = new(20, 20);
 //        OriginPreset = OriginPreset.Center;
 //
 //        BackgroundStyle.Roundness = 1;
@@ -35,7 +35,7 @@
 //        Rectangle rectangle = new()
 //        {
 //            Position = GlobalPosition - Offset,
-//            Size = Size
+//            Dimensions = Dimensions
 //        };
 //
 //        DrawInside(rectangle);
@@ -48,7 +48,7 @@
 //        //Raylib.DrawRectangleRounded(
 //        //    rectangle,
 //        //    BackgroundStyle.Current.Roundness,
-//        //    (int)Size.Y,
+//        //    (int)Dimensions.Y,
 //        //    BackgroundStyle.Current.FillColor);
 //    }
 //
@@ -59,7 +59,7 @@
 //        //    Raylib.DrawRectangleRoundedLines(
 //        //        rectangle,
 //        //        BackgroundStyle.Current.Roundness,
-//        //        (int)Size.Y,
+//        //        (int)Dimensions.Y,
 //        //        BackgroundStyle.Current.BorderLength,
 //        //        BackgroundStyle.Current.BorderColor);
 //        //}
@@ -75,7 +75,7 @@
 //        Rectangle rectangle = new()
 //        {
 //            Position = GlobalPosition - Offset / 2,
-//            Size = CheckSize
+//            Dimensions = CheckSize
 //        };
 //
 //        Raylib.DrawRectangleRounded(

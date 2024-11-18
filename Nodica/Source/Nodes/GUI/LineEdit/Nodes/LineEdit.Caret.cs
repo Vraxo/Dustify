@@ -141,7 +141,7 @@ public partial class LineEdit : Button
 
         private Vector2 GetSize()
         {
-            Font font = parent.Themes.Current.Font;
+            Raylib_cs.Font font = parent.Themes.Current.Font;
             float fontSize = parent.Themes.Current.FontSize;
 
             int width = (int)Raylib.MeasureTextEx(font, "|", fontSize, parent.Themes.Current.FontSpacing).X;

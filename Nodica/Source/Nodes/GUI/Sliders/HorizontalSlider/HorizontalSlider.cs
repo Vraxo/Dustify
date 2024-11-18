@@ -47,7 +47,7 @@ public partial class HorizontalSlider : BaseSlider
     //        return;
     //    }
     //
-    //    float unit = Size.X / MaxExternalValue;
+    //    float unit = Dimensions.X / MaxExternalValue;
     //    float x = Grabber.GlobalPosition.X + direction * unit;
     //    float y = Grabber.GlobalPosition.Y;
     //

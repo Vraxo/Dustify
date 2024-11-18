@@ -290,7 +290,7 @@ public class Button : Control
             Themes.Current.FontSize,
             1).X;
 
-        //Size = new(textWidth + TextPadding.X * 2 + TextMargin.X, Size.Y + TextMargin.Y);
+        //Dimensions = new(textWidth + TextPadding.X * 2 + TextMargin.X, Dimensions.Y + TextMargin.Y);
         Size = new(textWidth + TextMargin.X, Size.Y + TextMargin.Y);
     }
 

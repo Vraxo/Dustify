@@ -3,7 +3,7 @@ global using Image = Raylib_cs.Image;
 global using Rectangle = Raylib_cs.Rectangle;
 global using Timer = Nodica.Timer;
 global using Vector2 = System.Numerics.Vector2;
-global using Font = Raylib_cs.Font;
+global using Font = Nodica.Font;
 
 // Nodes
 

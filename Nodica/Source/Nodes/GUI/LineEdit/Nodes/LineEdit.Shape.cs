@@ -48,13 +48,13 @@ public partial class LineEdit : Button
         //        Rectangle rectangle = new()
         //        {
         //            Position = parent.GlobalPosition - parent.Offset - offset,
-        //            Size = new(parent.Size.X + i, parent.Size.Y + i)
+        //            Dimensions = new(parent.Dimensions.X + i, parent.Dimensions.Y + i)
         //        };
         //
         //        Raylib.DrawRectangleRounded(
         //            rectangle,
         //            parent.Themes.Current.Roundness,
-        //            (int)parent.Size.Y,
+        //            (int)parent.Dimensions.Y,
         //            parent.Themes.Current.BorderColor);
         //    }
         //}
@@ -64,13 +64,13 @@ public partial class LineEdit : Button
         //    Rectangle rectangle = new()
         //    {
         //        Position = parent.GlobalPosition - parent.Offset,
-        //        Size = parent.Size
+        //        Dimensions = parent.Dimensions
         //    };
         //
         //    Raylib.DrawRectangleRounded(
         //        rectangle,
         //        parent.Themes.Current.Roundness,
-        //        (int)parent.Size.Y,
+        //        (int)parent.Dimensions.Y,
         //        parent.Themes.Current.FillColor);
         //}
     }
