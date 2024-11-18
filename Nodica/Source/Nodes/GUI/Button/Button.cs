@@ -24,8 +24,7 @@ public class Button : Control
     public ClickBehavior Behavior { get; set; } = ClickBehavior.Left;
     public float IconMargin { get; set; } = 12;
 
-    public Texture2D Icon { get; set; }
-    public bool HasIcon = false;
+    public Texture? Icon { get; set; }
 
     public bool PressedLeft = false;
     public bool PressedRight = false;
@@ -232,7 +231,12 @@ public class Button : Control
 
     private void DrawIcon()
     {
-        var iconOrigin = new Vector2(Icon.Width, Icon.Height) / 2f;
+        if (Icon is null)
+        {
+            return;
+        }
+
+        Vector2 iconOrigin = Icon.Size / 2;
 
         Raylib.DrawTextureV(
             Icon,

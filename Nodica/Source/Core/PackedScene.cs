@@ -263,7 +263,7 @@ public class PackedScene
         }
     }
 
-    private static Texture2D ParseTexture(string value)
+    private static Texture ParseTexture(string value)
     {
         string stringValue = value.Trim();
 
