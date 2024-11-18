@@ -82,7 +82,7 @@ public class Label : VisualItem
     protected override void Draw()
     {
         DrawShadow();
-        DrawText();
+        DrawDisplayedText();
     }
 
     private void DrawShadow()
@@ -92,21 +92,21 @@ public class Label : VisualItem
             return;
         }
 
-        Raylib.DrawTextEx(
-            Theme.Font,
+        DrawText(
             displayedText,
-            GlobalPosition - Offset + Theme.ShadowOffset,
+            GlobalPosition - Origin + Theme.ShadowOffset,
+            Theme.Font,
             Theme.FontSize,
             Theme.FontSpacing,
             Theme.ShadowColor);
     }
 
-    private void DrawText()
+    private void DrawDisplayedText()
     {
-        Raylib.DrawTextEx(
-            Theme.Font,
+        DrawText(
             displayedText,
             GlobalPosition - Offset - new Vector2(0, Theme.FontSize / 2),
+            Theme.Font,
             Theme.FontSize,
             Theme.FontSpacing,
             Theme.FontColor);

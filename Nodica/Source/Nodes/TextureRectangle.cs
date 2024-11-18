@@ -1,12 +1,8 @@
-﻿using Raylib_cs;
-
-namespace Nodica;
+﻿namespace Nodica;
 
 public class TextureRectangle : VisualItem
 {
-    public Texture2D Texture { get; set; }
-    public bool HasTexture = false;
-    public int Height = 0;
+    public Texture? Texture { get; set; }
 
     public TextureRectangle()
     {
@@ -19,28 +15,11 @@ public class TextureRectangle : VisualItem
         base.Update();
     }
 
-    public void LoadTexture(string name, bool resize = false)
-    {
-        Texture = TextureLoader.Instance.Get(name);
-        HasTexture = true;
-
-        if (resize)
-        {
-            Size = new(Texture.Width, Texture.Height);
-        }
-    }
-
     protected override void Draw()
     {
-        Rectangle source = new(0, Height, Texture.Width, Texture.Height);
-        Rectangle destination = new(GlobalPosition, Size);
-
-        Raylib.DrawTexturePro(
+        DrawTexture(
             Texture,
-            source,
-            destination,
-            Offset,
-            0,
+            GlobalPosition - Origin,
             Color.White);
     }
 }

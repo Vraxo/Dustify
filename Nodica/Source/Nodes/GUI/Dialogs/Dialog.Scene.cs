@@ -4,7 +4,7 @@ public partial class Dialog : Node2D
 {
     public override void Build()
     {
-        AddChild(new ColorRectangle
+        AddChild(new ThemedRectangle
         {
             Size = new(300, 150),
             InheritOrigin = true

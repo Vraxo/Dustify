@@ -41,8 +41,8 @@ public abstract class VisualItem : Node2D
         float bottom = theme.BorderLengthDown;
         float left = theme.BorderLengthLeft;
 
-        Vector2 outerRectanglePosition = new Vector2(position.X - left, position.Y - top);
-        Vector2 outerRectangleSize = new Vector2(size.X + left + right, size.Y + top + bottom);
+        Vector2 outerRectanglePosition = new(position.X - left, position.Y - top);
+        Vector2 outerRectangleSize = new(size.X + left + right, size.Y + top + bottom);
 
         if (top > 0 || right > 0 || bottom > 0 || left > 0)
         {
@@ -60,5 +60,24 @@ public abstract class VisualItem : Node2D
             theme.Roundness,
             (int)size.Y,
             theme.FillColor);
+    }
+
+    protected void DrawTexture(Texture2D texture, Vector2 position, Color tint)
+    {
+        Raylib.DrawTextureV(
+            texture,
+            position,
+            tint);
+    }
+
+    protected void DrawText(string text, Vector2 position, Font font, float fontSize, float spacing, Color color)
+    {
+        Raylib.DrawTextEx(
+            font,
+            text,
+            position,
+            fontSize,
+            spacing,
+            color);
     }
 }

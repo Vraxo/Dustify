@@ -1,10 +1,10 @@
 ﻿namespace Nodica;
 
-public class ColorRectangle : ClickableRectangle
+public class ThemedRectangle : ClickableRectangle
 {
     public BoxTheme Style = new();
 
-    public ColorRectangle()
+    public ThemedRectangle()
     {
         Size = new(32, 32);
         OriginPreset = OriginPreset.TopLeft;

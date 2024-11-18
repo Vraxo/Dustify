@@ -1,6 +1,6 @@
 ﻿namespace Nodica;
 
-public class Particle : ColorRectangle
+public class Particle : ThemedRectangle
 {
     public float Speed = 50;
 
